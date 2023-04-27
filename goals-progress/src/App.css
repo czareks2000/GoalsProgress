@@ -1,1 +1,62 @@
+/*
+Green Treeline: #478559
+Purple baseline: #161748
+Pink highlight: #f95d9b
+Bluewater lowlight: #39a0ca
+*/
+:root{
+  --background-dark: #161748;
+  --background-light:#39a0ca;
+  --highlight: #f95d9b;
+  --background-green:#478559;
+}
 
+body{
+  background-color: var(--background-dark);
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.container{
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  min-height: 500px;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-top: 50px;
+  -webkit-box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 1);
+  box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 1);
+}
+
+.goal{
+  color: white;
+  padding: 15px;
+  margin: 10px;
+  border: 1px solid var(--highlight);
+  border-radius: 10px;
+  /* background-color: var(--background-light);  */
+  display: flex;
+}
+
+.goal h2{
+  margin: 0px;
+}
+
+.progress-bar {
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 115px;
+  height: 115px;
+  border-radius: 50%;
+  background: 
+    radial-gradient(closest-side, var(--background-dark) 79%, transparent 80% 100%),
+    conic-gradient(var(--background-green) 75%, white 0);    
+}
+
+.progress-bar::before {
+  content: "75%";
+}
