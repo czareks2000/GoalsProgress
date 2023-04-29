@@ -1,14 +1,14 @@
-const Goal = ({ name, progress, description, daysLeft }) => {
+const Goal = ({ goal }) => {
   return (
     <div className="goal">
         <div>
-            <h2>{name}</h2>
-            <p>{description}</p> 
-            <small>Zostało: {daysLeft} dni</small>
+            <h2>{goal.name}</h2>
+            <p>{goal.description}</p> 
+            <small>Zostało: {goal.daysLeft} dni</small>
         </div>
         <div className="progress-bar">
             <progress 
-                value={progress}
+                value={goal.progress}
                 min="0" 
                 max="100" 
                 style={{visibility: 'hidden', height: 0, width:0 }}
