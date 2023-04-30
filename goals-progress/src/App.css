@@ -48,7 +48,7 @@ body{
   text-decoration: none;
 }
 
-.active{
+.navbar-item.active{
   background-color: var(--highlight);
 }
 
