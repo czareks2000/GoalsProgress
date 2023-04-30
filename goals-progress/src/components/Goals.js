@@ -45,7 +45,6 @@ const Goals = () => {
       {goals.map((goal) => (
         <Goal key={goal.id} goal={goal}/>
       ))}
-      
     </div>
   )
 }
