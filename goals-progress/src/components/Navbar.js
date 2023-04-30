@@ -1,6 +1,6 @@
 const Navbar = () => {
   return (
-    <div className="navbar text-center">
+    <div className="navbar container shadow text-center">
         <div className="navbar-item active">
             Goals
         </div>

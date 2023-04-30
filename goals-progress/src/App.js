@@ -11,7 +11,7 @@ function App() {
     <>
       <div className="wrapper">
         <Header appName='GoalsProgress'/>
-        <div className="container">
+        <div className="goals container shadow">
           <div className="content">
             <Goals/>
           </div>
