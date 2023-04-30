@@ -1,3 +1,7 @@
 - zdarzenie onClick na komponencie Goal otwiera szczegóły goal'a
 - przycisk + NEW GOAL otwiera formularz dodawania goal'a
 - header z nazwą aplikacji + może rozwijane menu 
+- responsywność dodać (szególnie dopasowywanie do ekranu telefonu)
+- strona logowania/rejestracji
+- strona ustawień
+- routing
