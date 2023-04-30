@@ -17,11 +17,7 @@ function App() {
           </div>
         </div>
         <div className="text-center">
-          <Button text={
-            <>
-              <FaPlus className='icon'/> NEW GOAL
-            </>
-          } color={'#39a0ca'}/>
+          <Button text={<FaPlus className='icon'/>} color={'#39a0ca'}/>
         </div>
       </div>
       <Footer/>
