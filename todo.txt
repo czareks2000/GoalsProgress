@@ -1,0 +1,3 @@
+- zdarzenie onClick na komponencie Goal otwiera szczegóły goal'a
+- przycisk + NEW GOAL otwiera formularz dodawania goal'a
+- header z nazwą aplikacji + może rozwijane menu 
