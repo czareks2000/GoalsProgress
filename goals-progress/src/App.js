@@ -1,27 +1,21 @@
 import './App.css';
-import { FaPlus } from 'react-icons/fa'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import Goals from './components/Goals';
-import Button from './components/Button';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <div className="wrapper">
         <Header appName='GoalsProgress'/>
-        <div className="goals container shadow">
-          <div className="content">
-            <Goals/>
-          </div>
-        </div>
-        <div className="text-center">
-          <Button text={<FaPlus className='icon'/>} color={'#39a0ca'}/>
-        </div>
+        <Routes>
+          <Route path='/' element={<Goals/>}/>
+        </Routes>
       </div>
       <Footer/>
-    </>
+    </BrowserRouter>
   );
 }
 
