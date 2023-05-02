@@ -1,7 +1,15 @@
-- zdarzenie onClick na komponencie Goal otwiera szczegóły goal'a
-- przycisk + NEW GOAL otwiera formularz dodawania goal'a
-- header z nazwą aplikacji + może rozwijane menu 
 - responsywność dodać (szególnie dopasowywanie do ekranu telefonu)
+Layouty:
 - strona logowania/rejestracji
+- strona szegółów goal
+- strona dodawania progressu
+- strona zarchiwizowanych goals
 - strona ustawień
-- routing
+Funkcjonalność:
+- mockup backend dodać do testowania
+- routing na bierząco
+- obsługa formularza create goal form
+- wyświetlanie 
+
+Błedy:
+- na telefonie input daty nie zajmuje 100% szerokosci
