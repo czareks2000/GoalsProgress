@@ -1,4 +1,5 @@
 import { FaPlus } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 import Goal from "./Goal"
 import Button from './Button'
@@ -51,7 +52,9 @@ const Goals = () => {
         ))}
       </div>
       <div className="text-center">
-        <Button text={<FaPlus className='icon'/>} color={'#39a0ca'}/>
+        <Link to="/goals/create">
+          <Button text={<FaPlus className='icon'/>} color={'#39a0ca'}/>
+        </Link>
       </div>
     </>
   )
