@@ -13,6 +13,7 @@ function App() {
         <Header appName='GoalsProgress'/>
         <Routes>
           <Route path='/' element={<Goals/>}/>
+          <Route path='/goal/id' element={<>Goal Details</>}/>
           <Route path='/goals' element={<Goals/>}/>
           <Route path='/goals/create' element={<GoalCreateForm/>}/>
         </Routes>

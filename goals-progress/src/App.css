@@ -88,6 +88,10 @@ body{
   margin: 20px auto;
 }
 
+.goals a{
+  text-decoration: none;
+}
+
 .goal{
   color: white;
   padding: 15px;
@@ -101,6 +105,44 @@ body{
 
 .goal h2{
   margin: 0px;
+}
+
+.create-form{
+  margin: 10px;
+}
+
+.create-form > div{
+  margin: 10px 0;
+}
+
+.form-control{
+  display: grid;
+}
+
+.form-control label{
+  font-size: large;
+}
+
+.form-control input, .form-control select{
+  border-radius: 5px;
+  border: none;
+  font-size: large;
+  margin-top: 5px;
+  padding: 3px 7px;
+}
+
+.form-control input:focus-visible, .form-control select:focus-visible{
+  outline-style: solid;
+  outline-width: 2px;
+  outline-color: var(--highlight);
+} 
+
+.form-group-inline{
+  display: flex;
+}
+
+.form-group-inline :not(:last-child){
+  margin-right: 10px;
 }
 
 .progress-bar {
@@ -164,4 +206,8 @@ body{
 
 .my-1 {
   margin: 10px 0;
+}
+
+.w-100{
+  width: 100%;
 }

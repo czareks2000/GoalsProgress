@@ -48,7 +48,11 @@ const Goals = () => {
     <>
       <div className="goals container shadow">
         {goals.map((goal) => (
-          <Goal key={goal.id} goal={goal}/>
+          <>
+            <Link to="/goal/id">
+              <Goal key={goal.id} goal={goal}/>
+            </Link>
+          </>
         ))}
       </div>
       <div className="text-center">
