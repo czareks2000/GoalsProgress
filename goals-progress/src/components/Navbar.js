@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 
 const Navbar = () => {
     const location = useLocation()
-    
+
     return (
         <div className="navbar container shadow text-center">
             <Link 
