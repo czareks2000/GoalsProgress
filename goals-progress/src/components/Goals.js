@@ -1,4 +1,7 @@
+import { FaPlus } from 'react-icons/fa'
+
 import Goal from "./Goal"
+import Button from './Button'
 
 const Goals = () => {
   const goals = [
@@ -41,11 +44,16 @@ const Goals = () => {
   ]
 
   return (
-    <div>
-      {goals.map((goal) => (
-        <Goal key={goal.id} goal={goal}/>
-      ))}
-    </div>
+    <>
+      <div className="goals container shadow">
+        {goals.map((goal) => (
+          <Goal key={goal.id} goal={goal}/>
+        ))}
+      </div>
+      <div className="text-center">
+        <Button text={<FaPlus className='icon'/>} color={'#39a0ca'}/>
+      </div>
+    </>
   )
 }
 
