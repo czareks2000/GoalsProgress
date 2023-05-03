@@ -8,8 +8,10 @@ Layouty:
 Funkcjonalność:
 - mockup backend dodać do testowania
 - routing na bierząco
-- obsługa formularza create goal form
 - wyświetlanie 
+- alerty takie boostrapowe (dismisable) nad contentem pod navbarem 
+    informujące o jakiś akcjach typu pomyślne dodanie goal'a
+- validacja formularza create goal form
 
 Błedy:
 - na telefonie input daty nie zajmuje 100% szerokosci
