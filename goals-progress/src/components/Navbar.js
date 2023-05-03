@@ -7,7 +7,7 @@ const Navbar = () => {
     return (
         <div className="navbar container shadow text-center">
             <Link 
-                className={`navbar-item ${location.pathname === '/goals' && 'active'}`} 
+                className={`navbar-item ${(location.pathname === '/goals' || location.pathname === '/') && 'active'}`} 
                 to="/goals"
             >
                 Goals
