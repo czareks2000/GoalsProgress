@@ -5,6 +5,8 @@ import Goals from './components/Goals';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import GoalCreateForm from './components/GoalCreateForm';
+import ArchviedGoals from './components/ArchviedGoals';
+import Settings from './components/Settings';
 
 function App() {
   const goals = [
@@ -60,6 +62,8 @@ function App() {
           <Route path='/goals' element={<Goals goals={goals}/>}/>
           <Route path='/goal/id' element={<>Goal Details</>}/>
           <Route path='/goals/create' element={<GoalCreateForm onAdd={addGoal}/>}/>
+          <Route path='/archived' element={<ArchviedGoals/>}/>
+          <Route path='/settings' element={<Settings/>}/>
         </Routes>
       </div>
       <Footer/>
