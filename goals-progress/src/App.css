@@ -21,10 +21,6 @@ body{
   min-height: calc(100vh - 81px);
 }
 
-.header{
-  /* border-bottom: 1px solid var(--primary); */
-}
-
 .navbar{
   display: flex;
   margin: 0 0 30px 0;
