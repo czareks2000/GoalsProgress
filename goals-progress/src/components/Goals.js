@@ -48,11 +48,11 @@ const Goals = () => {
     <>
       <div className="goals container shadow">
         {goals.map((goal) => (
-          <>
+          <div key={goal.id}>
             <Link to="/goal/id">
-              <Goal key={goal.id} goal={goal}/>
+              <Goal goal={goal}/>
             </Link>
-          </>
+          </div>
         ))}
       </div>
       <div className="text-center">
