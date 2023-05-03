@@ -32,7 +32,7 @@ const GoalCreateForm = ({ onAdd }) => {
   }
 
   return (
-    <div className="container shadow" style={{color: 'white'}}>
+    <div className="container shadow">
         <form className="create-form" onSubmit={onSubmit}>
           <div className="form-control">
             <label>Name</label>

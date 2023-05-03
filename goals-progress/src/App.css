@@ -14,6 +14,7 @@ Bluewater lowlight: #39a0ca
 body{
   background-color: var(--background-dark);
   font-family: 'Noto Sans', sans-serif;
+  color: white;
 }
 
 .wrapper{
@@ -21,7 +22,6 @@ body{
 }
 
 .header{
-  color: white;
   /* border-bottom: 1px solid var(--primary); */
 }
 
@@ -58,7 +58,6 @@ body{
 }
 
 .footer{
-  color: white;
   /* border-top: 1px solid var(--primary); */
   margin-top: 30px;
   height: 50px;
@@ -90,10 +89,10 @@ body{
 
 .goals a{
   text-decoration: none;
+  color: inherit;
 }
 
 .goal{
-  color: white;
   padding: 15px;
   margin: 10px;
   border: 1px solid var(--primary);
