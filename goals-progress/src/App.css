@@ -98,6 +98,10 @@ body{
   display: flex;
 }
 
+.goal .stats{
+  font-size: small;
+}
+
 .goal h2{
   margin: 0px;
 }
@@ -147,8 +151,8 @@ body{
   justify-content: center;
   align-items: center;
 
-  width: 115px;
-  height: 115px;
+  width: 125px;
+  height: 125px;
   border-radius: 50%;
   background: 
     radial-gradient(closest-side, var(--background-dark) 79%, transparent 80% 100%),

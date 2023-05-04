@@ -18,8 +18,9 @@ function App() {
       description: 'Obejrzeć 20 filmów',
       currentValue: 4,
       targetValue: 20,
+      unit: 'none',
       progress: 20,
-      daysLeft: 230
+      daysLeft: 240
     },
     {
       id: 2,
@@ -27,8 +28,9 @@ function App() {
       description: 'Wypróbować 10 nowych przepisów',
       currentValue: 5,
       targetValue: 10,
+      unit: 'none',
       progress: 50,
-      daysLeft: 230
+      daysLeft: 240
     },
     {
       id: 3,
@@ -36,8 +38,9 @@ function App() {
       description: 'Przeczytać 10 książek',
       currentValue: 3,
       targetValue: 10,
+      unit: 'none',
       progress: 30,
-      daysLeft: 230
+      daysLeft: 240
     },
     {
       id: 4,
@@ -45,8 +48,9 @@ function App() {
       description: 'Zrobić morfologie krwi 2 razy',
       currentValue: 1,
       targetValue: 2,
+      unit: 'none',
       progress: 50,
-      daysLeft: 230
+      daysLeft: 240
     }
   ]
 

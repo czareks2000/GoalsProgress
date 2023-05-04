@@ -3,8 +3,13 @@ const Goal = ({ goal }) => {
     <div className="goal">
         <div>
             <h2>{goal.name}</h2>
-            <p>{goal.description}</p> 
-            <small>Zostało: {goal.daysLeft} dni</small>
+            <p>{goal.description}</p>
+            <div className="stats">
+              <div>
+                Progress: {goal.currentValue}/{goal.targetValue} {goal.unit !== 'none' && goal.unit}
+              </div>
+              <div>{goal.daysLeft} Days Left</div>
+            </div> 
         </div>
         <div 
           className="progress-bar"
