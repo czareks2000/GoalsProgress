@@ -6,14 +6,11 @@ const Goal = ({ goal }) => {
             <p>{goal.description}</p> 
             <small>Zostało: {goal.daysLeft} dni</small>
         </div>
-        <div className="progress-bar">
-            <progress 
-                value={goal.progress}
-                min="0" 
-                max="100" 
-                style={{visibility: 'hidden', height: 0, width:0 }}
-            >
-            </progress>
+        <div 
+          className="progress-bar"
+          data-value={`${goal.progress}%`}
+          style={{ '--progress': `${goal.progress}%` }}
+        >  
         </div>
     </div>
   )
