@@ -1,4 +1,8 @@
 - responsywność dodać (szególnie dopasowywanie do ekranu telefonu)
+- style css w oddzielnych plikach przypisanych do komponetów zrobić
+
+-goal i progress mają te same właściwości w css, można to jakoś połączyć
+
 Layouty:
 - strona logowania/rejestracji
 - strona szegółów goal
