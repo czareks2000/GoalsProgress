@@ -1,6 +1,6 @@
 const Goal = ({ goal }) => {
   return (
-    <div className="goal">
+    <div className="goal outline">
         <div>
             <h2>{goal.name}</h2>
             <p>{goal.description}</p>

@@ -82,6 +82,13 @@ body{
   border-radius: 5px;
 }
 
+.outline{
+  padding: 15px;
+  margin: 10px;
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+}
+
 .goals.container{
   min-height: 167px;
   margin: 20px auto;
@@ -92,12 +99,12 @@ body{
   color: inherit;
 }
 
-.goal{
-  padding: 15px;
-  margin: 10px;
-  border: 1px solid var(--primary);
-  border-radius: 10px;
+a .goal{
   cursor: pointer;
+}
+
+.goal{
+  cursor: default;
   /* background-color: var(--background-light);  */
   display: flex;
 }
@@ -187,14 +194,42 @@ body{
 }
 
 .progress{
-  padding: 15px;
-  margin: 10px;
-  border: 1px solid var(--primary);
-  border-radius: 10px;
-  cursor: pointer;
   display: flex;
+  cursor: default;
 }
 
+.progress-value{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  margin-right:20px;
+}
+
+.progress-value p{
+  margin: 0;
+  padding: 0;
+  font-size: 30px;
+}
+
+.progress-details > *{
+  margin: 0;
+  padding: 0;
+}
+
+.progress-delete{
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  font-size: 25px;
+}
+
+.progress-delete:hover{
+  color: var(--highlight);
+}
 
 .progress-bar {
   --progress: 50%;

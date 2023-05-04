@@ -24,25 +24,25 @@ const GoalDetails = ({ goals }) => {
           id: 1,
           value: 1,
           description: 'Batman',
-          date: 4,
+          date: '12-06-2022',
         },
         {
             id: 2,
             value: 1,
             description: 'Forrest Gump',
-            date: 4,
+            date: '05-05-2022',
         },
         {
             id: 3,
             value: 1,
             description: 'Shrek',
-            date: 4,
+            date: '25-04-2022',
         },
         {
             id: 4,
             value: 1,
             description: 'American Psycho',
-            date: 4,
+            date: '30-03-2022',
         }
       ]
 
