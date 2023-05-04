@@ -10,7 +10,7 @@ const Goals = ({ goals }) => {
       <div className="goals container shadow">
         {goals.map((goal) => (
           <div key={goal.id}>
-            <Link to="/goal/id">
+            <Link to={`/goal/${goal.id}`}>
               <Goal goal={goal}/>
             </Link>
           </div>

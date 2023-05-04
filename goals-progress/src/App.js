@@ -1,12 +1,14 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import Goals from './components/Goals';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Goals from './components/Goals';
+import GoalDetails from './components/GoalDetails';
 import GoalCreateForm from './components/GoalCreateForm';
 import ArchviedGoals from './components/ArchviedGoals';
 import Settings from './components/Settings';
+
 
 function App() {
   const goals = [
@@ -60,7 +62,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Goals goals={goals}/>}/>
           <Route path='/goals' element={<Goals goals={goals}/>}/>
-          <Route path='/goal/id' element={<>Goal Details</>}/>
+          <Route path='/goal/:id' element={<GoalDetails goals={goals}/>}/>
           <Route path='/goals/create' element={<GoalCreateForm onAdd={addGoal}/>}/>
           <Route path='/archived' element={<ArchviedGoals/>}/>
           <Route path='/settings' element={<Settings/>}/>
