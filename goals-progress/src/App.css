@@ -122,7 +122,7 @@ a .goal{
 }
 
 .create-form > div{
-  margin: 10px 0;
+  margin-top: 10px;
 }
 
 .form-control{
@@ -139,11 +139,20 @@ a .goal{
   font-size: large;
   margin-top: 5px;
   padding: 3px 7px;
+  background-color: var(--background-dark);
+  border: 1px solid var(--primary);
+  color: white;
+}
+
+.form-control input::placeholder, .form-control select::placeholder {
+  opacity: 0.7;
+  color: white;
 }
 
 .form-control input:focus-visible, .form-control select:focus-visible{
   outline-style: solid;
   outline-width: 2px;
+  border: 1px solid var(--highlight);
   outline-color: var(--highlight);
 } 
 

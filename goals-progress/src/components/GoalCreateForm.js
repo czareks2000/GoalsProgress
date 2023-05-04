@@ -33,7 +33,7 @@ const GoalCreateForm = ({ onAdd }) => {
 
   return (
     <div className="container shadow">
-        <form className="create-form" onSubmit={onSubmit}>
+        <form className="create-form outline " onSubmit={onSubmit}>
           <div className="form-control">
             <label>Name</label>
             <input 
