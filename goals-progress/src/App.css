@@ -144,6 +144,38 @@ body{
   margin-right: 10px;
 }
 
+.actions{
+  margin: 10px 0;
+  color: var(--background-dark);
+}
+
+.actions :not(:last-child){
+  border-right: 2px solid var(--background-dark);
+}
+
+.actions :last-child{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.actions :first-child{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.action{
+  min-width: 108px;
+  background-color: var(--background-light);
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.action:hover{
+  background-color: var(--highlight);
+}
+
 .progress-bar {
   --progress: 50%;
   margin-left: auto;
