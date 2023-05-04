@@ -186,6 +186,16 @@ body{
   background-color: var(--highlight);
 }
 
+.progress{
+  padding: 15px;
+  margin: 10px;
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+}
+
+
 .progress-bar {
   --progress: 50%;
   margin-left: auto;
