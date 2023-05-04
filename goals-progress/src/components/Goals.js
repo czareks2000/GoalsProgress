@@ -18,7 +18,7 @@ const Goals = ({ goals }) => {
       </div>
       <div className="text-center">
         <Link to="/goals/create">
-          <Button text={<FaPlus className='icon'/>} color={'#39a0ca'}/>
+          <Button text={<FaPlus/>} color={'#39a0ca'}/>
         </Link>
       </div>
     </>

@@ -153,7 +153,7 @@ body{
   color: var(--background-dark);
 }
 
-.actions :not(:last-child){
+.actions > :not(:last-child){
   border-right: 2px solid var(--background-dark);
 }
 
@@ -170,10 +170,16 @@ body{
 .action{
   min-width: 108px;
   background-color: var(--background-light);
-  text-align: center;
   padding: 5px;
   cursor: pointer;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action :first-child{
+  margin-right: 2px;
 }
 
 .action:hover{
@@ -204,10 +210,6 @@ body{
   justify-content: center;
 }
 
-.icon{
-  vertical-align: middle;
-}
-
 .btn {
   display: inline-block;
   background: #000;
@@ -221,6 +223,11 @@ body{
   font-size: 15px;
   /* font-weight: bold; */
   font-family: inherit;
+}
+
+.btn > *{
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .btn:focus {
