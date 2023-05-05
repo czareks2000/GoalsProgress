@@ -1,12 +1,15 @@
 import { FaPlus, FaEdit, FaTrash, FaFolder } from 'react-icons/fa'
+import { GiCancel } from 'react-icons/gi'
 
-const Actions = () => {
-  
+const Actions = ({ onShowAddForm, showAddForm }) => {
     return (
         <div className="actions text-center">
-            <div className="action">
-                <FaPlus/>
-                Progress
+            <div className={`action ${showAddForm ? 'active' : ''}`} onClick={onShowAddForm}>
+                {showAddForm ? 
+                <><GiCancel/>Cancel</>
+                : 
+                <><FaPlus/>Progress</> 
+                }
             </div>
             <div className="action">
                 <FaEdit/>

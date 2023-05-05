@@ -202,6 +202,10 @@ a .goal{
   background-color: var(--highlight);
 }
 
+.action.active{
+  background-color: var(--highlight);
+}
+
 .progress{
   display: flex;
   cursor: default;
