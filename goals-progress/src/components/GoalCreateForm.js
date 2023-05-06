@@ -22,22 +22,24 @@ const GoalCreateForm = ({ onAdd }) => {
   }
 
   return (
-    <GoalForm 
-      name={name}
-      setName={setName}
-      description={description}
-      setDescription={setDescription}
-      goalValue={goalValue}
-      setGoalValue={setGoalValue}
-      unit={unit}
-      setUnit={setUnit}
-      customUnit={customUnit}
-      setCustomUnit={setCustomUnit}
-      deadline={deadline}
-      setDeadline={setDeadline}
-      onSubmit={onSubmit}
-      buttonText={'ADD'}
-    />
+    <div className="container shadow">
+      <GoalForm 
+        name={name}
+        setName={setName}
+        description={description}
+        setDescription={setDescription}
+        goalValue={goalValue}
+        setGoalValue={setGoalValue}
+        unit={unit}
+        setUnit={setUnit}
+        customUnit={customUnit}
+        setCustomUnit={setCustomUnit}
+        deadline={deadline}
+        setDeadline={setDeadline}
+        onSubmit={onSubmit}
+        buttonText={'ADD'}
+      />
+    </div>
   )
 }
 
