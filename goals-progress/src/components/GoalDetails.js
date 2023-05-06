@@ -5,10 +5,13 @@ import Goal from "./Goal";
 import Actions from "./Actions";
 import ProgressList from "./ProgressList";
 import ProgressAddForm from "./ProgressAddForm";
+import GoalEditForm from "./GoalEditForm";
 
 const GoalDetails = ({ goals }) => {
     const [goal, setGoal] = useState();
     const [showAddForm, setShowAddForm] = useState(false);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [showProgressList, setShowProgressList] = useState(true);
     const [progressList, setProgressList] = useState([
     {
         id: 1,
@@ -49,6 +52,12 @@ const GoalDetails = ({ goals }) => {
 
     const toggleAddForm = () => {
         setShowAddForm(!showAddForm);
+        setShowProgressList(!showProgressList);
+    };
+
+    const toggleEditForm = () => {
+        setShowEditForm(!showEditForm);
+        setShowProgressList(!showProgressList);
     };
 
     // add progress
@@ -57,17 +66,25 @@ const GoalDetails = ({ goals }) => {
         setShowAddForm(false);
     }
 
+    // updateGoal
+    const updateGoal = (goal) => {
+        setGoal(goal);
+    }
+
     return (
         <div className="container shadow">
             {goal ?
             <>
                 <Goal goal={goal}/>
-                <Actions showAddForm={showAddForm} onShowAddForm={toggleAddForm}/>
-                {showAddForm ? 
-                <ProgressAddForm onAdd={addProgress} toggleAddForm={toggleAddForm}/> 
-                :
-                <ProgressList progressList={progressList}/>
-                }
+                <Actions 
+                    showAddForm={showAddForm} 
+                    onShowAddForm={toggleAddForm}
+                    showEditForm={showEditForm}
+                    onShowEditForm={toggleEditForm}
+                />
+                {showAddForm && <ProgressAddForm onAdd={addProgress} toggleAddForm={toggleAddForm}/>}
+                {showEditForm && <GoalEditForm goal={goal} toggleEditForm={toggleEditForm} onEdit={updateGoal}/>}
+                {showProgressList && <ProgressList progressList={progressList}/>}
             </>
             :
             <p className="text-center">Loading...</p>
