@@ -4,7 +4,6 @@
 - lepszy date picker
 
 Layouty:
-
 - strona logowania/rejestracji
 - strona szegółów goal
 - strona dodawania progressu
@@ -20,3 +19,13 @@ Funkcjonalność:
 
 Błedy:
 - na telefonie input daty nie zajmuje 100% szerokosci
+- goal details 2 formularze mogą być naraz włączone a tak nie powinno być 
+    (użytkownik powinnien kliknąć cancel aktualnego formularza zeby móc właczyć inny)
+-
+
+Do poprawienia w goal form:
+- wartość daty poprawnie przekazać do inputa
+
+Do poprawienia w edit goal form:
+- wykrywanie czy jest customUnit
+- poprawne wczytywanie daty z obiektu
