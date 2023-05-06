@@ -5,14 +5,16 @@
 
 Layouty:
 - strona logowania/rejestracji
-- strona szegółów goal
-- strona dodawania progressu
 - strona zarchiwizowanych goals
 - strona ustawień
 Funkcjonalność:
+- usuwanie goal'a
+- archiwizacja goal'a
+- usuwanie progressu
+- logowanie/rejestracja
+- wylogowanie
 - mockup backend dodać do testowania
 - routing na bierząco
-- wyświetlanie 
 - alerty takie boostrapowe (dismisable) nad contentem pod navbarem 
     informujące o jakiś akcjach typu pomyślne dodanie goal'a
 - validacja formularza create goal form
