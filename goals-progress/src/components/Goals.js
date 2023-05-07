@@ -8,13 +8,18 @@ const Goals = ({ goals }) => {
   return (
     <>
       <div className="goals container shadow">
-        {goals.map((goal) => (
-          <div key={goal.id}>
-            <Link to={`/goal/${goal.id}`}>
-              <Goal goal={goal}/>
-            </Link>
-          </div>
-        ))}
+        {goals.map((goal) => {
+          if (goal.status === 1)
+          {
+            return(
+              <div key={goal.id}>
+                <Link to={`/goal/${goal.id}`}>
+                  <Goal goal={goal}/>
+                </Link>
+              </div>
+            )
+          }
+        })}
       </div>
       <div className="text-center">
         <Link to="/goals/create">

@@ -22,7 +22,8 @@ function App() {
       customUnit: false,
       unit: 'none',
       progress: 20,
-      deadline: '2023-12-31'
+      deadline: '2023-12-31',
+      status: 1
     },
     {
       id: 2,
@@ -33,7 +34,8 @@ function App() {
       customUnit: false,
       unit: 'none',
       progress: 50,
-      deadline: '2023-12-31'
+      deadline: '2023-12-31',
+      status: 1
     },
     {
       id: 3,
@@ -44,7 +46,8 @@ function App() {
       customUnit: false,
       unit: 'none',
       progress: 30,
-      deadline: '2023-12-31'
+      deadline: '2023-12-31',
+      status: 1
     },
     {
       id: 4,
@@ -55,7 +58,8 @@ function App() {
       customUnit: true,
       unit: 'szt',
       progress: 50,
-      deadline: '2023-12-31'
+      deadline: '2023-12-31',
+      status: 2
     }
   ]);
 
@@ -66,7 +70,24 @@ function App() {
 
   // delete goal
   const deleteGoal = (id) => {
-    setGoals(goals.filter(x => x.id !== id));
+    setGoals(goals.map(goal => {
+      if (goal.id === id) {
+        return { ...goal, status: 3 }; // zmieniam status na 3 (usuniety)
+      } else {
+        return goal;
+      }
+    }));
+  }
+
+  // archive goal
+  const archiveGoal = (id) => {
+    setGoals(goals.map(goal => {
+      if (goal.id === id) {
+        return { ...goal, status: 2 }; // zmieniam status na 3 (zarchiwizowany)
+      } else {
+        return goal;
+      }
+    }));
   }
 
   return (
@@ -76,9 +97,9 @@ function App() {
         <Routes>
           <Route path='/' element={<Goals goals={goals}/>}/>
           <Route path='/goals' element={<Goals goals={goals}/>}/>
-          <Route path='/goal/:id' element={<GoalDetails goals={goals} onDelete={deleteGoal}/>}/>
+          <Route path='/goal/:id' element={<GoalDetails goals={goals} onDelete={deleteGoal} onArchive={archiveGoal}/>}/>
           <Route path='/goals/create' element={<GoalCreateForm onAdd={addGoal}/>}/>
-          <Route path='/archived' element={<ArchviedGoals/>}/>
+          <Route path='/archived' element={<ArchviedGoals goals={goals}/>}/>
           <Route path='/settings' element={<Settings/>}/>
         </Routes>
       </div>

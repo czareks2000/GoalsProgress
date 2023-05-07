@@ -1,8 +1,27 @@
-const ArchviedGoals = () => {
+import { FaPlus } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+
+import Goal from "./Goal"
+import Button from './Button'
+
+const ArchviedGoals = ({ goals }) => {
   return (
-    <div className="container shadow">
-      tu bedą zarchwizowane cele
-    </div>
+    <>
+      <div className="goals container shadow">
+        {goals.map((goal) => {
+          if (goal.status === 2)
+          {
+            return(
+              <div key={goal.id}>
+                <Link to={`/goal/${goal.id}`}>
+                  <Goal goal={goal}/>
+                </Link>
+              </div>
+            )
+          }
+        })}
+      </div>
+    </>
   )
 }
 

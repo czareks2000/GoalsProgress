@@ -2,13 +2,18 @@ import { FaPlus, FaEdit, FaTrash, FaFolder } from 'react-icons/fa'
 import { GiCancel } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
 
-const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onDelete, goal }) => {
+const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onDelete, onArchive, goal }) => {
     
     const navigate = useNavigate();
 
     const handleDeleteGoal = () => {
         onDelete(goal.id);
         navigate('/');
+    }
+
+    const handleArchiveGoal = () => {
+        onArchive(goal.id);
+        navigate('/archived');
     }
     
     return (
@@ -31,7 +36,7 @@ const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onD
                 <FaTrash/>
                 Delete
             </div>
-            <div className="action">
+            <div className="action" onClick={handleArchiveGoal}>
                 <FaFolder/>
                 Archive
             </div>
