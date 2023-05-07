@@ -38,6 +38,7 @@ const GoalDetails = ({ goals }) => {
         date: '30-03-2022',
     }
     ]);
+
     const placeholderGoal = {
         id: 0,
         name: 'Name',
@@ -77,6 +78,11 @@ const GoalDetails = ({ goals }) => {
         setShowAddForm(false);
     }
 
+    // delete progress
+    const deleteProgress = (id) => {
+        setProgressList(progressList.filter(x => x.id !== id));
+    }
+
     // updateGoal
     const updateGoal = (goal) => {
         console.log(goal);
@@ -97,7 +103,7 @@ const GoalDetails = ({ goals }) => {
                 />
                 {showAddForm && <ProgressAddForm onAdd={addProgress} toggleAddForm={toggleAddForm}/>}
                 {showEditForm && <GoalEditForm goalToEdit={goal} toggleEditForm={toggleEditForm} onEdit={updateGoal}/>}
-                {showProgressList && <ProgressList progressList={progressList}/>}
+                {showProgressList && <ProgressList progressList={progressList} onDelete={deleteProgress}/>}
         </div>
     )
 }

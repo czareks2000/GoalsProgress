@@ -1,6 +1,6 @@
 import { FaPlus, FaTrash } from 'react-icons/fa'
 
-const Progress = ({ progress }) => {
+const Progress = ({ progress, onDelete }) => {
   return (
     <div className="progress outline">
         <div className="progress-value">
@@ -11,7 +11,7 @@ const Progress = ({ progress }) => {
             <p>{progress.description}</p>
             <small>{progress.date}</small>
         </div>
-        <div className="progress-delete">
+        <div className="progress-delete" onClick={() => onDelete(progress.id)}>
           <FaTrash/>
         </div>
     </div>

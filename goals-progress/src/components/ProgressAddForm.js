@@ -3,15 +3,17 @@ import { useState } from "react"
 import Button from "./Button";
 
 const ProgressAddForm = ({ onAdd, toggleAddForm }) => {
-    const [value, setValue] = useState();
-    const [description, setDescription] = useState();
-    const [date, setDate] = useState();
+    const [value, setValue] = useState('');
+    const [description, setDescription] = useState('');
+    const [date, setDate] = useState('');
     
 
     const onSubmit = (e) => {
         e.preventDefault();
-    
-        onAdd({ value, description, date });
+
+        const id = Math.floor(Math.random() * (100 - 10 + 1)) + 10 // tylko do testowania
+
+        onAdd({ id, value, description, date });
         toggleAddForm();
     }
 
