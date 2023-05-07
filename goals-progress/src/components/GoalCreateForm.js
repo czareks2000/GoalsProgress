@@ -21,7 +21,8 @@ const GoalCreateForm = ({ onAdd }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    onAdd(goal);
+    const id = Math.floor(Math.random() * (100 - 10 + 1)) + 10 // tylko do testowania
+    onAdd({ ...goal, id: id});
 
     navigate("/");
   }

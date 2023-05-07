@@ -1,7 +1,16 @@
 import { FaPlus, FaEdit, FaTrash, FaFolder } from 'react-icons/fa'
 import { GiCancel } from 'react-icons/gi'
+import { useNavigate } from 'react-router-dom'
 
-const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm }) => {
+const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onDelete, goal }) => {
+    
+    const navigate = useNavigate();
+
+    const handleDeleteGoal = () => {
+        onDelete(goal.id);
+        navigate('/');
+    }
+    
     return (
         <div className="actions text-center">
             <div className={`action ${showAddForm ? 'active' : ''}`} onClick={onShowAddForm}>
@@ -18,7 +27,7 @@ const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm }) =
                 <><FaEdit/>Edit</> 
                 }
             </div>
-            <div className="action">
+            <div className="action" onClick={handleDeleteGoal}>
                 <FaTrash/>
                 Delete
             </div>

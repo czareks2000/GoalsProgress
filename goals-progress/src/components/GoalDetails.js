@@ -7,7 +7,7 @@ import ProgressList from "./ProgressList";
 import ProgressAddForm from "./ProgressAddForm";
 import GoalEditForm from "./GoalEditForm";
 
-const GoalDetails = ({ goals }) => {
+const GoalDetails = ({ goals, onDelete }) => {
     const [goal, setGoal] = useState();
     const [showAddForm, setShowAddForm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
@@ -47,7 +47,7 @@ const GoalDetails = ({ goals }) => {
         targetValue: 10,
         customUnit: false,
         unit: 'none',
-        progress: 0,
+        progress: 50,
         deadline: '2023-12-31'
     }
 
@@ -100,6 +100,8 @@ const GoalDetails = ({ goals }) => {
                     onShowAddForm={toggleAddForm}
                     showEditForm={showEditForm}
                     onShowEditForm={toggleEditForm}
+                    onDelete={onDelete}
+                    goal={goal}
                 />
                 {showAddForm && <ProgressAddForm onAdd={addProgress} toggleAddForm={toggleAddForm}/>}
                 {showEditForm && <GoalEditForm goalToEdit={goal} toggleEditForm={toggleEditForm} onEdit={updateGoal}/>}

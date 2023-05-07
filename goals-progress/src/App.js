@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { useState } from 'react';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -11,7 +12,7 @@ import Settings from './components/Settings';
 
 
 function App() {
-  const goals = [
+  const [goals, setGoals] = useState([
     {
       id: 1,
       name: 'Filmy',
@@ -56,11 +57,16 @@ function App() {
       progress: 50,
       deadline: '2023-12-31'
     }
-  ]
+  ]);
 
   // add goal
   const addGoal = (goal) => {
-    console.log(goal);
+    setGoals([ ...goals, goal]);
+  }
+
+  // delete goal
+  const deleteGoal = (id) => {
+    setGoals(goals.filter(x => x.id !== id));
   }
 
   return (
@@ -70,7 +76,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Goals goals={goals}/>}/>
           <Route path='/goals' element={<Goals goals={goals}/>}/>
-          <Route path='/goal/:id' element={<GoalDetails goals={goals}/>}/>
+          <Route path='/goal/:id' element={<GoalDetails goals={goals} onDelete={deleteGoal}/>}/>
           <Route path='/goals/create' element={<GoalCreateForm onAdd={addGoal}/>}/>
           <Route path='/archived' element={<ArchviedGoals/>}/>
           <Route path='/settings' element={<Settings/>}/>
