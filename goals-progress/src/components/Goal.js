@@ -1,4 +1,13 @@
+import moment from 'moment';
+
 const Goal = ({ goal }) => {
+
+  const daysLeft = () => {
+    const today = moment();
+    const deadline = moment(goal.deadline, 'YYYY-MM-DD');
+    return deadline.diff(today, 'days');
+  }
+
   return (
     <div className="goal outline">
         <div>
@@ -8,7 +17,7 @@ const Goal = ({ goal }) => {
               <div>
                 Progress: {goal.currentValue}/{goal.targetValue} {goal.unit !== 'none' && goal.unit}
               </div>
-              <div>{goal.daysLeft} Days Left</div>
+              <div>{daysLeft()} Days Left</div>
             </div> 
         </div>
         <div 

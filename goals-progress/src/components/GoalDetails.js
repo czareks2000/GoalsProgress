@@ -44,9 +44,10 @@ const GoalDetails = ({ goals }) => {
         description: 'Description',
         currentValue: 5,
         targetValue: 10,
+        customUnit: false,
         unit: 'none',
         progress: 0,
-        daysLeft: 240
+        deadline: '2023-12-31'
     }
 
     const param = useParams();
@@ -78,7 +79,7 @@ const GoalDetails = ({ goals }) => {
 
     // updateGoal
     const updateGoal = (goal) => {
-        setGoal(goal);
+        console.log(goal);
     }
 
     return (
@@ -95,7 +96,7 @@ const GoalDetails = ({ goals }) => {
                     onShowEditForm={toggleEditForm}
                 />
                 {showAddForm && <ProgressAddForm onAdd={addProgress} toggleAddForm={toggleAddForm}/>}
-                {showEditForm && <GoalEditForm goal={goal} toggleEditForm={toggleEditForm} onEdit={updateGoal}/>}
+                {showEditForm && <GoalEditForm goalToEdit={goal} toggleEditForm={toggleEditForm} onEdit={updateGoal}/>}
                 {showProgressList && <ProgressList progressList={progressList}/>}
         </div>
     )

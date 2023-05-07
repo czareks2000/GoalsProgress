@@ -18,9 +18,10 @@ function App() {
       description: 'Obejrzeć 20 filmów',
       currentValue: 4,
       targetValue: 20,
+      customUnit: false,
       unit: 'none',
       progress: 20,
-      daysLeft: 240
+      deadline: '2023-12-31'
     },
     {
       id: 2,
@@ -28,9 +29,10 @@ function App() {
       description: 'Wypróbować 10 nowych przepisów',
       currentValue: 5,
       targetValue: 10,
+      customUnit: false,
       unit: 'none',
       progress: 50,
-      daysLeft: 240
+      deadline: '2023-12-31'
     },
     {
       id: 3,
@@ -38,9 +40,10 @@ function App() {
       description: 'Przeczytać 10 książek',
       currentValue: 3,
       targetValue: 10,
+      customUnit: false,
       unit: 'none',
       progress: 30,
-      daysLeft: 240
+      deadline: '2023-12-31'
     },
     {
       id: 4,
@@ -48,9 +51,10 @@ function App() {
       description: 'Zrobić morfologie krwi 2 razy',
       currentValue: 1,
       targetValue: 2,
-      unit: 'none',
+      customUnit: true,
+      unit: 'szt',
       progress: 50,
-      daysLeft: 240
+      deadline: '2023-12-31'
     }
   ]
 
