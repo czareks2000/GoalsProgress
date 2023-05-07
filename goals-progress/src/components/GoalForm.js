@@ -44,12 +44,12 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal }) => {
         </div>
         <div className="form-control">
             <label>Unit</label>
-            <select id="unitSelect" onChange={handleSelectChange}>
-              <option value="">none</option>
+            <select id="unitSelect" value={goal.customUnit ? "1" : ""} onChange={handleSelectChange}>
+              <option value="none">none</option>
               <option value="psc">psc</option>
               <option value="km">km</option>
               <option value="kg">kg</option>
-              <option value="1" selected={goal.customUnit}>custom...</option>
+              <option value="1">custom...</option>
             </select>
         </div>
         </div>
