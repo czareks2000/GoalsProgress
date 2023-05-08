@@ -12,7 +12,6 @@ const GoalCreateForm = ({ onAdd }) => {
     targetValue: '',
     customUnit: false,
     unit: '',
-    progress: 0,
     deadline: '',
     status: 1
   });

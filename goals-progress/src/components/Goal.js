@@ -8,6 +8,10 @@ const Goal = ({ goal }) => {
     return deadline.diff(today, 'days');
   }
 
+  const currentProgress = () => {
+    return Math.round(goal.currentValue / goal.targetValue * 100);
+  }
+
   return (
     <div className="goal outline">
         <div>
@@ -22,8 +26,8 @@ const Goal = ({ goal }) => {
         </div>
         <div 
           className="progress-bar"
-          data-value={`${goal.progress}%`}
-          style={{ '--progress': `${goal.progress}%` }}
+          data-value={`${currentProgress()}%`}
+          style={{ '--progress': `${currentProgress()}%` }}
         >  
         </div>
     </div>

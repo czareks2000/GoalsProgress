@@ -47,7 +47,6 @@ const GoalDetails = ({ goals, onDelete, onArchive, onRestore, onUpdate }) => {
         targetValue: 10,
         customUnit: false,
         unit: 'none',
-        progress: 50,
         deadline: '2023-12-31',
         status: 1
     }

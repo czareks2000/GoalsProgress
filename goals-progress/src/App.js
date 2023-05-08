@@ -21,7 +21,6 @@ function App() {
       targetValue: 20,
       customUnit: false,
       unit: 'none',
-      progress: 20,
       deadline: '2023-12-31',
       status: 1
     },
@@ -33,7 +32,6 @@ function App() {
       targetValue: 10,
       customUnit: false,
       unit: 'none',
-      progress: 50,
       deadline: '2023-12-31',
       status: 1
     },
@@ -45,7 +43,6 @@ function App() {
       targetValue: 10,
       customUnit: false,
       unit: 'none',
-      progress: 30,
       deadline: '2023-12-31',
       status: 1
     },
@@ -57,7 +54,6 @@ function App() {
       targetValue: 2,
       customUnit: true,
       unit: 'szt',
-      progress: 50,
       deadline: '2023-12-31',
       status: 2
     }
