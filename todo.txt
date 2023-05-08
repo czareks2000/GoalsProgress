@@ -5,6 +5,8 @@
 - customowe tło do goals
 - animacje
 - zapis daty archwizacji/ostatniej_modyfikacji żeby móc wyświetlać zamiast days left gdy zarchiwizowany
+- zrezygnować z predefiniowanych unit, ustawić jako opcjonalne
+
 
 Layouty:
 - strona logowania/rejestracji
