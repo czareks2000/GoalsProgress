@@ -2,6 +2,8 @@
 - style css w oddzielnych plikach przypisanych do komponetów zrobić
 
 - lepszy date picker
+- customowe tło do goals
+- animacje
 
 Layouty:
 - strona logowania/rejestracji
@@ -10,6 +12,9 @@ Layouty:
 - komponent alertu z potwierdzeniem wykonania akcji
 Funkcjonalność:
 - archiwizacja goal'a
+- tworzenie dwóch rodzajów goals:
+    -zwykły - jednolite progressy bez kategorii 
+    -rozszerzony - każdy progress ma swoją kategorie (do kategorii przypisany mnożnik wartosci)
 - logowanie/rejestracja
 - wylogowanie
 - mockup backend dodać do testowania
@@ -24,3 +29,6 @@ Błedy:
     (użytkownik powinnien kliknąć cancel aktualnego formularza zeby móc właczyć inny)
 -
 
+GoalDetails:
+- Wyszarzenie reszty actions jeżeli otwarty formularz
+- inny wygląd jeżeli goal ma status zarchiwizowany
