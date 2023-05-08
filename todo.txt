@@ -4,6 +4,7 @@
 - lepszy date picker
 - customowe tło do goals
 - animacje
+- zapis daty archwizacji/ostatniej_modyfikacji żeby móc wyświetlać zamiast days left gdy zarchiwizowany
 
 Layouty:
 - strona logowania/rejestracji
@@ -11,7 +12,8 @@ Layouty:
 - strona ustawień
 - komponent alertu z potwierdzeniem wykonania akcji
 Funkcjonalność:
-- tworzenie dwóch rodzajów goals:
+- powiązanie progresu z goal od strony frontendu ?
+- tworzenie dwóch rodzajów goals (w tym - domyślna wartość progresu):
     -zwykły - jednolite progressy bez kategorii 
     -rozszerzony - każdy progress ma swoją kategorie (do kategorii przypisany mnożnik wartosci)
 - logowanie/rejestracja
@@ -24,6 +26,4 @@ Funkcjonalność:
 
 Błedy:
 - na telefonie input daty nie zajmuje 100% szerokosci
-- goal details 2 formularze mogą być naraz włączone a tak nie powinno być 
-    (użytkownik powinnien kliknąć cancel aktualnego formularza zeby móc właczyć inny)
--
+
