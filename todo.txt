@@ -7,10 +7,9 @@ Layouty:
 - strona logowania/rejestracji
 - strona zarchiwizowanych goals
 - strona ustawień
+- komponent alertu z potwierdzeniem wykonania akcji
 Funkcjonalność:
-- usuwanie goal'a
 - archiwizacja goal'a
-- usuwanie progressu
 - logowanie/rejestracja
 - wylogowanie
 - mockup backend dodać do testowania
@@ -25,9 +24,3 @@ Błedy:
     (użytkownik powinnien kliknąć cancel aktualnego formularza zeby móc właczyć inny)
 -
 
-Do poprawienia w goal form:
-- wartość daty poprawnie przekazać do inputa
-
-Do poprawienia w edit goal form:
-- wykrywanie czy jest customUnit
-- poprawne wczytywanie daty z obiektu
