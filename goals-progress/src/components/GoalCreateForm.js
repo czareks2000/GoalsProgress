@@ -13,7 +13,8 @@ const GoalCreateForm = ({ onAdd }) => {
     customUnit: false,
     unit: '',
     progress: 0,
-    deadline: ''
+    deadline: '',
+    status: 1
   });
 
   const navigate = useNavigate()
