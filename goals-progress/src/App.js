@@ -83,7 +83,18 @@ function App() {
   const archiveGoal = (id) => {
     setGoals(goals.map(goal => {
       if (goal.id === id) {
-        return { ...goal, status: 2 }; // zmieniam status na 3 (zarchiwizowany)
+        return { ...goal, status: 2 }; // zmieniam status na 2 (zarchiwizowany)
+      } else {
+        return goal;
+      }
+    }));
+  }
+
+  // restore goal
+  const restoreGoal = (id) => {
+    setGoals(goals.map(goal => {
+      if (goal.id === id) {
+        return { ...goal, status: 1 }; // zmieniam status na 1 (aktualny)
       } else {
         return goal;
       }
@@ -97,7 +108,17 @@ function App() {
         <Routes>
           <Route path='/' element={<Goals goals={goals}/>}/>
           <Route path='/goals' element={<Goals goals={goals}/>}/>
-          <Route path='/goal/:id' element={<GoalDetails goals={goals} onDelete={deleteGoal} onArchive={archiveGoal}/>}/>
+          <Route 
+            path='/goal/:id' 
+            element={
+            <GoalDetails 
+                  goals={goals} 
+                  onDelete={deleteGoal} 
+                  onArchive={archiveGoal} 
+                  onRestore={restoreGoal}
+            />
+            }
+          />
           <Route path='/goals/create' element={<GoalCreateForm onAdd={addGoal}/>}/>
           <Route path='/archived' element={<ArchviedGoals goals={goals}/>}/>
           <Route path='/settings' element={<Settings/>}/>

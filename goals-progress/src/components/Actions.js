@@ -1,9 +1,10 @@
 import { FaPlus, FaEdit, FaTrash, FaFolder } from 'react-icons/fa'
 import { GiCancel } from 'react-icons/gi'
+import { RiArrowGoBackFill } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
 
-const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onDelete, onArchive, goal }) => {
-    
+const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onDelete, onArchive, onRestore, goal }) => {
+
     const navigate = useNavigate();
 
     const handleDeleteGoal = () => {
@@ -13,32 +14,57 @@ const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onD
 
     const handleArchiveGoal = () => {
         onArchive(goal.id);
-        navigate('/archived');
+        navigate(`/goal/${goal.id}`);
+    }
+
+    const handleRestoreGoal = () => {
+        onRestore(goal.id);
+        navigate(`/goal/${goal.id}`);
     }
     
     return (
         <div className="actions text-center">
-            <div className={`action ${showAddForm ? 'active' : ''}`} onClick={onShowAddForm}>
+            <div 
+                className={`action 
+                        ${showAddForm ? 'active' : ''}
+                        ${goal.status !== 1 || showEditForm ? 'disabled' : ''}`} 
+                onClick={onShowAddForm}
+            >
                 {showAddForm ? 
                 <><GiCancel/>Cancel</>
                 : 
                 <><FaPlus/>Progress</> 
                 }
             </div>
-            <div className={`action ${showEditForm ? 'active' : ''}`} onClick={onShowEditForm}>
+            <div 
+                className={`action 
+                        ${showEditForm ? 'active' : ''} 
+                        ${goal.status !== 1 || showAddForm ? 'disabled' : ''}`} 
+                onClick={onShowEditForm}
+            >
                 {showEditForm ? 
                 <><GiCancel/>Cancel</>
                 : 
                 <><FaEdit/>Edit</> 
                 }
             </div>
-            <div className="action" onClick={handleDeleteGoal}>
-                <FaTrash/>
-                Delete
+            <div 
+                className={`action 
+                        ${showAddForm || showEditForm ? 'disabled' : ''}`} 
+                onClick={handleDeleteGoal}
+            >
+                <><FaTrash/>Delete</>
             </div>
-            <div className="action" onClick={handleArchiveGoal}>
-                <FaFolder/>
-                Archive
+            <div 
+                className={`action 
+                        ${showAddForm || showEditForm ? 'disabled' : ''}`}  
+                onClick={goal.status === 1 ? handleArchiveGoal : handleRestoreGoal}
+            >
+                {goal.status === 1 ? 
+                <><FaFolder/>Archive</>
+                : 
+                <><RiArrowGoBackFill/>Restore</> 
+                }
             </div>
         </div>
   )

@@ -7,7 +7,7 @@ import ProgressList from "./ProgressList";
 import ProgressAddForm from "./ProgressAddForm";
 import GoalEditForm from "./GoalEditForm";
 
-const GoalDetails = ({ goals, onDelete, onArchive }) => {
+const GoalDetails = ({ goals, onDelete, onArchive, onRestore }) => {
     const [goal, setGoal] = useState();
     const [showAddForm, setShowAddForm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
@@ -48,7 +48,8 @@ const GoalDetails = ({ goals, onDelete, onArchive }) => {
         customUnit: false,
         unit: 'none',
         progress: 50,
-        deadline: '2023-12-31'
+        deadline: '2023-12-31',
+        status: 1
     }
 
     const param = useParams();
@@ -85,28 +86,25 @@ const GoalDetails = ({ goals, onDelete, onArchive }) => {
 
     // updateGoal
     const updateGoal = (goal) => {
-        console.log(goal);
+        setGoal(goal);
     }
 
     return (
         <div className="container shadow">
-            {goal ?
-                <Goal goal={goal}/>
-            :
-                <Goal goal={placeholderGoal}/>
-            }
+            <Goal goal={goal ? goal : placeholderGoal}/>
             <Actions 
-                    showAddForm={showAddForm} 
-                    onShowAddForm={toggleAddForm}
-                    showEditForm={showEditForm}
-                    onShowEditForm={toggleEditForm}
-                    onDelete={onDelete}
-                    onArchive={onArchive}
-                    goal={goal}
-                />
-                {showAddForm && <ProgressAddForm onAdd={addProgress} toggleAddForm={toggleAddForm}/>}
-                {showEditForm && <GoalEditForm goalToEdit={goal} toggleEditForm={toggleEditForm} onEdit={updateGoal}/>}
-                {showProgressList && <ProgressList progressList={progressList} onDelete={deleteProgress}/>}
+                showAddForm={showAddForm} 
+                onShowAddForm={toggleAddForm}
+                showEditForm={showEditForm}
+                onShowEditForm={toggleEditForm}
+                onDelete={onDelete}
+                onArchive={onArchive}
+                onRestore={onRestore}
+                goal={goal ? goal : placeholderGoal}
+            />
+            {showAddForm && <ProgressAddForm onAdd={addProgress} toggleAddForm={toggleAddForm}/>}
+            {showEditForm && <GoalEditForm goalToEdit={goal} toggleEditForm={toggleEditForm} onEdit={updateGoal}/>}
+            {showProgressList && <ProgressList progressList={progressList} onDelete={deleteProgress} goalStatus={goal ? goal.status : 1}/>}
         </div>
     )
 }

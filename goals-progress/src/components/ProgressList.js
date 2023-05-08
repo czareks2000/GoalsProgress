@@ -1,11 +1,11 @@
 import Progress from "./Progress"
 
-const ProgressList = ({ progressList, onDelete }) => {
+const ProgressList = ({ progressList, onDelete, goalStatus }) => {
   return (
     <div>
       {progressList.map((progress) => (
           <div key={progress.id}>
-              <Progress progress={progress} onDelete={onDelete}/>
+              <Progress progress={progress} onDelete={onDelete} goalStatus={goalStatus}/>
           </div>
         ))}
     </div>

@@ -7,6 +7,7 @@ Bluewater lowlight: #39a0ca
 :root{
   --background-dark: #161748;
   --background-light:#39a0ca;
+  --background-disabled: #175168;
   --primary:#478559; 
   --highlight: #f95d9b;
 }
@@ -204,6 +205,12 @@ a .goal{
 
 .action.active{
   background-color: var(--highlight);
+}
+
+.action.disabled{
+  background-color: var(--background-disabled);
+  pointer-events: none;
+  cursor: default;
 }
 
 .progress{
