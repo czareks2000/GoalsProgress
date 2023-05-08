@@ -2,14 +2,13 @@ import { useState } from "react";
 
 import GoalForm from "./GoalForm"
 
-const GoalEditForm = ({ goalToEdit, onEdit, toggleEditForm }) => {
+const GoalEditForm = ({ goalToEdit, onUpdate, toggleEditForm }) => {
     const [goal, setGoal] = useState(goalToEdit);
 
     const onSubmit = (e) => {
         e.preventDefault();
     
-        onEdit(goal);
-
+        onUpdate(goal);
         toggleEditForm();
       }
 

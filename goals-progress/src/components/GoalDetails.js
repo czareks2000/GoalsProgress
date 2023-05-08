@@ -7,7 +7,7 @@ import ProgressList from "./ProgressList";
 import ProgressAddForm from "./ProgressAddForm";
 import GoalEditForm from "./GoalEditForm";
 
-const GoalDetails = ({ goals, onDelete, onArchive, onRestore }) => {
+const GoalDetails = ({ goals, onDelete, onArchive, onRestore, onUpdate }) => {
     const [goal, setGoal] = useState();
     const [showAddForm, setShowAddForm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
@@ -84,11 +84,6 @@ const GoalDetails = ({ goals, onDelete, onArchive, onRestore }) => {
         setProgressList(progressList.filter(x => x.id !== id));
     }
 
-    // updateGoal
-    const updateGoal = (goal) => {
-        setGoal(goal);
-    }
-
     return (
         <div className="container shadow">
             <Goal goal={goal ? goal : placeholderGoal}/>
@@ -103,7 +98,7 @@ const GoalDetails = ({ goals, onDelete, onArchive, onRestore }) => {
                 goal={goal ? goal : placeholderGoal}
             />
             {showAddForm && <ProgressAddForm onAdd={addProgress} toggleAddForm={toggleAddForm}/>}
-            {showEditForm && <GoalEditForm goalToEdit={goal} toggleEditForm={toggleEditForm} onEdit={updateGoal}/>}
+            {showEditForm && <GoalEditForm goalToEdit={goal} toggleEditForm={toggleEditForm} onUpdate={onUpdate}/>}
             {showProgressList && <ProgressList progressList={progressList} onDelete={deleteProgress} goalStatus={goal ? goal.status : 1}/>}
         </div>
     )

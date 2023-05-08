@@ -64,8 +64,19 @@ function App() {
   ]);
 
   // add goal
-  const addGoal = (goal) => {
-    setGoals([ ...goals, goal]);
+  const addGoal = (newGoal) => {
+    setGoals([ ...goals, newGoal]);
+  }
+
+  // update goal
+  const updateGoal = (updatedGoal) => {
+    setGoals(goals.map(goal => {
+      if (goal.id === updatedGoal.id) {
+        return updatedGoal
+      } else {
+        return goal;
+      }
+    }));
   }
 
   // delete goal
@@ -116,6 +127,7 @@ function App() {
                   onDelete={deleteGoal} 
                   onArchive={archiveGoal} 
                   onRestore={restoreGoal}
+                  onUpdate={updateGoal}
             />
             }
           />
