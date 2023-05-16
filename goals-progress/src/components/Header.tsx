@@ -1,6 +1,10 @@
 import Navbar from "./Navbar"
 
-const Header = ({ appName }) => {
+interface Props {
+  appName: string;
+}
+
+const Header = ({ appName }: Props) => {
   return (
     <>
         <div className="text-center">

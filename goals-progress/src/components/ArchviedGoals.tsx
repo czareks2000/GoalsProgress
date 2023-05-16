@@ -1,10 +1,13 @@
-import { FaPlus } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-import Goal from "./Goal"
-import Button from './Button'
+import GoalItem from "./GoalItem"
+import { Goal } from '../interfaces/GoalInterface'
 
-const ArchviedGoals = ({ goals }) => {
+interface Props {
+  goals: Goal[];
+}
+
+const ArchviedGoals = ({ goals }: Props) => {
   return (
     <>
       <div className="goals container shadow">
@@ -14,11 +17,12 @@ const ArchviedGoals = ({ goals }) => {
             return(
               <div key={goal.id}>
                 <Link to={`/goal/${goal.id}`}>
-                  <Goal goal={goal}/>
+                  <GoalItem goal={goal}/>
                 </Link>
               </div>
             )
           }
+          return null;
         })}
       </div>
     </>

@@ -2,8 +2,21 @@ import { FaPlus, FaEdit, FaTrash, FaFolder } from 'react-icons/fa'
 import { GiCancel } from 'react-icons/gi'
 import { RiArrowGoBackFill } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
+import { Goal } from '../interfaces/GoalInterface';
 
-const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onDelete, onArchive, onRestore, goal }) => {
+interface Props {
+    onShowAddForm: () => void;
+    showAddForm: boolean;
+    onShowEditForm: () => void;
+    showEditForm: boolean;
+    onDelete: (id: number) => void;
+    onArchive:(id: number) => void;
+    onRestore: (id: number) => void;
+    goal: Goal;
+}
+
+
+const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onDelete, onArchive, onRestore, goal }: Props) => {
 
     const navigate = useNavigate();
 

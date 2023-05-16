@@ -1,14 +1,20 @@
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 
 import Button from "./Button";
+import { Progress } from "../interfaces/ProgressInterface";
 
-const ProgressAddForm = ({ onAdd, toggleAddForm }) => {
-    const [value, setValue] = useState('');
-    const [description, setDescription] = useState('');
-    const [date, setDate] = useState('');
+interface Props {
+  onAdd: (progress: Progress) => void;
+  toggleAddForm: () => void;
+}
+
+const ProgressAddForm = ({ onAdd, toggleAddForm }: Props) => {
+    const [value, setValue] = useState<number>(1);
+    const [description, setDescription] = useState<string>('');
+    const [date, setDate] = useState<string>('');
     
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const id = Math.floor(Math.random() * (100 - 10 + 1)) + 10 // tylko do testowania
@@ -25,7 +31,7 @@ const ProgressAddForm = ({ onAdd, toggleAddForm }) => {
               type="number" 
               placeholder="ex. 1"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => setValue(parseInt(e.target.value))}
             />
           </div>
           <div className="form-control">
@@ -45,7 +51,7 @@ const ProgressAddForm = ({ onAdd, toggleAddForm }) => {
             />
           </div>
           <div className="text-center">
-            <Button text={<>ADD</>} color={'#39a0ca'}/>
+            <Button text={'ADD'} color={'#39a0ca'}/>
           </div>
         </form>
   )

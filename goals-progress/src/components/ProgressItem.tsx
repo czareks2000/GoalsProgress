@@ -1,6 +1,13 @@
 import { FaPlus, FaTrash } from 'react-icons/fa'
+import { Progress } from '../interfaces/ProgressInterface';
 
-const Progress = ({ progress, onDelete, goalStatus }) => {
+interface Props {
+  progress: Progress;
+  onDelete: (id: number) => void;
+  goalStatus: number;
+}
+
+const ProgressItem = ({ progress, onDelete, goalStatus }: Props) => {
   return (
     <div className="progress outline">
         <div className="progress-value">
@@ -21,4 +28,4 @@ const Progress = ({ progress, onDelete, goalStatus }) => {
   )
 }
 
-export default Progress
+export default ProgressItem

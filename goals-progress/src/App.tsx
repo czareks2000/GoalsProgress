@@ -9,10 +9,10 @@ import GoalDetails from './components/GoalDetails';
 import GoalCreateForm from './components/GoalCreateForm';
 import ArchviedGoals from './components/ArchviedGoals';
 import Settings from './components/Settings';
-
+import { Goal } from './interfaces/GoalInterface';
 
 function App() {
-  const [goals, setGoals] = useState([
+  const [goals, setGoals] = useState<Goal[]>([
     {
       id: 1,
       name: 'Filmy',
@@ -60,12 +60,12 @@ function App() {
   ]);
 
   // add goal
-  const addGoal = (newGoal) => {
+  const addGoal = (newGoal: Goal) => {
     setGoals([ ...goals, newGoal]);
   }
 
   // update goal
-  const updateGoal = (updatedGoal) => {
+  const updateGoal = (updatedGoal: Goal) => {
     setGoals(goals.map(goal => {
       if (goal.id === updatedGoal.id) {
         return updatedGoal
@@ -76,7 +76,7 @@ function App() {
   }
 
   // delete goal
-  const deleteGoal = (id) => {
+  const deleteGoal = (id: number) => {
     setGoals(goals.map(goal => {
       if (goal.id === id) {
         return { ...goal, status: 3 }; // zmieniam status na 3 (usuniety)
@@ -87,7 +87,7 @@ function App() {
   }
 
   // archive goal
-  const archiveGoal = (id) => {
+  const archiveGoal = (id: number) => {
     setGoals(goals.map(goal => {
       if (goal.id === id) {
         return { ...goal, status: 2 }; // zmieniam status na 2 (zarchiwizowany)
@@ -98,7 +98,7 @@ function App() {
   }
 
   // restore goal
-  const restoreGoal = (id) => {
+  const restoreGoal = (id: number) => {
     setGoals(goals.map(goal => {
       if (goal.id === id) {
         return { ...goal, status: 1 }; // zmieniam status na 1 (aktualny)

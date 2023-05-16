@@ -1,8 +1,17 @@
+import { ChangeEvent, FormEvent } from "react";
+import { Goal } from "../interfaces/GoalInterface";
 import Button from "./Button";
 
-const GoalForm = ({ onSubmit, buttonText, goal, setGoal }) => {
+interface Props {
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  buttonText: string;
+  goal: Goal;
+  setGoal: (goal: Goal) => void ;
+}
+
+const GoalForm = ({ onSubmit, buttonText, goal, setGoal }: Props) => {
     
-    const handleSelectChange = (e) => {
+    const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
         if (e.target.value === '1') {
           setGoal({ ...goal, unit: '' });
           setGoal({ ...goal, customUnit: true });
@@ -39,7 +48,7 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal }) => {
             type="number" 
             placeholder="ex. 10"
             value={goal.targetValue}
-            onChange={(e) => setGoal({ ...goal, targetValue: e.target.value })}
+            onChange={(e) => setGoal({ ...goal, targetValue: parseInt(e.target.value) })}
             />
         </div>
         <div className="form-control">

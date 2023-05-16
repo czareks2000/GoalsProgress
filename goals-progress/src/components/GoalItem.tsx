@@ -1,6 +1,11 @@
 import moment from 'moment';
+import { Goal } from '../interfaces/GoalInterface';
 
-const Goal = ({ goal }) => {
+interface Props {
+  goal: Goal;
+}
+
+const GoalItem = ({ goal }: Props) => {
 
   const daysLeft = () => {
     const today = moment();
@@ -27,11 +32,11 @@ const Goal = ({ goal }) => {
         <div 
           className="progress-bar"
           data-value={`${currentProgress()}%`}
-          style={{ '--progress': `${currentProgress()}%` }}
+          style={{ '--progress': `${currentProgress()}%` } as any}
         >  
         </div>
     </div>
   )
 }
 
-export default Goal
+export default GoalItem
