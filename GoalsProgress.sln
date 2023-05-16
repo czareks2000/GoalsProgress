@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{CD45E377-1F7A-4424-8CB2-41177009BD9E}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "goals-progress", "goals-progress\", "{01DAD523-2A1C-44DC-A398-BFA37A46A214}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_60319"
+		Debug.AspNetCompiler.PhysicalPath = "goals-progress\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60319\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_60319"
+		Release.AspNetCompiler.PhysicalPath = "goals-progress\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60319\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "60319"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9200B096-49B5-48B7-8D6F-39F57473153B}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		todo.txt = todo.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{38D256F0-0713-45E8-97DD-0AA4A0D1510A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{E2A5734D-AE2C-404D-B6AB-B35ADA7B9884}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{062B92C1-00DB-41B7-AD91-773CD3E48596}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD45E377-1F7A-4424-8CB2-41177009BD9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD45E377-1F7A-4424-8CB2-41177009BD9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD45E377-1F7A-4424-8CB2-41177009BD9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD45E377-1F7A-4424-8CB2-41177009BD9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01DAD523-2A1C-44DC-A398-BFA37A46A214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01DAD523-2A1C-44DC-A398-BFA37A46A214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01DAD523-2A1C-44DC-A398-BFA37A46A214}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{01DAD523-2A1C-44DC-A398-BFA37A46A214}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{38D256F0-0713-45E8-97DD-0AA4A0D1510A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D256F0-0713-45E8-97DD-0AA4A0D1510A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D256F0-0713-45E8-97DD-0AA4A0D1510A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D256F0-0713-45E8-97DD-0AA4A0D1510A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2A5734D-AE2C-404D-B6AB-B35ADA7B9884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2A5734D-AE2C-404D-B6AB-B35ADA7B9884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2A5734D-AE2C-404D-B6AB-B35ADA7B9884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2A5734D-AE2C-404D-B6AB-B35ADA7B9884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{062B92C1-00DB-41B7-AD91-773CD3E48596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{062B92C1-00DB-41B7-AD91-773CD3E48596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{062B92C1-00DB-41B7-AD91-773CD3E48596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{062B92C1-00DB-41B7-AD91-773CD3E48596}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2AD5588E-B703-47F4-8188-8417C343CF64}
+	EndGlobalSection
+EndGlobal
