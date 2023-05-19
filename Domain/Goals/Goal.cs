@@ -2,7 +2,7 @@ using Domain.Enums;
 
 namespace Domain.Goals
 {
-    public class Goal
+    public abstract class Goal
     {
         public int Id { get; set; }
         public string Name { get; set; }
