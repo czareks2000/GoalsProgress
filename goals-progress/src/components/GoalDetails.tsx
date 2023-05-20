@@ -27,7 +27,8 @@ const GoalDetails = ({ goals, onDelete, onArchive, onRestore, onUpdate }: Props)
         customUnit: false,
         unit: 'none',
         deadline: '2023-12-31',
-        status: 1
+        status: 1,
+        type: 1
     });
     const [showAddForm, setShowAddForm] = useState<boolean>(false);
     const [showEditForm, setShowEditForm] = useState<boolean>(false);

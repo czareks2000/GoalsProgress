@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -10,54 +10,22 @@ import GoalCreateForm from './components/GoalCreateForm';
 import ArchviedGoals from './components/ArchviedGoals';
 import Settings from './components/Settings';
 import { Goal } from './interfaces/GoalInterface';
+import axios from 'axios';
 
 function App() {
-  const [goals, setGoals] = useState<Goal[]>([
-    {
-      id: 1,
-      name: 'Filmy',
-      description: 'Obejrzeć 20 filmów',
-      currentValue: 4,
-      targetValue: 20,
-      customUnit: false,
-      unit: 'none',
-      deadline: '2023-12-31',
-      status: 1
-    },
-    {
-      id: 2,
-      name: 'Przepisy',
-      description: 'Wypróbować 10 nowych przepisów',
-      currentValue: 5,
-      targetValue: 10,
-      customUnit: false,
-      unit: 'none',
-      deadline: '2023-12-31',
-      status: 1
-    },
-    {
-      id: 3,
-      name: 'Książki',
-      description: 'Przeczytać 10 książek',
-      currentValue: 3,
-      targetValue: 10,
-      customUnit: false,
-      unit: 'none',
-      deadline: '2023-12-31',
-      status: 1
-    },
-    {
-      id: 4,
-      name: 'Badanie krwi',
-      description: 'Zrobić morfologie krwi 2 razy',
-      currentValue: 1,
-      targetValue: 2,
-      customUnit: true,
-      unit: 'szt',
-      deadline: '2023-12-31',
-      status: 2
-    }
-  ]);
+  const [goals, setGoals] = useState<Goal[]>([]);
+
+  useEffect(() => {
+    getGoals();
+  }, []);
+
+  // get goals
+  const getGoals = () => {
+    axios.get('http://localhost:5000/api/goals')
+    .then(response => {
+      setGoals(response.data);
+    })
+  }
 
   // add goal
   const addGoal = (newGoal: Goal) => {

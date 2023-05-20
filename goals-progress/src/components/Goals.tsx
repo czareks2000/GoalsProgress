@@ -17,7 +17,7 @@ const Goals = ({ goals }: Props) => {
           if (goal.status === 1)
           {
             return(
-              <div key={goal.id}>
+              <div key={`${goal.id}-${goal.type}`}>
                 <Link to={`/goal/${goal.id}`}>
                   <GoalItem goal={goal}/>
                 </Link>

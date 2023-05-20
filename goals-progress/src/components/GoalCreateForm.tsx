@@ -18,7 +18,8 @@ const GoalCreateForm = ({ onAdd }: Props) => {
     customUnit: false,
     unit: '',
     deadline: '',
-    status: 1
+    status: 1,
+    type: 1
   });
 
   const navigate = useNavigate()

@@ -15,7 +15,6 @@ interface Props {
     goal: Goal;
 }
 
-
 const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onDelete, onArchive, onRestore, goal }: Props) => {
 
     const navigate = useNavigate();

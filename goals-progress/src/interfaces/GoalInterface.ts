@@ -7,5 +7,6 @@ export interface Goal {
     customUnit: boolean,
     unit: string,
     deadline: string,
-    status: number
+    status: number,
+    type: number
 }
