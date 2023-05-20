@@ -2,10 +2,10 @@ using Domain.Progresses;
 
 namespace Domain.Goals
 {
-    public class GoalStandard : Goal
+    public class StandardGoal : Goal
     {
         public int CurrentValue { get; set; }
         public int TargetValue { get; set; }
-        public ICollection<ProgressStandard> Progresses { get; set; }
+        public ICollection<StandardProgress> Progresses { get; set; }
     }
 }

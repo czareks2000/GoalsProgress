@@ -11,5 +11,6 @@ namespace Domain.Goals
         public string Unit { get; set; }
         public DateOnly Deadline { get; set; }
         public GoalStatus Status { get; set; }
+        public GoalType Type { get; set; }
     }
 }
