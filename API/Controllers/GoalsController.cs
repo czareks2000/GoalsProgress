@@ -1,15 +1,21 @@
-using Domain.Goals;
+using Application.Dto;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
     public class GoalsController : BaseApiController
     {
-        [HttpGet("standardgoals")] //api/standardgoals
-        public async Task<ActionResult<List<StandardGoal>>> GetStandardGoals()
+        private readonly IGoalsService _goalService;
+        public GoalsController(IGoalsService goalService)
         {
-            return await Context.StandardGoals.ToListAsync();
+            _goalService = goalService;
+        }
+
+        [HttpGet("goals")] //api/goals
+        public async Task<ActionResult<List<GoalDto>>> GetStandardGoals()
+        {
+            return await _goalService.GetAllGoalsAsync();
         }
     }
 }

@@ -1,3 +1,5 @@
+using Application;
+using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -11,6 +13,8 @@ builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<IGoalsService, GoalsService>();
 
 var app = builder.Build();
 
