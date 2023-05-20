@@ -6,7 +6,7 @@ namespace Domain
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Multiplier { get; set; }
+        public Decimal Multiplier { get; set; }
         public ExtendedProgress ExtendedProgress { get; set; }
     }
 }

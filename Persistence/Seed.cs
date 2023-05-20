@@ -1,3 +1,4 @@
+using Domain;
 using Domain.Enums;
 using Domain.Goals;
 using Domain.Progresses;
@@ -168,8 +169,65 @@ namespace Persistence
                     }
                 }
             };
+            
+            var extendedGoals = new List<ExtendedGoal>
+            {
+                new ExtendedGoal
+                {
+                    Id = 1,
+                    Name = "Aktywność fizyczna",
+                    Description = "Zdobyć 1000 punktów",
+                    CustomUnit = true,
+                    Unit = "pkt",
+                    Deadline = DateOnly.Parse("2023-12-31"),
+                    Status = GoalStatus.Current,
+                    Type = GoalType.Extended,
+                    CurrentValue = 548.77M,
+                    TargetValue = 1000.0M,
+                    Progresses = new List<ExtendedProgress>
+                    {
+                        new ExtendedProgress
+                        {
+                            Id = 1,
+                            Date = DateTime.Now.AddDays(-5), 
+                            Value = 200.0M,
+                            Category = new Category
+                            {
+                                Id = 1,
+                                Name = "Spacer",
+                                Multiplier = 1.0M
+                            }
+                        },
+                        new ExtendedProgress
+                        {
+                            Id = 2,
+                            Date = DateTime.Now.AddDays(-4), 
+                            Value = 230.5M,
+                            Category = new Category
+                            {
+                                Id = 2,
+                                Name = "Bieganie",
+                                Multiplier = 1.5M
+                            }
+                        },
+                        new ExtendedProgress
+                        {
+                            Id = 3,
+                            Date = DateTime.Now.AddDays(-3), 
+                            Value = 6.04M,
+                            Category = new Category
+                            {
+                                Id = 3,
+                                Name = "Rower",
+                                Multiplier = 0.5M
+                            }
+                        }
+                    }
+                }
+            };
 
             await context.StandardGoals.AddRangeAsync(standardGoals);
+            await context.ExtendedGoals.AddRangeAsync(extendedGoals);
             await context.SaveChangesAsync();
         }
     }
