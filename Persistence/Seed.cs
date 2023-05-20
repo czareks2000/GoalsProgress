@@ -22,7 +22,6 @@ namespace Persistence
                     Unit = "none",
                     Deadline = DateOnly.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
-                    Type = GoalType.Standard,
                     CurrentValue = 4,
                     TargetValue = 20,
                     Progresses = new List<StandardProgress>
@@ -66,7 +65,6 @@ namespace Persistence
                     Unit = "none",
                     Deadline = DateOnly.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
-                    Type = GoalType.Standard,
                     CurrentValue = 5,
                     TargetValue = 10,
                     Progresses = new List<StandardProgress>
@@ -117,7 +115,6 @@ namespace Persistence
                     Unit = "none",
                     Deadline = DateOnly.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
-                    Type = GoalType.Standard,
                     CurrentValue = 3,
                     TargetValue = 10,
                     Progresses = new List<StandardProgress>
@@ -154,7 +151,6 @@ namespace Persistence
                     Unit = "szt",
                     Deadline = DateOnly.Parse("2023-12-31"),
                     Status = GoalStatus.Archvied,
-                    Type = GoalType.Standard,
                     CurrentValue = 1,
                     TargetValue = 2,
                     Progresses = new List<StandardProgress>
@@ -181,7 +177,6 @@ namespace Persistence
                     Unit = "pkt",
                     Deadline = DateOnly.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
-                    Type = GoalType.Extended,
                     CurrentValue = 548.77M,
                     TargetValue = 1000.0M,
                     Progresses = new List<ExtendedProgress>
