@@ -19,13 +19,13 @@ namespace API.Controllers
             return await _goalService.GetAllGoalsAsync();
         }
 
-        [HttpGet("goal/standard/{id}")] //api/goal/standard/id
+        [HttpGet("goal/1/{id}")] //api/goal/1/id
         public async Task<ActionResult<StandardGoalDto>> GetStandardGoal(int id)
         {
             return await _goalService.GetStandardGoalAsync(id);
         }
 
-        [HttpGet("goal/extended/{id}")] //api/goal/extended/id
+        [HttpGet("goal/2/{id}")] //api/goal/2/id
         public async Task<ActionResult<ExtendedGoalDto>> GetExtendedGoal(int id)
         {
             return await _goalService.GetExtendedGoalAsync(id);
