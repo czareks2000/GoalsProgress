@@ -1,7 +1,5 @@
 using Domain;
 using Domain.Enums;
-using Domain.Goals;
-using Domain.Progresses;
 
 namespace Persistence
 {
@@ -29,28 +27,28 @@ namespace Persistence
                         new StandardProgress
                         {
                             Id = 1,
-                            Date = DateTime.Now.AddDays(-5), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), 
                             Value = 1,
                             Description = "Batman"
                         },
                         new StandardProgress
                         {
                             Id = 2,
-                            Date = DateTime.Now.AddDays(-4), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
                             Value = 1,
                             Description = "Forest Gump"
                         },
                         new StandardProgress
                         {
                             Id = 3,
-                            Date = DateTime.Now.AddDays(-3), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
                             Value = 1,
                             Description = "Shrek"
                         },
                         new StandardProgress
                         {
                             Id = 4,
-                            Date = DateTime.Now.AddDays(-2), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)), 
                             Value = 1,
                             Description = "American Psycho"
                         }
@@ -72,35 +70,35 @@ namespace Persistence
                         new StandardProgress
                         {
                             Id = 5,
-                            Date = DateTime.Now.AddDays(-5), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), 
                             Value = 1,
                             Description = "Makaron 1"
                         },
                         new StandardProgress
                         {
                             Id = 6,
-                            Date = DateTime.Now.AddDays(-4), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
                             Value = 1,
                             Description = "Makaron 2"
                         },
                         new StandardProgress
                         {
                             Id = 7,
-                            Date = DateTime.Now.AddDays(-3), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
                             Value = 1,
                             Description = "Makaron 3"
                         },
                         new StandardProgress
                         {
                             Id = 8,
-                            Date = DateTime.Now.AddDays(-2), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)), 
                             Value = 1,
                             Description = "Makaron 4"
                         },
                         new StandardProgress
                         {
                             Id = 9,
-                            Date = DateTime.Now.AddDays(-1), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)), 
                             Value = 1,
                             Description = "Makaron 5"
                         }
@@ -122,21 +120,21 @@ namespace Persistence
                         new StandardProgress
                         {
                             Id = 10,
-                            Date = DateTime.Now.AddDays(-5), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), 
                             Value = 1,
                             Description = "Książka 1"
                         },
                         new StandardProgress
                         {
                             Id = 11,
-                            Date = DateTime.Now.AddDays(-4), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
                             Value = 1,
                             Description = "Książka 2"
                         },
                         new StandardProgress
                         {
                             Id = 12,
-                            Date = DateTime.Now.AddDays(-3), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
                             Value = 1,
                             Description = "Książka 3"
                         }
@@ -158,7 +156,7 @@ namespace Persistence
                         new StandardProgress
                         {
                             Id = 13,
-                            Date = DateTime.Now.AddDays(-50), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-50)), 
                             Value = 1,
                             Description = "W normie"
                         }
@@ -184,7 +182,7 @@ namespace Persistence
                         new ExtendedProgress
                         {
                             Id = 1,
-                            Date = DateTime.Now.AddDays(-5), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)),
                             Value = 200.0M,
                             Category = new Category
                             {
@@ -196,7 +194,7 @@ namespace Persistence
                         new ExtendedProgress
                         {
                             Id = 2,
-                            Date = DateTime.Now.AddDays(-4), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
                             Value = 230.5M,
                             Category = new Category
                             {
@@ -208,7 +206,7 @@ namespace Persistence
                         new ExtendedProgress
                         {
                             Id = 3,
-                            Date = DateTime.Now.AddDays(-3), 
+                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
                             Value = 6.04M,
                             Category = new Category
                             {

@@ -1,6 +1,4 @@
-using Domain.Progresses;
-
-namespace Domain.Goals
+namespace Domain
 {
     public class ExtendedGoal : Goal
     {

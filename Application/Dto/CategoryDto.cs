@@ -1,10 +1,9 @@
-namespace Domain
+namespace Application.Dto
 {
-    public class Category
+    public class CategoryDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public Decimal Multiplier { get; set; }
-        public ExtendedProgress ExtendedProgress { get; set; }
     }
 }

@@ -1,6 +1,4 @@
 using Domain;
-using Domain.Goals;
-using Domain.Progresses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence

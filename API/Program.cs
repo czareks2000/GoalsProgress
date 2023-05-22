@@ -1,7 +1,9 @@
-using Application;
 using Application.Interfaces;
+using Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Interfaces;
+using Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,7 @@ builder.Services.AddCors(opt => {
 });
 
 builder.Services.AddScoped<IGoalsService, GoalsService>();
+builder.Services.AddScoped<IGoalsRepository, GoalsRepository>();
 
 var app = builder.Build();
 

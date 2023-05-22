@@ -1,6 +1,6 @@
 using Domain.Enums;
 
-namespace Domain.Goals
+namespace Domain
 {
     public abstract class Goal
     {

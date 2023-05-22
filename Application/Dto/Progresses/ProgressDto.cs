@@ -1,6 +1,6 @@
-namespace Domain
+namespace Application.Dto
 {
-    public abstract class Progress
+    public class ProgressDto
     {
         public int Id { get; set; }
         public Decimal Value { get; set; }
