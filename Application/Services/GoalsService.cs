@@ -22,6 +22,9 @@ namespace Application.Services
 
             foreach(var goal in standardGoals)
             {
+                if (goal.Status == GoalStatus.Deleted)
+                    continue;
+
                 allGoals.Add(new GoalDto()
                 {
                     Id = goal.Id,
@@ -41,6 +44,9 @@ namespace Application.Services
 
             foreach(var goal in extendedGoals)
             {
+                if (goal.Status == GoalStatus.Deleted)
+                    continue;
+
                 allGoals.Add(new GoalDto()
                 {
                     Id = goal.Id,
