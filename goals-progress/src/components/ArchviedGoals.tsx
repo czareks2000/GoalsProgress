@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import GoalItem from "./GoalItem"
-import { Goal } from '../interfaces/GoalInterface'
+import { Goal } from '../interfaces/Goal'
 
 interface Props {
   goals: Goal[];
@@ -16,7 +16,7 @@ const ArchviedGoals = ({ goals }: Props) => {
           {
             return(
               <div key={goal.id}>
-                <Link to={`/goal/${goal.id}`}>
+                <Link to={`/goal/${goal.type}/${goal.id}`}>
                   <GoalItem goal={goal}/>
                 </Link>
               </div>

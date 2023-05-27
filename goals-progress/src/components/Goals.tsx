@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import GoalItem from "./GoalItem"
 import Button from './Button'
-import { Goal } from '../interfaces/GoalInterface'
+import { Goal } from '../interfaces/Goal'
 
 interface Props {
   goals: Goal[];
@@ -18,7 +18,7 @@ const Goals = ({ goals }: Props) => {
           {
             return(
               <div key={`${goal.id}-${goal.type}`}>
-                <Link to={`/goal/${goal.id}`}>
+                <Link to={`/goal/${goal.type}/${goal.id}`}>
                   <GoalItem goal={goal}/>
                 </Link>
               </div>

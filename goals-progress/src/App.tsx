@@ -9,7 +9,7 @@ import GoalDetails from './components/GoalDetails';
 import GoalCreateForm from './components/GoalCreateForm';
 import ArchviedGoals from './components/ArchviedGoals';
 import Settings from './components/Settings';
-import { Goal } from './interfaces/GoalInterface';
+import { Goal } from './interfaces/Goal';
 import axios from 'axios';
 
 function App() {
@@ -84,10 +84,9 @@ function App() {
           <Route path='/' element={<Goals goals={goals}/>}/>
           <Route path='/goals' element={<Goals goals={goals}/>}/>
           <Route 
-            path='/goal/:id' 
+            path='/goal/:type/:id' 
             element={
             <GoalDetails 
-                  goals={goals} 
                   onDelete={deleteGoal} 
                   onArchive={archiveGoal} 
                   onRestore={restoreGoal}
