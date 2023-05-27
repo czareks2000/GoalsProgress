@@ -1,17 +1,19 @@
 using Domain.Enums;
 
-namespace Domain
+namespace Application.Dto
 {
-    public abstract class Goal
+    public class GoalDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Decimal CurrentValue { get; set; }
-        public Decimal TargetValue { get; set; }
+        public decimal CurrentValue { get; set; }
+        public decimal TargetValue { get; set; }
         public bool CustomUnit { get; set; }
         public string Unit { get; set; }
         public DateOnly Deadline { get; set; }
         public GoalStatus Status { get; set; }
+        public GoalType Type { get; set; }
+        public ICollection<ProgressDto> Progresses { get; set; }
     }
 }

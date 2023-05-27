@@ -8,35 +8,25 @@ namespace Persistence
         public DataContext(DbContextOptions options) 
             :base(options){}
 
-        public DbSet<StandardGoal> StandardGoals { get; set; }
-        public DbSet<ExtendedGoal> ExtendedGoals { get; set; }
-        public DbSet<StandardProgress> StandardProgresses { get; set; }
-        public DbSet<ExtendedProgress> ExtendedProgresses { get; set; }
+        public DbSet<Goal> Goals { get; set; }
+        public DbSet<Progress> Progresses { get; set; }
         public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
             base.OnModelCreating(modelBuilder);
 
-            // Required one-to-many with shadow foreign key
-            modelBuilder.Entity<StandardGoal>()
+            modelBuilder.Entity<Goal>()
                 .HasMany(e => e.Progresses)
-                .WithOne(e => e.StandardGoal)
+                .WithOne(e => e.Goal)
                 .HasForeignKey("GoalId")
                 .IsRequired();
 
-            // Required one-to-many with shadow foreign key 
-            modelBuilder.Entity<ExtendedGoal>()
+            modelBuilder.Entity<Category>()
                 .HasMany(e => e.Progresses)
-                .WithOne(e => e.ExtendedGoal)
-                .HasForeignKey("GoalId")
-                .IsRequired();
-
-            // Required one-to-one with primary key to primary key relationship
-            modelBuilder.Entity<ExtendedProgress>()
-                .HasOne(e => e.Category)
-                .WithOne(e => e.ExtendedProgress)
-                .HasForeignKey<Category>();
+                .WithOne(e => e.Category)
+                .HasForeignKey("CategoryId")
+                .IsRequired(false);
         }
 
     }

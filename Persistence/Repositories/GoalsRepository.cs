@@ -12,27 +12,14 @@ namespace Persistence.Repositories
             _context = context;
         }
 
-        public async Task<List<ExtendedGoal>> GetAllExtendedGoalsAsync()
+        public async Task<List<Goal>> GetAllGoalsAsync()
         {
-            return await _context.ExtendedGoals.ToListAsync();
+            return await _context.Goals.ToListAsync();
         }
 
-        public async Task<List<StandardGoal>> GetAllStandardGoalsAsync()
+        public async Task<Goal> GetGoalAsync(int id)
         {
-            return await _context.StandardGoals.ToListAsync();
-        }
-
-        public async Task<ExtendedGoal> GetExtendedGoalAsync(int id)
-        {
-            return await _context.ExtendedGoals
-                .Include(g => g.Progresses)
-                    .ThenInclude(p => p.Category)
-                .FirstOrDefaultAsync(g => g.Id == id);
-        }
-
-        public async Task<StandardGoal> GetStandardGoalAsync(int id)
-        {
-            return await _context.StandardGoals
+            return await _context.Goals
                 .Include(g => g.Progresses)
                 .FirstOrDefaultAsync(g => g.Id == id);
         }

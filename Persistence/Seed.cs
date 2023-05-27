@@ -7,11 +7,36 @@ namespace Persistence
     {
         public static async Task SeedData(DataContext context)
         {
-            if (context.StandardGoals.Any()) return;
+            if (context.Goals.Any()) return;
             
-            var standardGoals = new List<StandardGoal>
+
+            var categories = new List<Category>
             {
-                new StandardGoal
+                new Category
+                {
+                    Id = 1,
+                    Name = "Spacer",
+                    Multiplier = 1.0M
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "Bieganie",
+                    Multiplier = 1.5M
+                },
+                new Category
+                {
+                    Id = 3,
+                    Name = "Rower",
+                    Multiplier = 0.5M
+                }
+            };
+
+            await context.Categories.AddRangeAsync(categories);
+
+            var goals = new List<Goal>
+            {
+                new Goal
                 {
                     Id = 1,
                     Name = "Filmy",
@@ -22,30 +47,31 @@ namespace Persistence
                     Status = GoalStatus.Current,
                     CurrentValue = 4,
                     TargetValue = 20,
-                    Progresses = new List<StandardProgress>
+                    Type = GoalType.Standard,
+                    Progresses = new List<Progress>
                     {
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 1,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), 
                             Value = 1,
                             Description = "Batman"
                         },
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 2,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
                             Value = 1,
                             Description = "Forest Gump"
                         },
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 3,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
                             Value = 1,
                             Description = "Shrek"
                         },
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 4,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)), 
@@ -54,7 +80,7 @@ namespace Persistence
                         }
                     }
                 },
-                new StandardGoal
+                new Goal
                 {
                     Id = 2,
                     Name = "Przepisy",
@@ -65,37 +91,38 @@ namespace Persistence
                     Status = GoalStatus.Current,
                     CurrentValue = 5,
                     TargetValue = 10,
-                    Progresses = new List<StandardProgress>
+                    Type = GoalType.Standard,
+                    Progresses = new List<Progress>
                     {
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 5,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), 
                             Value = 1,
                             Description = "Makaron 1"
                         },
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 6,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
                             Value = 1,
                             Description = "Makaron 2"
                         },
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 7,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
                             Value = 1,
                             Description = "Makaron 3"
                         },
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 8,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)), 
                             Value = 1,
                             Description = "Makaron 4"
                         },
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 9,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)), 
@@ -104,7 +131,7 @@ namespace Persistence
                         }
                     }
                 },
-                new StandardGoal
+                new Goal
                 {
                     Id = 3,
                     Name = "Książki",
@@ -115,23 +142,24 @@ namespace Persistence
                     Status = GoalStatus.Current,
                     CurrentValue = 3,
                     TargetValue = 10,
-                    Progresses = new List<StandardProgress>
+                    Type = GoalType.Standard,
+                    Progresses = new List<Progress>
                     {
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 10,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), 
                             Value = 1,
                             Description = "Książka 1"
                         },
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 11,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
                             Value = 1,
                             Description = "Książka 2"
                         },
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 12,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
@@ -140,7 +168,7 @@ namespace Persistence
                         }
                     }
                 },
-                new StandardGoal
+                new Goal
                 {
                     Id = 4,
                     Name = "Badanie krwi",
@@ -151,9 +179,10 @@ namespace Persistence
                     Status = GoalStatus.Archvied,
                     CurrentValue = 1,
                     TargetValue = 2,
-                    Progresses = new List<StandardProgress>
+                    Type = GoalType.Standard,
+                    Progresses = new List<Progress>
                     {
-                        new StandardProgress
+                        new Progress
                         {
                             Id = 13,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-50)), 
@@ -161,14 +190,10 @@ namespace Persistence
                             Description = "W normie"
                         }
                     }
-                }
-            };
-            
-            var extendedGoals = new List<ExtendedGoal>
-            {
-                new ExtendedGoal
+                },
+                new Goal
                 {
-                    Id = 1,
+                    Id = 5,
                     Name = "Aktywność fizyczna",
                     Description = "Zdobyć 1000 punktów",
                     CustomUnit = true,
@@ -177,50 +202,37 @@ namespace Persistence
                     Status = GoalStatus.Current,
                     CurrentValue = 548.77M,
                     TargetValue = 1000.0M,
-                    Progresses = new List<ExtendedProgress>
+                    Type = GoalType.Extended,
+                    Progresses = new List<Progress>
                     {
-                        new ExtendedProgress
+                        new Progress
                         {
-                            Id = 1,
+                            Id = 14,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)),
                             Value = 200.0M,
-                            Category = new Category
-                            {
-                                Id = 1,
-                                Name = "Spacer",
-                                Multiplier = 1.0M
-                            }
+                            Category = categories[0]
                         },
-                        new ExtendedProgress
+                        new Progress
                         {
-                            Id = 2,
+                            Id = 15,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
                             Value = 230.5M,
-                            Category = new Category
-                            {
-                                Id = 2,
-                                Name = "Bieganie",
-                                Multiplier = 1.5M
-                            }
+                            Category = categories[1]
                         },
-                        new ExtendedProgress
+                        new Progress
                         {
-                            Id = 3,
+                            Id = 16,
                             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
                             Value = 6.04M,
-                            Category = new Category
-                            {
-                                Id = 3,
-                                Name = "Rower",
-                                Multiplier = 0.5M
-                            }
+                            Category = categories[2]
                         }
                     }
                 }
             };
 
-            await context.StandardGoals.AddRangeAsync(standardGoals);
-            await context.ExtendedGoals.AddRangeAsync(extendedGoals);
+            
+            
+            await context.Goals.AddRangeAsync(goals);
             await context.SaveChangesAsync();
         }
     }

@@ -4,9 +4,7 @@ namespace Persistence.Interfaces
 {
     public interface IGoalsRepository
     {
-        Task<List<StandardGoal>> GetAllStandardGoalsAsync();
-        Task<List<ExtendedGoal>> GetAllExtendedGoalsAsync();
-        Task<StandardGoal> GetStandardGoalAsync(int id);
-        Task<ExtendedGoal> GetExtendedGoalAsync(int id);
+        Task<List<Goal>> GetAllGoalsAsync();
+        Task<Goal> GetGoalAsync(int id);
     }
 }

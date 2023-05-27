@@ -18,9 +18,9 @@ namespace Application.Services
         {   
             var allGoals = new List<GoalDto>();
 
-            var standardGoals = await _repository.GetAllStandardGoalsAsync();
+            var goals = await _repository.GetAllGoalsAsync();
 
-            foreach(var goal in standardGoals)
+            foreach(var goal in goals)
             {
                 if (goal.Status == GoalStatus.Deleted)
                     continue;
@@ -36,40 +36,18 @@ namespace Application.Services
                     Unit = goal.Unit,
                     Deadline = goal.Deadline,
                     Status = goal.Status,
-                    Type = GoalType.Standard
-                });
-            }
-
-            var extendedGoals = await _repository.GetAllExtendedGoalsAsync();
-
-            foreach(var goal in extendedGoals)
-            {
-                if (goal.Status == GoalStatus.Deleted)
-                    continue;
-
-                allGoals.Add(new GoalDto()
-                {
-                    Id = goal.Id,
-                    Name = goal.Name,
-                    Description = goal.Description,
-                    CurrentValue = goal.CurrentValue,
-                    TargetValue = goal.TargetValue,
-                    CustomUnit = goal.CustomUnit,
-                    Unit = goal.Unit,
-                    Deadline = goal.Deadline,
-                    Status = goal.Status,
-                    Type = GoalType.Extended
+                    Type = goal.Type
                 });
             }
 
             return allGoals;
         }
 
-        public async Task<StandardGoalDto> GetStandardGoalAsync(int id)
+        public async Task<GoalDto> GetGoalAsync(int id)
         {   
-            var goal = await _repository.GetStandardGoalAsync(id);
+            var goal = await _repository.GetGoalAsync(id);
 
-            var goalDto = new StandardGoalDto
+            var goalDto = new GoalDto
             {
                 Id = goal.Id,
                 Name = goal.Name,
@@ -80,43 +58,13 @@ namespace Application.Services
                 Unit = goal.Unit,
                 Deadline = goal.Deadline,
                 Status = goal.Status,
-                Type = GoalType.Standard,
-                Progresses = goal.Progresses.Select(progress => new StandardProgressDto
+                Type = goal.Type,
+                Progresses = goal.Progresses.Select(progress => new ProgressDto
                 {   
                     Id = progress.Id,
                     Value = progress.Value,
                     Date = progress.Date,
-                    Description = progress.Description
-                }
-                ).ToList()
-            };
-                
-            return goalDto;
-        }
-
-        public async Task<ExtendedGoalDto> GetExtendedGoalAsync(int id)
-        {   
-            var goal = await _repository.GetExtendedGoalAsync(id);
-
-            Console.WriteLine(goal);
-
-            var goalDto = new ExtendedGoalDto
-            {
-                Id = goal.Id,
-                Name = goal.Name,
-                Description = goal.Description,
-                CurrentValue = goal.CurrentValue,
-                TargetValue = goal.TargetValue,
-                CustomUnit = goal.CustomUnit,
-                Unit = goal.Unit,
-                Deadline = goal.Deadline,
-                Status = goal.Status,
-                Type = GoalType.Extended,
-                Progresses = goal.Progresses.Select(progress => new ExtendedProgressDto
-                {
-                    Id = progress.Id,
-                    Value = progress.Value,
-                    Date = progress.Date,
+                    Description = progress.Description,
                     Category = new CategoryDto
                     {
                         Id = progress.Category.Id,
