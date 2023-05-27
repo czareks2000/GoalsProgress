@@ -38,16 +38,18 @@ const GoalDetails = ({ onDelete, onArchive, onRestore, onUpdate }: Props) => {
     const param = useParams();
 
     useEffect(() => {
+        // get goal
+        const getGoal = () => {
+            axios.get(`http://localhost:5000/api/goal/${param.id}`)
+            .then(response => {
+            setGoal(response.data);
+            })
+        }
+
         getGoal();
     }, [param.id])
 
-    // get goal
-    const getGoal = () => {
-        axios.get(`http://localhost:5000/api/goal/${param.type}/${param.id}`)
-        .then(response => {
-        setGoal(response.data);
-        })
-    }
+    
 
     const toggleAddForm = () => {
         setShowAddForm(!showAddForm);

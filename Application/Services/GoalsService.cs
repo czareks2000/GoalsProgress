@@ -65,12 +65,12 @@ namespace Application.Services
                     Value = progress.Value,
                     Date = progress.Date,
                     Description = progress.Description,
-                    Category = new CategoryDto
+                    Category = progress.Category != null ? new CategoryDto
                     {
                         Id = progress.Category.Id,
                         Name = progress.Category.Name,
                         Multiplier = progress.Category.Multiplier
-                    }
+                    } : null
                 }
                 ).ToList()
             };

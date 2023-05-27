@@ -84,7 +84,7 @@ function App() {
           <Route path='/' element={<Goals goals={goals}/>}/>
           <Route path='/goals' element={<Goals goals={goals}/>}/>
           <Route 
-            path='/goal/:type/:id' 
+            path='/goal/:id' 
             element={
             <GoalDetails 
                   onDelete={deleteGoal} 
