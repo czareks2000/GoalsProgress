@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent } from "react";
-import { Goal } from "../interfaces/GoalInterface";
+import { Goal } from "../interfaces/Goal";
 import Button from "./Button";
 
 interface Props {

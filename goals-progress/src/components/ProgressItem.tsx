@@ -1,8 +1,8 @@
 import { FaPlus, FaTrash } from 'react-icons/fa'
-import { Progress } from '../interfaces/ProgressInterface';
+import { StandardProgress } from '../interfaces/Progress';
 
 interface Props {
-  progress: Progress;
+  progress: StandardProgress;
   onDelete: (id: number) => void;
   goalStatus: number;
 }

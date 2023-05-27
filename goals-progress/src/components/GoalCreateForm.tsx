@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 import GoalForm from "./GoalForm";
-import { Goal } from "../interfaces/GoalInterface";
+import { Goal } from "../interfaces/Goal";
 
 interface Props {
   onAdd: (goal: Goal) => void;

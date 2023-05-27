@@ -1,8 +1,8 @@
-import { Progress } from "../interfaces/ProgressInterface"
+import { StandardProgress } from "../interfaces/Progress"
 import ProgressItem from "./ProgressItem"
 
 interface Props {
-  progressList: Progress[];
+  progressList: StandardProgress[];
   onDelete: (id: number) => void ;
   goalStatus: number;
 }
@@ -10,7 +10,7 @@ interface Props {
 const ProgressList = ({ progressList, onDelete, goalStatus }: Props) => {
   return (
     <div>
-      {progressList.map((progress: Progress) => (
+      {progressList.map((progress: StandardProgress) => (
           <div key={progress.id}>
               <ProgressItem progress={progress} onDelete={onDelete} goalStatus={goalStatus}/>
           </div>

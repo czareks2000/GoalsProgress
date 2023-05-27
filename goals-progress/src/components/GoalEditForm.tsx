@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 
 import GoalForm from "./GoalForm"
-import { Goal } from "../interfaces/GoalInterface";
+import { Goal } from "../interfaces/Goal";
 
 interface Props {
     goalToEdit: Goal; 

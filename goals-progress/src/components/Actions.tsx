@@ -2,7 +2,7 @@ import { FaPlus, FaEdit, FaTrash, FaFolder } from 'react-icons/fa'
 import { GiCancel } from 'react-icons/gi'
 import { RiArrowGoBackFill } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
-import { Goal } from '../interfaces/GoalInterface';
+import { Goal } from '../interfaces/Goal';
 
 interface Props {
     onShowAddForm: () => void;
