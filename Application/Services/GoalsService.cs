@@ -1,5 +1,7 @@
+using Application.Core;
 using Application.Dto;
 using Application.Interfaces;
+using Domain;
 using Domain.Enums;
 using Persistence.Interfaces;
 
@@ -7,75 +9,93 @@ namespace Application.Services
 {
     public class GoalsService : IGoalsService
     {
-        private readonly IGoalsRepository _repository;
+        private readonly IGoalsRepository _goalsRepository;
    
-        public GoalsService(IGoalsRepository repository)
+        public GoalsService(IGoalsRepository goalsRepository)
         {
-            _repository = repository;
+            _goalsRepository = goalsRepository;
         }
 
-        public async Task<List<GoalDto>> GetAllGoalsAsync()
+        public async Task<Result<List<Goal>>> GetAll()
         {   
-            var allGoals = new List<GoalDto>();
+            var goals = await _goalsRepository.GetAll();
 
-            var goals = await _repository.GetAllGoalsAsync();
-
-            foreach(var goal in goals)
-            {
-                if (goal.Status == GoalStatus.Deleted)
-                    continue;
-
-                allGoals.Add(new GoalDto()
-                {
-                    Id = goal.Id,
-                    Name = goal.Name,
-                    Description = goal.Description,
-                    CurrentValue = goal.CurrentValue,
-                    TargetValue = goal.TargetValue,
-                    CustomUnit = goal.CustomUnit,
-                    Unit = goal.Unit,
-                    Deadline = goal.Deadline,
-                    Status = goal.Status,
-                    Type = goal.Type
-                });
-            }
-
-            return allGoals;
+            return Result<List<Goal>>.Sucess(goals.FindAll(g => g.Status != GoalStatus.Deleted));
         }
 
-        public async Task<GoalDto> GetGoalAsync(int id)
+        public async Task<Result<Goal>> GetOne(int id)
         {   
-            var goal = await _repository.GetGoalAsync(id);
+            return Result<Goal>.Sucess(await _goalsRepository.GetOne(id));
+        }
 
-            var goalDto = new GoalDto
-            {
-                Id = goal.Id,
-                Name = goal.Name,
-                Description = goal.Description,
-                CurrentValue = goal.CurrentValue,
-                TargetValue = goal.TargetValue,
-                CustomUnit = goal.CustomUnit,
-                Unit = goal.Unit,
-                Deadline = goal.Deadline,
-                Status = goal.Status,
-                Type = goal.Type,
-                Progresses = goal.Progresses.Select(progress => new ProgressDto
-                {   
-                    Id = progress.Id,
-                    Value = progress.Value,
-                    Date = progress.Date,
-                    Description = progress.Description,
-                    Category = progress.Category != null ? new CategoryDto
-                    {
-                        Id = progress.Category.Id,
-                        Name = progress.Category.Name,
-                        Multiplier = progress.Category.Multiplier
-                    } : null
-                }
-                ).ToList()
+        public async Task<Result<int>> Create(GoalCreateUpdateDto newGoal)
+        {
+            var goal = new Goal {
+                Name = newGoal.Name,
+                Description = newGoal.Description,
+                CurrentValue = 0,
+                TargetValue = newGoal.TargetValue,
+                CustomUnit = newGoal.CustomUnit,
+                Unit = newGoal.Unit,
+                Deadline = newGoal.Deadline,
+                Status = GoalStatus.Current,
+                Type = newGoal.Type
             };
-                
-            return goalDto;
+
+            if (await _goalsRepository.Add(goal) == 0)
+                return Result<int>.Failure("Failed to create goal");
+            
+            return Result<int>.Sucess(goal.Id);
+        }
+        
+        public async Task<Result<Object>> Update(int id, GoalCreateUpdateDto updatedGoal)
+        {
+            var goal = await _goalsRepository.GetOne(id);
+
+            if (goal == null || goal.Status == GoalStatus.Deleted)
+                return null;
+
+            goal.Name = updatedGoal.Name;
+            goal.Description = updatedGoal.Description;
+            goal.TargetValue = updatedGoal.TargetValue;
+            goal.CustomUnit = updatedGoal.CustomUnit;
+            goal.Unit = updatedGoal.Unit;
+            goal.Deadline = updatedGoal.Deadline;
+
+            if (await _goalsRepository.Update(goal) == 0)
+                return Result<Object>.Failure("Failed to update goal");
+            
+            return Result<Object>.Sucess(null);
+        }
+
+        public async Task<Result<object>> UpdateStatus(int id, GoalStatus newStatus)
+        {
+            var goal = await _goalsRepository.GetOne(id);
+
+            if (goal == null)
+                return null;
+
+            goal.Status = newStatus;
+
+            if (await _goalsRepository.Update(goal) == 0)
+                return Result<Object>.Failure("Failed to update goal status");
+            
+            return Result<Object>.Sucess(null);
+        }
+
+        public async Task<Result<Object>> Delete(int id)
+        {
+            var goal = await _goalsRepository.GetOne(id);
+
+            if (goal == null || goal.Status == GoalStatus.Deleted)
+                return null;
+
+            goal.Status = GoalStatus.Deleted;
+
+            if (await _goalsRepository.Update(goal) == 0)
+                return Result<Object>.Failure("Failed to delete goal");
+            
+            return Result<Object>.Sucess(null);
         }
     }
 }

@@ -12,17 +12,37 @@ namespace Persistence.Repositories
             _context = context;
         }
 
-        public async Task<List<Goal>> GetAllGoalsAsync()
+        public async Task<int> Add(Goal goal)
+        {
+            await _context.AddAsync(goal);
+
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<Goal>> GetAll()
         {
             return await _context.Goals.ToListAsync();
         }
 
-        public async Task<Goal> GetGoalAsync(int id)
+        public async Task<Goal> GetOne(int id)
         {
-            return await _context.Goals
-                .Include(g => g.Progresses)
-                    .ThenInclude(p => p.Category)
-                .FirstOrDefaultAsync(g => g.Id == id);
+            return await _context.Goals.FirstOrDefaultAsync(g => g.Id == id);
+        }
+
+        public async Task<int> Update(Goal goal)
+        {
+            _context.Goals.Update(goal);
+
+            return await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> Delete(int id)
+        {   
+            var goal = await _context.Goals.FindAsync(id);
+
+            _context.Goals.Remove(goal);
+
+            return await _context.SaveChangesAsync();
         }
     }
 }
