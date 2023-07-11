@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Application.Interfaces;
 using Application.Services;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+        .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddDbContext<DataContext>(opt => 
 {
@@ -24,6 +26,11 @@ builder.Services.AddCors(opt => {
 
 builder.Services.AddScoped<IGoalsService, GoalsService>();
 builder.Services.AddScoped<IGoalsRepository, GoalsRepository>();
+
+builder.Services.AddScoped<IProgressesService, ProgressesService>();
+builder.Services.AddScoped<IProgressesRepository, ProgressesRepository>();
+
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 
 var app = builder.Build();
 

@@ -8,9 +8,13 @@ namespace API.Controllers
     public class GoalsController : BaseApiController
     {
         private readonly IGoalsService _goalsService;
-        public GoalsController(IGoalsService goalsService)
+        private readonly IProgressesService _progressesService;
+
+        public GoalsController(IGoalsService goalsService, 
+                IProgressesService progressesService)
         {
             _goalsService = goalsService;
+            _progressesService = progressesService;
         }
 
         [HttpGet("goals")] //api/goals
@@ -23,6 +27,12 @@ namespace API.Controllers
         public async Task<IActionResult> GetGoal(int id)
         {
             return HandleResult(await _goalsService.GetOne(id));
+        }
+
+        [HttpGet("goal/{id}/progresses")] //api/progresses
+        public async Task<IActionResult> GetGoalProgresses(int id)
+        {
+            return HandleResult(await _progressesService.GetAll(id));
         }
 
         [HttpPost("goals")] //api/goals
