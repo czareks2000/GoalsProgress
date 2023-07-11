@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 
 const Navbar = () => {
@@ -6,24 +6,24 @@ const Navbar = () => {
 
     return (
         <div className="navbar container shadow text-center">
-            <Link 
+            <NavLink 
                 className={`navbar-item ${(location.pathname === '/goals' || location.pathname === '/') ? 'active' : ''}`} 
                 to="/goals"
             >
                 Goals
-            </Link>
-            <Link 
-                className={`navbar-item ${location.pathname === '/archived' ? 'active' : ''}`} 
+            </NavLink>
+            <NavLink 
+                className={`navbar-item`} 
                 to="/archived"
             >
                 Archived
-            </Link>       
-            <Link 
-                className={`navbar-item ${location.pathname === '/settings' ? 'active' : ''}`}  
+            </NavLink>       
+            <NavLink  
+                className={`navbar-item`} 
                 to="/settings"
             >
                 Settings
-            </Link>
+            </NavLink>
             <div className="navbar-item">
                 Logout
             </div>
