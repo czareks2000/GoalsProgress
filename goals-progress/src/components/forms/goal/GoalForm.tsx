@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent } from "react";
-import { Goal } from "../interfaces/Goal";
-import Button from "./Button";
+import { Goal } from "../../../app/models/Goal";
+import Button from "../../common/Button";
 
 interface Props {
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;

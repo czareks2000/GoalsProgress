@@ -2,44 +2,46 @@ import { FaPlus, FaEdit, FaTrash, FaFolder } from 'react-icons/fa'
 import { GiCancel } from 'react-icons/gi'
 import { RiArrowGoBackFill } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
-import { Goal } from '../interfaces/Goal';
+import { GoalStatus } from '../../app/models/enums/GoalStatus';
+import { useStore } from '../../app/stores/store';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
     onShowAddForm: () => void;
     showAddForm: boolean;
     onShowEditForm: () => void;
     showEditForm: boolean;
-    onDelete: (id: number) => void;
-    onArchive:(id: number) => void;
-    onRestore: (id: number) => void;
-    goal: Goal;
 }
 
-const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onDelete, onArchive, onRestore, goal }: Props) => {
+export default observer(function Actions({ onShowAddForm, showAddForm, onShowEditForm, showEditForm }: Props) {
+    const {goalStore} = useStore();
+    const {selectedGoal: goal, changeStatus} = goalStore;
 
     const navigate = useNavigate();
 
     const handleDeleteGoal = () => {
-        onDelete(goal.id);
+        changeStatus(goal!.id, GoalStatus.Deleted);
         navigate('/');
     }
 
     const handleArchiveGoal = () => {
-        onArchive(goal.id);
-        navigate(`/goal/${goal.id}`);
+        changeStatus(goal!.id, GoalStatus.Archvied);
+        navigate(`/goal/${goal!.id}`);
     }
 
     const handleRestoreGoal = () => {
-        onRestore(goal.id);
-        navigate(`/goal/${goal.id}`);
+        changeStatus(goal!.id, GoalStatus.Current);
+        navigate(`/goal/${goal!.id}`);
     }
     
+    if (!goal) return <></>
+
     return (
         <div className="actions text-center">
             <div 
                 className={`action 
                         ${showAddForm ? 'active' : ''}
-                        ${goal.status !== 1 || showEditForm ? 'disabled' : ''}`} 
+                        ${goal.status !== GoalStatus.Current || showEditForm ? 'disabled' : ''}`} 
                 onClick={onShowAddForm}
             >
                 {showAddForm ? 
@@ -51,7 +53,7 @@ const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onD
             <div 
                 className={`action 
                         ${showEditForm ? 'active' : ''} 
-                        ${goal.status !== 1 || showAddForm ? 'disabled' : ''}`} 
+                        ${goal.status !== GoalStatus.Current || showAddForm ? 'disabled' : ''}`} 
                 onClick={onShowEditForm}
             >
                 {showEditForm ? 
@@ -70,9 +72,9 @@ const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onD
             <div 
                 className={`action 
                         ${showAddForm || showEditForm ? 'disabled' : ''}`}  
-                onClick={goal.status === 1 ? handleArchiveGoal : handleRestoreGoal}
+                onClick={goal.status === GoalStatus.Current ? handleArchiveGoal : handleRestoreGoal}
             >
-                {goal.status === 1 ? 
+                {goal.status === GoalStatus.Current ? 
                 <><FaFolder/>Archive</>
                 : 
                 <><RiArrowGoBackFill/>Restore</> 
@@ -80,6 +82,4 @@ const Actions = ({ onShowAddForm, showAddForm, onShowEditForm, showEditForm, onD
             </div>
         </div>
   )
-}
-
-export default Actions
+})

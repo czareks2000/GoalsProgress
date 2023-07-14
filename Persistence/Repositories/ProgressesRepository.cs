@@ -31,6 +31,7 @@ namespace Persistence.Repositories
         {
             return await _context.Progresses
                     .Include(p => p.Category)
+                    .Include(p => p.Goal)
                     .FirstOrDefaultAsync(p => p.Id == id);
         }
 

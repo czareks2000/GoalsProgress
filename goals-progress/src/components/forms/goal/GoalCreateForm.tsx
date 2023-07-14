@@ -2,13 +2,9 @@ import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 import GoalForm from "./GoalForm";
-import { Goal } from "../interfaces/Goal";
+import { Goal } from "../../../app/models/Goal";
 
-interface Props {
-  onAdd: (goal: Goal) => void;
-}
-
-const GoalCreateForm = ({ onAdd }: Props) => { 
+const GoalCreateForm = () => { 
   const [goal, setGoal] = useState<Goal>({
     id: 0,
     name: '',
@@ -27,8 +23,8 @@ const GoalCreateForm = ({ onAdd }: Props) => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const id = Math.floor(Math.random() * (100 - 10 + 1)) + 10 // tylko do testowania
-    onAdd({ ...goal, id: id});
+    //const id = Math.floor(Math.random() * (100 - 10 + 1)) + 10 // tylko do testowania
+    //onAdd({ ...goal, id: id});
 
     navigate("/");
   }

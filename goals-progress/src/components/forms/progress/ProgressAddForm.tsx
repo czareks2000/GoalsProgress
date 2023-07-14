@@ -1,10 +1,10 @@
 import { FormEvent, useState } from "react"
 
-import Button from "./Button";
-import { StandardProgress } from "../interfaces/Progress";
+import Button from "../../common/Button";
+import { Progress } from "../../../app/models/Progress";
 
 interface Props {
-  onAdd: (progress: StandardProgress) => void;
+  onAdd: (progress: Progress) => void;
   toggleAddForm: () => void;
 }
 

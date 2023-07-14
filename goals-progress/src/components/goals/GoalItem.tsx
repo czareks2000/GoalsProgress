@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Goal } from '../interfaces/Goal';
+import { Goal } from '../../app/models/Goal';
 
 interface Props {
   goal: Goal;

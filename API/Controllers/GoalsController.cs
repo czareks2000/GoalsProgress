@@ -29,7 +29,7 @@ namespace API.Controllers
             return HandleResult(await _goalsService.GetOne(id));
         }
 
-        [HttpGet("goal/{id}/progresses")] //api/progresses
+        [HttpGet("goal/{id}/progresses")] //api/goal/id/progresses
         public async Task<IActionResult> GetGoalProgresses(int id)
         {
             return HandleResult(await _progressesService.GetAll(id));
@@ -47,7 +47,7 @@ namespace API.Controllers
             return HandleResult(await _goalsService.Update(id, goal));
         }
 
-        [HttpPatch("goal/{id}")] //api/goal/id
+        [HttpPatch("goal/{id}/{status}")] //api/goal/id/status
         public async Task<IActionResult> UpdateGoalStatus(int id, GoalStatus status)
         {
             return HandleResult(await _goalsService.UpdateStatus(id, status));
