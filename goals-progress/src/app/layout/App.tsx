@@ -14,10 +14,11 @@ import GoalCreate from '../../components/forms/goal/GoalCreate';
 
 export default observer(function App() {
   const {goalStore} = useStore();
-  const {loadGoals} = goalStore;
+  const {loadGoals, loadCategories, categories, goalsRegistry} = goalStore;
 
   useEffect(() => {
-    loadGoals();
+    if (goalsRegistry.size <= 0) loadGoals();
+    if (categories.length == 0) loadCategories();
   }, [loadGoals]);
 
   return (

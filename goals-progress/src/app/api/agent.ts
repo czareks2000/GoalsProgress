@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { Goal } from "../models/Goal";
 import { Progress } from "../models/Progress";
 import { GoalStatus } from "../models/enums/GoalStatus";
+import { Category } from "../models/Category";
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
@@ -30,9 +31,14 @@ const Progresses = {
     delete: (id: number) => requests.del<void>(`/progress/${id}`) 
 }
 
+const Categories = {
+    list: () => requests.get<Category[]>('/categories')
+}
+
 const agent = {
     Goals,
-    Progresses
+    Progresses,
+    Categories
 }
 
 export default agent;

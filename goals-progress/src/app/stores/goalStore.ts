@@ -3,11 +3,13 @@ import { Goal } from "../models/Goal";
 import agent from "../api/agent";
 import { GoalStatus } from "../models/enums/GoalStatus";
 import { Progress } from "../models/Progress";
+import { Category } from "../models/Category";
 
 export default class GoalStore {
     goalsRegistry = new Map<number, Goal>();
     selectedGoal: Goal | undefined = undefined;
     progresses = new Map<number, Progress>();
+    categories: Category[] = [];
 
     constructor() {
         makeAutoObservable(this);
@@ -96,6 +98,17 @@ export default class GoalStore {
                 this.progresses.delete(id);
                 this.setGoal(goal);
                 this.selectedGoal = goal;
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    loadCategories = async () => {
+        try {
+            var categories = await agent.Categories.list();
+            runInAction(() => {
+                this.categories = categories
             })
         } catch (error) {
             console.log(error);
