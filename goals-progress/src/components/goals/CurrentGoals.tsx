@@ -30,7 +30,7 @@ export default observer(function Goals (){
         })}
       </div>
       <div className="text-center">
-        <Link to="/goals/create">
+        <Link to="/goal/create">
           <Button text={<FaPlus/>} color={'#39a0ca'}/>
         </Link>
       </div>

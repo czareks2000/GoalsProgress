@@ -6,18 +6,17 @@ import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
 interface Props {
-    goalToEdit: Goal; 
     toggleEditForm: () => void; 
 }
 
-export default observer(function GoalEditForm({ goalToEdit, toggleEditForm }: Props)  {
+export default observer(function GoalEditForm({ toggleEditForm }: Props)  {
     const {goalStore} = useStore();
-    const {updateGoal} = goalStore;
-    const [goal, setGoal] = useState<Goal>(goalToEdit);
+    const {updateGoal, selectedGoal} = goalStore;
+    const [goal, setGoal] = useState<Goal>(selectedGoal as Goal);
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    
+        
         updateGoal(goal.id, goal);
         toggleEditForm();
       }

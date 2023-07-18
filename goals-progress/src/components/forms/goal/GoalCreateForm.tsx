@@ -3,8 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 import GoalForm from "./GoalForm";
 import { Goal } from "../../../app/models/Goal";
+import { GoalType } from "../../../app/models/enums/GoalType";
+import { useStore } from "../../../app/stores/store";
 
-const GoalCreateForm = () => { 
+interface Props {
+  type: GoalType;
+}
+
+const GoalCreateForm = ({type}: Props) => {
+  const {goalStore} = useStore();
+  const {createGoal} = goalStore
+     
   const [goal, setGoal] = useState<Goal>({
     id: 0,
     name: '',
@@ -12,32 +21,26 @@ const GoalCreateForm = () => {
     currentValue: 0,
     targetValue: 0,
     customUnit: false,
-    unit: '',
+    unit: 'none',
     deadline: '',
     status: 1,
-    type: 1
+    type: type
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    //const id = Math.floor(Math.random() * (100 - 10 + 1)) + 10 // tylko do testowania
-    //onAdd({ ...goal, id: id});
-
-    navigate("/");
+    createGoal(goal).then(() => navigate(`/goals`));
   }
 
   return (
-    <div className="container shadow">
       <GoalForm 
         goal={goal}
         setGoal={setGoal}
         onSubmit={onSubmit}
-        buttonText={'ADD'}
+        buttonText={'CREATE'}
       />
-    </div>
   )
 }
 

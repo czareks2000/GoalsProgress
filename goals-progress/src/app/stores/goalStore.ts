@@ -118,7 +118,8 @@ export default class GoalStore {
         try {
             await agent.Goals.update(id, goal);
             runInAction(() => {
-                this.goalsRegistry.set(goal.id, goal);
+                this.setGoal(goal);
+                this.selectedGoal = goal;
             })
         } catch (error) {
             console.log(error);

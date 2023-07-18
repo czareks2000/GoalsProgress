@@ -23,7 +23,7 @@ export default observer(function GoalDetails() {
 
     useEffect(() => {
         if (id) loadGoal(parseInt(id));
-    }, [id, goal])
+    }, [id, goal, loadGoal])
 
     
     const toggleAddForm = () => {
@@ -54,7 +54,7 @@ export default observer(function GoalDetails() {
                 onShowEditForm={toggleEditForm}
             />
             {showAddForm && <ProgressAddForm onAdd={addProgress} toggleAddForm={toggleAddForm}/>}
-            {showEditForm && <GoalEditForm goalToEdit={goal as Goal} toggleEditForm={toggleEditForm} />}
+            {showEditForm && <GoalEditForm toggleEditForm={toggleEditForm} />}
             {showProgressList && <ProgressList />}
         </div>
     )

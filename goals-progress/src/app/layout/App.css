@@ -90,6 +90,23 @@ body{
   border-radius: 10px;
 }
 
+.card-group {
+  display: flex;
+}
+
+.card {
+  background-color: var(--background-light);
+  border-radius: 5px;
+  margin: 5px auto 30px auto;
+  color: var(--background-dark);
+  width: 200px;
+  text-align: center;
+}
+
+.card:hover {
+  background-color: var(--highlight);
+}
+
 .goals.container{
   min-height: 167px;
   margin: 20px auto;

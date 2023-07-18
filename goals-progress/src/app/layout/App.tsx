@@ -6,11 +6,11 @@ import Header from './Header';
 import Footer from './Footer';
 import Goals from '../../components/goals/CurrentGoals';
 import GoalDetails from '../../components/details/GoalDetails';
-import GoalCreateForm from '../../components/forms/goal/GoalCreateForm';
 import ArchviedGoals from '../../components/goals/ArchviedGoals';
 import Settings from '../../components/settings/Settings';
 import { useStore } from '../stores/store';
 import { observer } from 'mobx-react-lite';
+import GoalCreate from '../../components/forms/goal/GoalCreate';
 
 export default observer(function App() {
   const {goalStore} = useStore();
@@ -28,7 +28,7 @@ export default observer(function App() {
           <Route path='/' element={<Goals />}/>
           <Route path='/goals' element={<Goals />}/>
           <Route path='/goal/:id'  element={<GoalDetails />}/>
-          <Route path='/goals/create' element={<GoalCreateForm />}/>
+          <Route path='/goal/create' element={<GoalCreate />}/>
           <Route path='/archived' element={<ArchviedGoals />}/>
           <Route path='/settings' element={<Settings />}/>
         </Routes>

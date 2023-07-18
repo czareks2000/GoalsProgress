@@ -10,14 +10,12 @@ interface Props {
 }
 
 const GoalForm = ({ onSubmit, buttonText, goal, setGoal }: Props) => {
-    
+
     const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
         if (e.target.value === '1') {
-          setGoal({ ...goal, unit: '' });
-          setGoal({ ...goal, customUnit: true });
+          setGoal({ ...goal, unit: '', customUnit: true });
         } else {
-          setGoal({ ...goal, unit: e.target.value });
-          setGoal({ ...goal, customUnit: false });
+          setGoal({ ...goal, unit: e.target.value, customUnit: false });
         }
       };
 
@@ -42,25 +40,25 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal }: Props) => {
         />
         </div>
         <div className="form-group-inline">
-        <div className="form-control w-100">
-            <label>Goal Value</label>
-            <input 
-            type="number" 
-            placeholder="ex. 10"
-            value={goal.targetValue}
-            onChange={(e) => setGoal({ ...goal, targetValue: parseInt(e.target.value) })}
-            />
-        </div>
-        <div className="form-control">
-            <label>Unit</label>
-            <select id="unitSelect" value={goal.customUnit ? "1" : ""} onChange={handleSelectChange}>
-              <option value="none">none</option>
-              <option value="psc">psc</option>
-              <option value="km">km</option>
-              <option value="kg">kg</option>
-              <option value="1">custom...</option>
-            </select>
-        </div>
+          <div className="form-control w-100">
+              <label>Goal Value</label>
+              <input 
+              type="number" 
+              placeholder="ex. 10"
+              value={goal.targetValue}
+              onChange={(e) => setGoal({ ...goal, targetValue: parseInt(e.target.value) })}
+              />
+          </div>
+          <div className="form-control">
+              <label>Unit</label>
+              <select id="unitSelect" value={goal.customUnit ? "1" : goal.unit} onChange={handleSelectChange}>
+                <option value="none">none</option>
+                <option value="psc">psc</option>
+                <option value="km">km</option>
+                <option value="kg">kg</option>
+                <option value="1">custom...</option>
+              </select>
+          </div>
         </div>
         {
         goal.customUnit &&
