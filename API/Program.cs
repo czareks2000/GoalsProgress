@@ -30,6 +30,7 @@ builder.Services.AddScoped<IGoalsRepository, GoalsRepository>();
 builder.Services.AddScoped<IProgressesService, ProgressesService>();
 builder.Services.AddScoped<IProgressesRepository, ProgressesRepository>();
 
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 
 var app = builder.Build();

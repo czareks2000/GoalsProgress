@@ -30,9 +30,9 @@ namespace Application.Services
             return Result<List<Progress>>.Sucess(progresses);
         }
 
-        public async Task<Result<int>> Create(ProgressCreateDto newProgress)
+        public async Task<Result<int>> Create(int goalId, ProgressCreateDto newProgress)
         {
-            var goal = await _goalsRepository.GetOne(newProgress.GoalId);
+            var goal = await _goalsRepository.GetOne(goalId);
 
             if (goal == null)
                 return Result<int>.Failure("Invalid goal id");

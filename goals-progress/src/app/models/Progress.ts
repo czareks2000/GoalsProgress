@@ -6,4 +6,5 @@ export interface Progress{
     date: string;
     description?: string;
     category?: Category;
+    categoryId?: number;
 }

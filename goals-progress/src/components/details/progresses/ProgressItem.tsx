@@ -3,6 +3,7 @@ import { Progress } from '../../../app/models/Progress';
 import { GoalStatus } from '../../../app/models/enums/GoalStatus';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
+import { GoalType } from '../../../app/models/enums/GoalType';
 
 interface Props {
   progress: Progress;
@@ -19,7 +20,12 @@ export default observer(function ProgressItem({ progress }: Props) {
             <p>{progress.value}</p>
         </div>
         <div className="progress-details">
-            <p>{progress.description}</p>
+            <p>
+              {goal?.type === GoalType.Standard 
+                ? progress.description 
+                : `${progress.category?.name} (x ${progress.category?.multiplier})`
+              }
+            </p>
             <small>{progress.date}</small>
         </div>
         {goal!.status === GoalStatus.Current && 

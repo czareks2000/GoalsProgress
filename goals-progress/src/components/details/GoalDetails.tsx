@@ -36,12 +36,6 @@ export default observer(function GoalDetails() {
         setShowProgressList(!showProgressList);
     };
 
-    // add progress
-    const addProgress = (progress: Progress) => {
-        //setProgressList([ ...progressList, progress]);
-        setShowAddForm(false);
-    }
-
     if (!goal) return <></>
 
     return (
@@ -53,7 +47,7 @@ export default observer(function GoalDetails() {
                 showEditForm={showEditForm}
                 onShowEditForm={toggleEditForm}
             />
-            {showAddForm && <ProgressAddForm onAdd={addProgress} toggleAddForm={toggleAddForm}/>}
+            {showAddForm && <ProgressAddForm toggleAddForm={toggleAddForm}/>}
             {showEditForm && <GoalEditForm toggleEditForm={toggleEditForm} />}
             {showProgressList && <ProgressList />}
         </div>

@@ -46,7 +46,7 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal }: Props) => {
               type="number" 
               placeholder="ex. 10"
               value={goal.targetValue}
-              onChange={(e) => setGoal({ ...goal, targetValue: parseInt(e.target.value) })}
+              onChange={(e) => setGoal({ ...goal, targetValue: parseInt(e.target.value)})}
               />
           </div>
           <div className="form-control">

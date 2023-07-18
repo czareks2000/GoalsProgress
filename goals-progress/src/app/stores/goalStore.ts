@@ -90,6 +90,21 @@ export default class GoalStore {
         }
     }
 
+    createProgress = async (goalId: number, progress: Progress) => {
+        try {
+            const id = await agent.Progresses.create(goalId, progress);
+            progress.id = id;
+            let goal = await agent.Goals.details(goalId);
+            runInAction(() => {
+                this.setProgress(progress);
+                this.setGoal(goal);
+                this.selectedGoal = goal;
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     deleteProgress = async (id: number, goalId: number) => {
         try {
             await agent.Progresses.delete(id);

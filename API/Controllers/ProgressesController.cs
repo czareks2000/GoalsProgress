@@ -13,10 +13,10 @@ namespace API.Controllers
             _progressesService = progressesService;
         }
 
-        [HttpPost("progresses")] //api/progresses
-        public async Task<IActionResult> CreateProgress(ProgressCreateDto progress)
+        [HttpPost("progresses/{goalId}")] //api/progresses/goalId
+        public async Task<IActionResult> CreateProgress(int goalId, ProgressCreateDto progress)
         {
-            return HandleResult(await _progressesService.Create(progress));
+            return HandleResult(await _progressesService.Create(goalId, progress));
         }
 
         [HttpDelete("progress/{id}")] //api/progress/id

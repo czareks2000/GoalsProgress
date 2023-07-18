@@ -10,7 +10,6 @@ namespace Application.Dto
         [Required]
         public DateOnly Date { get; set; }
         [Required]
-        public int GoalId { get; set; }
         public int CategoryId { get; set; }
     }
 }
