@@ -53,10 +53,7 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal }: Props) => {
               <label>Unit</label>
               <select id="unitSelect" value={goal.customUnit ? "1" : goal.unit} onChange={handleSelectChange}>
                 <option value="none">none</option>
-                <option value="psc">psc</option>
-                <option value="km">km</option>
-                <option value="kg">kg</option>
-                <option value="1">custom...</option>
+                <option value="1">custom</option>
               </select>
           </div>
         </div>
