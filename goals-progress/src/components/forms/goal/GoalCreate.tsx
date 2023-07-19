@@ -6,19 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 const GoalCreate = () => {
     const [type, setType] = useState<GoalType | null>(null);
-    const [isTypeChoosen, setIsTypeChoosen] = useState(false);
 
     const navigate = useNavigate();
-
-    const handleChooseType = (type: GoalType) => {
-        setIsTypeChoosen(true);
-        setType(type);
-    }
 
     return (
         <>
             <div className="container shadow">
-                {isTypeChoosen 
+                {type
                 ?  
                 <>
                     <h2 className="text-center">{'Create ' + GoalType[type!] + ' Goal'}</h2>
@@ -29,12 +23,12 @@ const GoalCreate = () => {
                     <h2 className="text-center">Choose goal type</h2>
                     <div className="card-group">
                         <div className="card" 
-                            onClick={() => handleChooseType(GoalType.Standard)}
+                            onClick={() => setType(GoalType.Standard)}
                         >
                             <h3>Standard</h3>     
                         </div>
                         <div className="card" 
-                            onClick={() => handleChooseType(GoalType.Extended)}
+                            onClick={() => setType(GoalType.Extended)}
                         >
                             <h3>Extended</h3>          
                         </div>

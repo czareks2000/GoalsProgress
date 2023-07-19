@@ -6,14 +6,12 @@ import Actions from "./Actions";
 import ProgressList from "./progresses/ProgressList";
 import ProgressAddForm from "../forms/progress/ProgressAddForm";
 import GoalEditForm from "../forms/goal/GoalEditForm";
-import { Progress } from "../../app/models/Progress";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { Goal } from "../../app/models/Goal";
 
 export default observer(function GoalDetails() {
     const {goalStore} = useStore();
-    const {selectedGoal: goal, loadGoal} = goalStore;
+    const {selectedGoal: goal, loadGoal, loadCategories, categories} = goalStore;
 
     const [showAddForm, setShowAddForm] = useState<boolean>(false);
     const [showEditForm, setShowEditForm] = useState<boolean>(false);
@@ -23,7 +21,8 @@ export default observer(function GoalDetails() {
 
     useEffect(() => {
         if (id) loadGoal(parseInt(id));
-    }, [id, goal, loadGoal])
+        if (categories.length === 0) loadCategories();
+    }, [id, goal, loadGoal, loadCategories, categories])
 
     
     const toggleAddForm = () => {
@@ -40,7 +39,7 @@ export default observer(function GoalDetails() {
 
     return (
         <div className="container shadow">
-            <GoalItem goal={goal as Goal}/>
+            <GoalItem goal={goal}/>
             <Actions 
                 showAddForm={showAddForm} 
                 onShowAddForm={toggleAddForm}

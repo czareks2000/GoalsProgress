@@ -7,11 +7,11 @@ import { observer } from 'mobx-react-lite';
 
 export default observer(function ArchviedGoals() {
   const {goalStore} = useStore();
-  const {archivedGoals, loadGoals} = goalStore;
+  const {archivedGoals, goalsRegistry, loadGoals} = goalStore;
 
   useEffect(() => {
-    loadGoals();
-  }, [loadGoals]);
+    if (goalsRegistry.size <= 0) loadGoals();
+  }, [loadGoals, goalsRegistry]);
   
   return (
     <>

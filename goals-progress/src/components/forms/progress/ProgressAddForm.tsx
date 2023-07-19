@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react"
+import { FormEvent, useState } from "react"
 
 import Button from "../../common/Button";
 import { Progress } from "../../../app/models/Progress";
@@ -54,7 +54,7 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
             <div className="form-control">
               <label>Category</label>
               <select id="categorySelect" 
-                onChange={(e) => setProgress({ ... progress, categoryId: parseInt(e.target.value)})}>
+                onChange={(e) => setProgress({ ...progress, categoryId: parseInt(e.target.value)})}>
                 {categories.map(category => (
                   <option key={category.id} value={category.id}>{`${category.name} (x ${category.multiplier})`}</option>
                 ))}

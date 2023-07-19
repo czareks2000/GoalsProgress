@@ -8,13 +8,13 @@ import { useStore } from '../../app/stores/store'
 import { useEffect } from 'react';
 
 
-export default observer(function Goals (){
+export default observer(function CurrentGoals (){
   const {goalStore} = useStore();
-  const {currentGoals, loadGoals} = goalStore;
+  const {currentGoals, loadGoals, goalsRegistry} = goalStore;
 
   useEffect(() => {
-    loadGoals();
-  }, [loadGoals]);
+    if (goalsRegistry.size <= 0) loadGoals();
+  }, [loadGoals, goalsRegistry]);
 
   return (
     <>
