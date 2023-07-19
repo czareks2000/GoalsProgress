@@ -1,11 +1,11 @@
 import { FaPlus } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-import GoalItem from "./GoalItem"
 import Button from '../common/Button'
 import { observer } from "mobx-react-lite";
 import { useStore } from '../../app/stores/store'
 import { useEffect } from 'react';
+import GoalsList from './GoalsList';
 
 
 export default observer(function CurrentGoals (){
@@ -13,22 +13,20 @@ export default observer(function CurrentGoals (){
   const {currentGoals, loadGoals, goalsRegistry} = goalStore;
 
   useEffect(() => {
-    if (goalsRegistry.size <= 0) loadGoals();
+    if (goalsRegistry.size <= 1) loadGoals();
   }, [loadGoals, goalsRegistry]);
 
   return (
     <>
       <div className="goals container shadow">
-        {currentGoals.map((goal) => {
-          return(
-            <div key={`${goal.id}-${goal.type}`}>
-              <Link to={`/goal/${goal.id}`}>
-                <GoalItem goal={goal}/>
-              </Link>
-            </div>
-          )
-        })}
+        {currentGoals.length > 0 
+        ?
+          <GoalsList goals={currentGoals}/>
+        :
+          <h2 className="text-center outline">You have no goals</h2>
+        }
       </div>
+
       <div className="text-center">
         <Link to="/goal/create">
           <Button text={<FaPlus/>} color={'#39a0ca'}/>

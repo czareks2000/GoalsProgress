@@ -107,6 +107,10 @@ body{
   background-color: var(--highlight);
 }
 
+.goals.container{
+  margin: 20px auto;
+}
+
 .goals a{
   text-decoration: none;
   color: inherit;

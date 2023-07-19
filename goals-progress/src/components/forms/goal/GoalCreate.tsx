@@ -15,7 +15,7 @@ const GoalCreate = () => {
                 {type
                 ?  
                 <>
-                    <h2 className="text-center">{'Create ' + GoalType[type!] + ' Goal'}</h2>
+                    <h2 className="text-center outline">{'Create ' + GoalType[type!] + ' Goal'}</h2>
                     <GoalCreateForm type={type!}/>
                 </>
                 :
