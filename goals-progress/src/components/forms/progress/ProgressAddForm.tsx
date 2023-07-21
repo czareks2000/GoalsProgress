@@ -4,6 +4,7 @@ import Button from "../../common/Button";
 import { Progress } from "../../../app/models/Progress";
 import { useStore } from "../../../app/stores/store";
 import { GoalType } from "../../../app/models/enums/GoalType";
+import DatePicker from "react-datepicker"
 
 interface Props {
   toggleAddForm: () => void;
@@ -16,7 +17,7 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
     const [progress, setProgress] = useState<Progress>({
       id: 0,
       value: 1,
-      date: '',
+      date: null,
       description: '',
       categoryId: categories[0].id
     });
@@ -63,9 +64,12 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
           }
           <div className="form-control">
             <label>Date</label>
-            <input 
-              type="date"
-              onChange={(e) => setProgress({...progress, date: e.target.value})}
+            <DatePicker
+              className="date-input"
+              placeholderText="Click to select a date"
+              todayButton="Today"
+              selected={progress.date}
+              onChange={(date) => setProgress({ ...progress, date: date})}
             />
           </div>
           <div className="text-center">

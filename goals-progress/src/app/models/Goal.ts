@@ -9,7 +9,7 @@ export interface Goal {
     targetValue: number,
     customUnit: boolean,
     unit: string,
-    deadline: string,
+    deadline: Date | null,
     status: GoalStatus,
     type: GoalType
 }

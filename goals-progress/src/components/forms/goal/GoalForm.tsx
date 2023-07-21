@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent } from "react";
 import { Goal } from "../../../app/models/Goal";
 import Button from "../../common/Button";
+import DatePicker from "react-datepicker"
 
 interface Props {
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
@@ -71,10 +72,12 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal }: Props) => {
         }
         <div className="form-control">
         <label>Deadline</label>
-        <input 
-            type="date"
-            value={goal.deadline}
-            onChange={(e) => {setGoal({ ...goal, deadline: e.target.value })}}
+        <DatePicker
+          className="date-input"
+          placeholderText="Click to select a date"
+          todayButton="Today"
+          selected={goal.deadline}
+          onChange={(date) => setGoal({ ...goal, deadline: date})}
         />
         </div>
         <div className="text-center">

@@ -20,8 +20,8 @@ const GoalCreate = () => {
                 </>
                 :
                 <>
-                    <h2 className="text-center">Choose goal type</h2>
-                    <div className="card-group">
+                    <h2 className="text-center outline">Choose goal type</h2>
+                    <div className="card-group outline">
                         <div className="card" 
                             onClick={() => setType(GoalType.Standard)}
                         >

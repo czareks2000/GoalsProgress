@@ -22,7 +22,7 @@ const GoalCreateForm = ({type}: Props) => {
     targetValue: 0,
     customUnit: false,
     unit: 'none',
-    deadline: '',
+    deadline: null,
     status: 1,
     type: type
   });

@@ -17,26 +17,28 @@ export default class GoalStore {
 
     get selectedProgresses() {
         return Array.from(this.progresses.values())
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            .sort((a, b) => b.date!.getTime() - a.date!.getTime());
     }
 
     get currentGoals() {
         return Array.from(this.goalsRegistry.values())
                 .filter(g => g.status === GoalStatus.Current)
-                .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime());
+                .sort((a, b) => a.deadline!.getTime() - b.deadline!.getTime());
     }
 
     get archivedGoals() {
         return Array.from(this.goalsRegistry.values())
                 .filter(g => g.status === GoalStatus.Archvied)
-                .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime());
+                .sort((a, b) => a.deadline!.getTime() - b.deadline!.getTime());
     }
 
     private setProgress = (progress: Progress) => {
+        progress.date = new Date(progress.date!);
         this.progresses.set(progress.id, progress);
     }
 
     private setGoal = (goal: Goal) => {
+        goal.deadline = new Date(goal.deadline!);
         this.goalsRegistry.set(goal.id, goal);
     }
 

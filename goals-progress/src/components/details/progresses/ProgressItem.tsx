@@ -4,6 +4,7 @@ import { GoalStatus } from '../../../app/models/enums/GoalStatus';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import { GoalType } from '../../../app/models/enums/GoalType';
+import { format } from 'date-fns';
 
 interface Props {
   progress: Progress;
@@ -26,7 +27,7 @@ export default observer(function ProgressItem({ progress }: Props) {
                 : `${progress.category?.name} (x ${progress.category?.multiplier})`
               }
             </p>
-            <small>{progress.date}</small>
+            <small>{format(progress.date!, 'dd MMM yyyy')}</small>
         </div>
         {goal!.status === GoalStatus.Current && 
         <div className="progress-delete" onClick={() => deleteProgress(progress.id, goal!.id)}>

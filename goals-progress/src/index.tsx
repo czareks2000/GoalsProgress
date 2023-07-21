@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
+import 'react-datepicker/dist/react-datepicker.css'
 import { StoreContext, store } from './app/stores/store';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './app/router/Routes';

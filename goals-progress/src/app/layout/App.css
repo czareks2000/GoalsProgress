@@ -97,7 +97,7 @@ body{
 .card {
   background-color: var(--background-light);
   border-radius: 5px;
-  margin: 5px auto 30px auto;
+  margin: 5px auto;
   color: var(--background-dark);
   width: 200px;
   text-align: center;
@@ -159,6 +159,10 @@ a .goal{
   background-color: var(--background-dark);
   border: 1px solid var(--primary);
   color: white;
+}
+
+.form-control .date-input {
+  width: calc(100% - 16px);
 }
 
 .form-control input::placeholder, .form-control select::placeholder {
