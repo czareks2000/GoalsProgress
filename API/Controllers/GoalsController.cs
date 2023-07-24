@@ -58,6 +58,5 @@ namespace API.Controllers
         {
             return HandleResult(await _goalsService.Delete(id));
         }
-
     }
 }

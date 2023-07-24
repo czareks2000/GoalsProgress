@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using API.Middleware;
 using Application.Interfaces;
 using Application.Services;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors("CorsPolicy");
 
