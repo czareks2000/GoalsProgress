@@ -33,7 +33,14 @@ export default class GoalStore {
     }
 
     private setProgress = (progress: Progress) => {
-        progress.date = new Date(progress.date!);
+        // date in database is in UTC, 
+        // so we need to convert it to local timezone
+        const date = new Date(progress.date!);
+        const timezoneOffsetMinutes = date.getTimezoneOffset();
+        console.log(timezoneOffsetMinutes);
+        date.setMinutes(date.getMinutes() - timezoneOffsetMinutes);
+        progress.date = date;
+
         this.progresses.set(progress.id, progress);
     }
 

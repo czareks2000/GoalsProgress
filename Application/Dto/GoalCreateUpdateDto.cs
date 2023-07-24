@@ -14,7 +14,7 @@ namespace Application.Dto
         public bool CustomUnit { get; set; }
         public string Unit { get; set; }
         [Required]
-        public DateOnly Deadline { get; set; }
+        public DateTime Deadline { get; set; }
         [Required]
         public GoalType Type { get; set; }
     }

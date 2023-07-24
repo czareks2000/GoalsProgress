@@ -43,7 +43,7 @@ namespace Persistence
                     Description = "Obejrzeć 20 filmów",
                     CustomUnit = false,
                     Unit = "none",
-                    Deadline = DateOnly.Parse("2023-12-31"),
+                    Deadline = DateTime.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
                     CurrentValue = 4,
                     TargetValue = 20,
@@ -53,28 +53,28 @@ namespace Persistence
                         new Progress
                         {
                             Id = 1,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), 
+                            Date = DateTime.Now.AddDays(-5), 
                             Value = 1,
                             Description = "Batman"
                         },
                         new Progress
                         {
                             Id = 2,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
+                            Date = DateTime.Now.AddDays(-4), 
                             Value = 1,
                             Description = "Forest Gump"
                         },
                         new Progress
                         {
                             Id = 3,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
+                            Date = DateTime.Now.AddDays(-3), 
                             Value = 1,
                             Description = "Shrek"
                         },
                         new Progress
                         {
                             Id = 4,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)), 
+                            Date = DateTime.Now.AddDays(-2), 
                             Value = 1,
                             Description = "American Psycho"
                         }
@@ -87,7 +87,7 @@ namespace Persistence
                     Description = "Wypróbować 10 nowych przepisów",
                     CustomUnit = false,
                     Unit = "none",
-                    Deadline = DateOnly.Parse("2023-12-31"),
+                    Deadline = DateTime.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
                     CurrentValue = 5,
                     TargetValue = 10,
@@ -97,35 +97,35 @@ namespace Persistence
                         new Progress
                         {
                             Id = 5,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), 
+                            Date = DateTime.Now.AddDays(-5), 
                             Value = 1,
                             Description = "Makaron 1"
                         },
                         new Progress
                         {
                             Id = 6,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
+                            Date = DateTime.Now.AddDays(-4), 
                             Value = 1,
                             Description = "Makaron 2"
                         },
                         new Progress
                         {
                             Id = 7,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
+                            Date = DateTime.Now.AddDays(-3), 
                             Value = 1,
                             Description = "Makaron 3"
                         },
                         new Progress
                         {
                             Id = 8,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)), 
+                            Date = DateTime.Now.AddDays(-2), 
                             Value = 1,
                             Description = "Makaron 4"
                         },
                         new Progress
                         {
                             Id = 9,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)), 
+                            Date = DateTime.Now.AddDays(-1), 
                             Value = 1,
                             Description = "Makaron 5"
                         }
@@ -138,7 +138,7 @@ namespace Persistence
                     Description = "Przeczytać 10 książek",
                     CustomUnit = false,
                     Unit = "none",
-                    Deadline = DateOnly.Parse("2023-12-31"),
+                    Deadline = DateTime.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
                     CurrentValue = 3,
                     TargetValue = 10,
@@ -148,21 +148,21 @@ namespace Persistence
                         new Progress
                         {
                             Id = 10,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)), 
+                            Date = DateTime.Now.AddDays(-5), 
                             Value = 1,
                             Description = "Książka 1"
                         },
                         new Progress
                         {
                             Id = 11,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
+                            Date = DateTime.Now.AddDays(-4), 
                             Value = 1,
                             Description = "Książka 2"
                         },
                         new Progress
                         {
                             Id = 12,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
+                            Date = DateTime.Now.AddDays(-3), 
                             Value = 1,
                             Description = "Książka 3"
                         }
@@ -175,7 +175,7 @@ namespace Persistence
                     Description = "Zrobić morfologie krwi 2 razy",
                     CustomUnit = true,
                     Unit = "szt",
-                    Deadline = DateOnly.Parse("2023-12-31"),
+                    Deadline = DateTime.Parse("2023-12-31"),
                     Status = GoalStatus.Archvied,
                     CurrentValue = 1,
                     TargetValue = 2,
@@ -185,7 +185,7 @@ namespace Persistence
                         new Progress
                         {
                             Id = 13,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-50)), 
+                            Date = DateTime.Now.AddDays(-50), 
                             Value = 1,
                             Description = "W normie"
                         }
@@ -198,7 +198,7 @@ namespace Persistence
                     Description = "Zdobyć 1000 punktów",
                     CustomUnit = true,
                     Unit = "pkt",
-                    Deadline = DateOnly.Parse("2023-12-31"),
+                    Deadline = DateTime.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
                     CurrentValue = 548.77M,
                     TargetValue = 1000.0M,
@@ -208,21 +208,21 @@ namespace Persistence
                         new Progress
                         {
                             Id = 14,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)),
+                            Date = DateTime.Now.AddDays(-5),
                             Value = 200.0M,
                             Category = categories[0]
                         },
                         new Progress
                         {
                             Id = 15,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-4)), 
+                            Date = DateTime.Now.AddDays(-4), 
                             Value = 230.5M,
                             Category = categories[1]
                         },
                         new Progress
                         {
                             Id = 16,
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)), 
+                            Date = DateTime.Now.AddDays(-3), 
                             Value = 6.04M,
                             Category = categories[2]
                         }

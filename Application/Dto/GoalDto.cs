@@ -11,7 +11,7 @@ namespace Application.Dto
         public decimal TargetValue { get; set; }
         public bool CustomUnit { get; set; }
         public string Unit { get; set; }
-        public DateOnly Deadline { get; set; }
+        public DateTime Deadline { get; set; }
         public GoalStatus Status { get; set; }
         public GoalType Type { get; set; }
         public ICollection<ProgressDto> Progresses { get; set; }
