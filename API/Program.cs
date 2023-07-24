@@ -1,38 +1,12 @@
-using System.Text.Json.Serialization;
+using API.Extentions;
 using API.Middleware;
-using Application.Interfaces;
-using Application.Services;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using Persistence.Interfaces;
-using Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers()
-        .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
-builder.Services.AddDbContext<DataContext>(opt => 
-{
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-builder.Services.AddCors(opt => {
-    opt.AddPolicy("CorsPolicy", policy => {
-        policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
-    });
-});
-
-builder.Services.AddScoped<IGoalsService, GoalsService>();
-builder.Services.AddScoped<IGoalsRepository, GoalsRepository>();
-
-builder.Services.AddScoped<IProgressesService, ProgressesService>();
-builder.Services.AddScoped<IProgressesRepository, ProgressesRepository>();
-
-builder.Services.AddScoped<ICategoriesService, CategoriesService>();
-builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
