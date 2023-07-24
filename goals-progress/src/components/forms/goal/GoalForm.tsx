@@ -46,7 +46,7 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal }: Props) => {
               <input 
               type="number" 
               placeholder="ex. 10"
-              value={goal.targetValue}
+              value={goal.targetValue || ''}
               onChange={(e) => setGoal({ ...goal, targetValue: parseInt(e.target.value)})}
               />
           </div>
@@ -76,6 +76,8 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal }: Props) => {
           className="date-input"
           placeholderText="Click to select a date"
           todayButton="Today"
+          calendarStartDay={1}
+          dateFormat="dd MMM yyyy"
           selected={goal.deadline}
           onChange={(date) => setGoal({ ...goal, deadline: date})}
         />

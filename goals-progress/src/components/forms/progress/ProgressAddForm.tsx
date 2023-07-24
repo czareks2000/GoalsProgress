@@ -16,7 +16,8 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
 
     const [progress, setProgress] = useState<Progress>({
       id: 0,
-      value: 1,
+      value: 
+        selectedGoal?.type === GoalType.Standard ? 1 : 0,
       date: null,
       description: '',
       categoryId: categories[0].id
@@ -36,7 +37,7 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
               type="number"
               step="any" 
               placeholder="ex. 1"
-              value={progress.value}
+              value={progress.value || ''}
               onChange={(e) => setProgress({...progress, value: parseFloat(e.target.value)})}
             />
           </div>
@@ -68,6 +69,8 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
               className="date-input"
               placeholderText="Click to select a date"
               todayButton="Today"
+              calendarStartDay={1}
+              dateFormat="dd MMM yyyy"
               selected={progress.date}
               onChange={(date) => setProgress({ ...progress, date: date})}
             />
