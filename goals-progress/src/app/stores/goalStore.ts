@@ -37,7 +37,6 @@ export default class GoalStore {
         // so we need to convert it to local timezone
         const date = new Date(progress.date!);
         const timezoneOffsetMinutes = date.getTimezoneOffset();
-        console.log(timezoneOffsetMinutes);
         date.setMinutes(date.getMinutes() - timezoneOffsetMinutes);
         progress.date = date;
 
