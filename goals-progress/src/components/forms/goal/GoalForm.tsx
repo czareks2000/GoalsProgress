@@ -9,12 +9,11 @@ interface Props {
   onSubmit: (goal: Goal) => void;
   buttonText: string;
   goal: Goal;
-  setGoal: (goal: Goal) => void;
   cancelButton?: boolean;
   cancelButtonAction?: any;
 }
 
-const GoalForm = ({ onSubmit, buttonText, goal, setGoal, cancelButton = false, cancelButtonAction }: Props) => {
+const GoalForm = ({ onSubmit, buttonText, goal, cancelButton = false, cancelButtonAction }: Props) => {
 
     const validationSchema = Yup.object({
       name: Yup.string().required('The goal name is required'),

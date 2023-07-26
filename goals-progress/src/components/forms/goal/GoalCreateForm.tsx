@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction } from "react"
 import { useNavigate } from "react-router-dom";
 
 import GoalForm from "./GoalForm";
@@ -15,7 +15,7 @@ const GoalCreateForm = ({type, setType}: Props) => {
   const {goalStore} = useStore();
   const {createGoal} = goalStore
      
-  const [goal, setGoal] = useState<Goal>({
+  const initialValues: Goal = {
     id: 0,
     name: '',
     description: '',
@@ -26,7 +26,7 @@ const GoalCreateForm = ({type, setType}: Props) => {
     deadline: null,
     status: 1,
     type: type
-  });
+  };
 
   const navigate = useNavigate();
 
@@ -36,8 +36,7 @@ const GoalCreateForm = ({type, setType}: Props) => {
 
   return (
       <GoalForm 
-        goal={goal}
-        setGoal={setGoal}
+        goal={initialValues}
         onSubmit={submitForm}
         buttonText={'CREATE'}
         cancelButton={true}

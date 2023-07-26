@@ -47,7 +47,7 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
           validationSchema={validationSchema}
           onSubmit={values => onSubmit(values)}
         >
-        {({ errors, touched, isValid, dirty, values, setFieldValue }) => (
+        {({ isValid, dirty, values, setFieldValue }) => (
           <Form className="outline">
             {/* Value */}
             <NumberInput placeholder="ex. 1" name="value" label="Value"/>
