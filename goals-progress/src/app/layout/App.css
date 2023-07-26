@@ -150,6 +150,14 @@ a .goal{
   font-size: large;
 }
 
+form .error{
+  color: red;
+}
+
+.form-control input.error{
+  border: 1px solid red;
+}
+
 .form-control input, .form-control select{
   border-radius: 5px;
   border: none;
@@ -297,7 +305,7 @@ a .goal{
 
 .btn {
   display: inline-block;
-  background: #000;
+  background: var(--background-light);
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -326,6 +334,12 @@ a .goal{
 .btn-block {
   display: block;
   width: 100%;
+}
+
+.btn.disabled{
+  background-color: var(--background-disabled) !important;
+  pointer-events: none;
+  cursor: default;
 }
 
 .btn-primary{

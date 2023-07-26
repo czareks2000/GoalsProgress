@@ -6,7 +6,7 @@ export interface Goal {
     name: string,
     description: string,
     currentValue: number,
-    targetValue: number,
+    targetValue: number | null,
     customUnit: boolean,
     unit: string,
     deadline: Date | null,

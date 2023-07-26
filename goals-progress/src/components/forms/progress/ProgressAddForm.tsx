@@ -76,7 +76,7 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
             />
           </div>
           <div className="text-center">
-            <Button text={'ADD'} color={'#39a0ca'}/>
+            <Button text={'ADD'}/>
           </div>
         </form>
   )

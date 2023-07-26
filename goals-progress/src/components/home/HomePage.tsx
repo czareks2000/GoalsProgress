@@ -6,7 +6,7 @@ export default function HomePage() {
         <>
             <h1 className="text-center">GoalsProgress</h1>
             <Link className="text-center" to='/goals'>
-                <Button text={"Your goals"} color="#39a0ca"/>
+                <Button text={"Your goals"} />
             </Link>
         </>
     )

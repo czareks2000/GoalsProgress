@@ -21,7 +21,7 @@ export default observer(function Actions({ onShowAddForm, showAddForm, onShowEdi
 
     const handleDeleteGoal = () => {
         changeStatus(goal!.id, GoalStatus.Deleted);
-        navigate('/');
+        navigate('/goals');
     }
 
     const handleArchiveGoal = () => {

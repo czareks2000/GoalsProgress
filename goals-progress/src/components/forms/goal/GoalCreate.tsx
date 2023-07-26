@@ -39,8 +39,7 @@ const GoalCreate = () => {
             {!type &&
                 <div className="text-center my-1">
                 <Button 
-                    text={'CANCEL'} 
-                    color={'#39a0ca'} 
+                    text={'CANCEL'}
                     onClick={() => navigate(-1)}
                 />
             </div>

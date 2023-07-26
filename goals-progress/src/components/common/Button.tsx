@@ -1,17 +1,14 @@
-import { ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
-interface Props {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: ReactNode;
-  color: string;
-  onClick?: () => void;
 }
 
-const Button = ({ text, color, onClick }: Props) => {
+const Button = ({ text, ...rest }: Props) => {
   return (
-    <button 
-        className="btn"
-        style={{backgroundColor: color}}
-        onClick={onClick} 
+    <button
+        className={`btn ${rest.className}`}
+        {...rest}
     >
     {text}
     </button>

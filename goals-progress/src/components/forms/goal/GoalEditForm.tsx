@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 
 import GoalForm from "./GoalForm"
 import { Goal } from "../../../app/models/Goal";
@@ -14,18 +14,16 @@ export default observer(function GoalEditForm({ toggleEditForm }: Props)  {
     const {updateGoal, selectedGoal} = goalStore;
     const [goal, setGoal] = useState<Goal>(selectedGoal as Goal);
 
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        
+    const submitForm = (goal: Goal) => {
         updateGoal(goal.id, goal);
         toggleEditForm();
-      }
+    }
 
     return (
         <GoalForm 
             goal={goal}
             setGoal={setGoal}
-            onSubmit={onSubmit}
+            onSubmit={submitForm}
             buttonText={'UPDATE'}
             cancelButton={false}
         />

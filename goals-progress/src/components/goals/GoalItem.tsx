@@ -14,7 +14,7 @@ const GoalItem = ({ goal }: Props) => {
   }
 
   const currentProgress = () => {
-    return Math.round(goal.currentValue / goal.targetValue * 100);
+    return Math.round(goal.currentValue / goal.targetValue! * 100);
   }
 
   return (
@@ -24,7 +24,7 @@ const GoalItem = ({ goal }: Props) => {
             <p>{goal.description}</p>
             <div className="stats">
               <div>
-                Progress: {goal.currentValue}/{goal.targetValue} {goal.unit !== 'none' && goal.unit}
+                Progress: {goal.currentValue}/{goal.targetValue} {goal.unit}
               </div>
               <div>{daysLeft()} Days Left</div>
             </div> 

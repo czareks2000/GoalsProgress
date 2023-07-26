@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 import GoalForm from "./GoalForm";
@@ -20,9 +20,9 @@ const GoalCreateForm = ({type, setType}: Props) => {
     name: '',
     description: '',
     currentValue: 0,
-    targetValue: 0,
+    targetValue: null,
     customUnit: false,
-    unit: 'none',
+    unit: '',
     deadline: null,
     status: 1,
     type: type
@@ -30,8 +30,7 @@ const GoalCreateForm = ({type, setType}: Props) => {
 
   const navigate = useNavigate();
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const submitForm = (goal: Goal) => {
     createGoal(goal).then(() => navigate(`/goals`));
   }
 
@@ -39,7 +38,7 @@ const GoalCreateForm = ({type, setType}: Props) => {
       <GoalForm 
         goal={goal}
         setGoal={setGoal}
-        onSubmit={onSubmit}
+        onSubmit={submitForm}
         buttonText={'CREATE'}
         cancelButton={true}
         cancelButtonAction={() => setType(null)}
