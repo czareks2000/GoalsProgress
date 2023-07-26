@@ -16,7 +16,7 @@ const GoalCreate = () => {
                 ?  
                 <>
                     <h2 className="text-center outline">{'Create ' + GoalType[type!] + ' Goal'}</h2>
-                    <GoalCreateForm type={type!}/>
+                    <GoalCreateForm type={type!} setType={setType}/>
                 </>
                 :
                 <>
@@ -33,13 +33,18 @@ const GoalCreate = () => {
                             <h3>Extended</h3>          
                         </div>
                     </div>
-                    
                 </>
                 }
             </div>
-            <div className="text-center my-1">
-                <Button text={'CANCEL'} color={'#39a0ca'} onClick={() => navigate(-1)}/>
+            {!type &&
+                <div className="text-center my-1">
+                <Button 
+                    text={'CANCEL'} 
+                    color={'#39a0ca'} 
+                    onClick={() => navigate(-1)}
+                />
             </div>
+            }   
         </>
     )
 }

@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react"
+import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 import GoalForm from "./GoalForm";
@@ -8,9 +8,10 @@ import { useStore } from "../../../app/stores/store";
 
 interface Props {
   type: GoalType;
+  setType: Dispatch<SetStateAction<GoalType | null>>;
 }
 
-const GoalCreateForm = ({type}: Props) => {
+const GoalCreateForm = ({type, setType}: Props) => {
   const {goalStore} = useStore();
   const {createGoal} = goalStore
      
@@ -40,6 +41,8 @@ const GoalCreateForm = ({type}: Props) => {
         setGoal={setGoal}
         onSubmit={onSubmit}
         buttonText={'CREATE'}
+        cancelButton={true}
+        cancelButtonAction={() => setType(null)}
       />
   )
 }

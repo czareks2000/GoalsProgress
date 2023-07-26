@@ -7,11 +7,12 @@ interface Props {
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   buttonText: string;
   goal: Goal;
-  setGoal: (goal: Goal) => void ;
+  setGoal: (goal: Goal) => void;
+  cancelButton?: boolean;
+  cancelButtonAction?: any;
 }
 
-const GoalForm = ({ onSubmit, buttonText, goal, setGoal }: Props) => {
-
+const GoalForm = ({ onSubmit, buttonText, goal, setGoal, cancelButton = false, cancelButtonAction }: Props) => {
     const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
         if (e.target.value === '1') {
           setGoal({ ...goal, unit: '', customUnit: true });
@@ -83,7 +84,16 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal }: Props) => {
         />
         </div>
         <div className="text-center">
-          <Button text={buttonText} color={'#39a0ca'}/>
+            <Button text={buttonText} color={'#39a0ca'}/>
+            {cancelButton &&
+            <div
+              className="btn"
+              style={{backgroundColor: '#39a0ca'}}
+              onClick={cancelButtonAction}
+            >
+              CANCEL
+            </div> 
+            }
         </div>
     </form>
   )

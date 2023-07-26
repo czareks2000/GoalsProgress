@@ -27,6 +27,7 @@ export default observer(function GoalEditForm({ toggleEditForm }: Props)  {
             setGoal={setGoal}
             onSubmit={onSubmit}
             buttonText={'UPDATE'}
+            cancelButton={false}
         />
     )
 })
