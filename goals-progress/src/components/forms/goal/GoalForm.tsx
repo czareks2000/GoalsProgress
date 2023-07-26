@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 import { Goal } from "../../../app/models/Goal";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikProps } from "formik";
 import * as Yup from "yup";
 import DateInput from "../../common/form/DateInput";
 import TextInput from "../../common/form/TextInput";
@@ -16,7 +16,7 @@ interface Props {
 
 const GoalForm = ({ onSubmit, buttonText, goal, setGoal, cancelButton = false, cancelButtonAction }: Props) => {
 
-    const validationSchema = Yup.object().shape({
+    const validationSchema = Yup.object({
       name: Yup.string().required('The goal name is required'),
       description: Yup.string().required('The goal description is required'),
       targetValue: Yup.number().required('The goal value is required'),
@@ -24,6 +24,12 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal, cancelButton = false, c
       customUnit: Yup.boolean(),
       unit: Yup.string().notRequired()
     });
+
+    const handleCustomUnitOption = (formik: FormikProps<Goal>, selectedValue: string) => {
+        formik.setFieldValue('customUnit', selectedValue === 'true');
+        if (selectedValue === 'false')
+          formik.setFieldValue('unit', '');
+    }
 
     return (
       <Formik
@@ -64,12 +70,8 @@ const GoalForm = ({ onSubmit, buttonText, goal, setGoal, cancelButton = false, c
                         name="customUnit" 
                         id="customUnit" 
                         value={values.customUnit.toString()}
-                        onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                          const selectedValue = e.target.value;
-                          formik.setFieldValue('customUnit', selectedValue === 'true');
-                          if (selectedValue === 'false')
-                            formik.setFieldValue('unit', '');
-                        }}
+                        onChange={(e: ChangeEvent<HTMLSelectElement>) => 
+                          handleCustomUnitOption(formik, e.target.value)}
                       >
                         <option value="false">none</option>
                         <option value="true">custom</option>

@@ -1,10 +1,13 @@
-import { FormEvent, useState } from "react"
+import { ChangeEvent, useState } from "react"
 
-import Button from "../../common/Button";
 import { Progress } from "../../../app/models/Progress";
 import { useStore } from "../../../app/stores/store";
 import { GoalType } from "../../../app/models/enums/GoalType";
-import DatePicker from "react-datepicker"
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import TextInput from "../../common/form/TextInput";
+import NumberInput from "../../common/form/NumberInput";
+import DateInput from "../../common/form/DateInput";
 
 interface Props {
   toggleAddForm: () => void;
@@ -14,71 +17,87 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
     const {goalStore} = useStore();
     const {createProgress, categories, selectedGoal} = goalStore;
 
-    const [progress, setProgress] = useState<Progress>({
+    const initialValues = {
       id: 0,
       value: 
-        selectedGoal?.type === GoalType.Standard ? 1 : 0,
+        selectedGoal?.type === GoalType.Standard ? 1 : null,
       date: null,
       description: '',
       categoryId: categories[0].id
+    };
+
+    const validationSchema = Yup.object({
+      value: Yup.string().required('Value is required'),
+      description: 
+        selectedGoal?.type === GoalType.Standard 
+          ? Yup.string().required('Description is required')
+          : Yup.string().notRequired(),
+      date: Yup.date().required('Date is required'),
     });
 
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        createProgress(selectedGoal?.id!, progress);
-        toggleAddForm();
+    const onSubmit = (values: Progress) => {
+      createProgress(selectedGoal!.id, values);
+      toggleAddForm();
     }
 
     return (
-      <form className="create-form outline" onSubmit={onSubmit}>
-          <div className="form-control">
-            <label>Value</label>
-            <input 
-              type="number"
-              step="any" 
-              placeholder="ex. 1"
-              value={progress.value || ''}
-              onChange={(e) => setProgress({...progress, value: parseFloat(e.target.value)})}
-            />
-          </div>
-          {selectedGoal?.type === GoalType.Standard 
-          ?
-            <div className="form-control">
-              <label>Description</label>
-              <input 
-                type="text" 
-                placeholder="ex. title of the movie"
-                value={progress.description}
-                onChange={(e) => setProgress({...progress, description: e.target.value})}
-              />
-            </div>
-          :
-            <div className="form-control">
-              <label>Category</label>
-              <select id="categorySelect" 
-                onChange={(e) => setProgress({ ...progress, categoryId: parseInt(e.target.value)})}>
-                {categories.map(category => (
-                  <option key={category.id} value={category.id}>{`${category.name} (x ${category.multiplier})`}</option>
-                ))}
-              </select>
-            </div>
-          }
-          <div className="form-control">
-            <label>Date</label>
-            <DatePicker
-              className="date-input"
+      <>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={values => onSubmit(values)}
+        >
+        {({ errors, touched, isValid, dirty, values, setFieldValue }) => (
+          <Form className="outline">
+            {/* Value */}
+            <NumberInput placeholder="ex. 1" name="value" label="Value"/>
+
+            {/* Description or Category */}
+            {selectedGoal?.type === GoalType.Standard 
+              ?
+              <TextInput placeholder="ex. title of the movie" name="description" label="Description"/>
+              :
+              <div className="form-control">
+                <label htmlFor="categoryId">Category</label>
+                <Field
+                  as="select"
+                  name="categoryId" 
+                  id="categoryId"
+                  value={values.categoryId} 
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) => 
+                    setFieldValue('categoryId', parseInt(e.target.value))}>
+                  {categories.map(category => (
+                    <option key={category.id} value={category.id}>{`${category.name} (x ${category.multiplier})`}</option>
+                  ))}
+                </Field>
+              </div>
+            } 
+
+            {/* Date */}
+            <DateInput
+              label="Date" 
+              name="date"
               placeholderText="Click to select a date"
               todayButton="Today"
               calendarStartDay={1}
               dateFormat="dd MMM yyyy"
-              selected={progress.date}
-              onChange={(date) => setProgress({ ...progress, date: date})}
             />
-          </div>
-          <div className="text-center">
-            <Button text={'ADD'}/>
-          </div>
-        </form>
+
+            {/* Button */}
+            <div className="text-center">
+              <button
+                type="submit"
+                className={!(dirty && isValid) ? "btn disabled" : "btn"}
+                disabled={!(dirty && isValid) }
+              >
+                ADD
+              </button>
+            </div>
+
+          </Form>
+        )}
+        </Formik>
+      </>
   )
 }
 
