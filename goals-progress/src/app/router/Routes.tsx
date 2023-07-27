@@ -6,6 +6,9 @@ import GoalCreate from "../../components/forms/goal/GoalCreate";
 import ArchviedGoals from "../../components/goals/ArchviedGoals";
 import Settings from "../../components/settings/Settings";
 import NotFound from "../../components/errors/NotFound";
+import Unauthorised from "../../components/errors/Unauthorised";
+import Forbidden from "../../components/errors/Forbidden";
+import ServerError from "../../components/errors/ServerError";
 
 export const routes: RouteObject[] = [
     {
@@ -17,6 +20,10 @@ export const routes: RouteObject[] = [
             {path: 'goal/create', element: <GoalCreate />},
             {path: 'archived', element: <ArchviedGoals />},
             {path: 'settings', element: <Settings />},
+            {path: 'not-found', element: <NotFound />},
+            {path: 'unauthorised', element: <Unauthorised />},
+            {path: 'forbidden', element: <Forbidden />},
+            {path: 'server-error', element: <ServerError />},
             {path: '*', element: <NotFound />}
         ]
     }

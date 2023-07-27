@@ -25,7 +25,12 @@ namespace Application.Services
 
         public async Task<Result<Goal>> GetOne(int id)
         {   
-            return Result<Goal>.Sucess(await _goalsRepository.GetOne(id));
+            var goal = await _goalsRepository.GetOne(id);
+            
+            if (goal == null)
+                return null;
+
+            return Result<Goal>.Sucess(goal);
         }
 
         public async Task<Result<int>> Create(GoalCreateUpdateDto newGoal)
