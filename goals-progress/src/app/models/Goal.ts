@@ -11,5 +11,6 @@ export interface Goal {
     unit: string,
     deadline: Date | null,
     status: GoalStatus,
-    type: GoalType
+    type: GoalType,
+    modificationDate?: Date
 }

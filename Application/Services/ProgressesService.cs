@@ -60,6 +60,8 @@ namespace Application.Services
             else if (goal.Type == GoalType.Extended)
                 goal.CurrentValue += progress.Value * category.Multiplier; 
 
+            goal.ModificationDate = DateTime.UtcNow;
+
             if (await _progressesRepository.Add(progress) == 0)
                 return Result<int>.Failure("Failed to create progress");
             
@@ -80,8 +82,7 @@ namespace Application.Services
             else if (goal.Type == GoalType.Extended)
                 goal.CurrentValue -= progress.Value * progress.Category.Multiplier; 
 
-            if (await _goalsRepository.Update(goal) == 0)
-                return Result<Object>.Failure("Failed to update goal");
+            goal.ModificationDate = DateTime.UtcNow;
 
             if (await _progressesRepository.Delete(id) == 0)
                 return Result<Object>.Failure("Failed to delete progress");

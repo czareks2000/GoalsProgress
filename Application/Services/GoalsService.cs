@@ -44,7 +44,8 @@ namespace Application.Services
                 Unit = newGoal.Unit,
                 Deadline = newGoal.Deadline,
                 Status = GoalStatus.Current,
-                Type = newGoal.Type
+                Type = newGoal.Type,
+                ModificationDate = DateTime.UtcNow
             };
 
             if (await _goalsRepository.Add(goal) == 0)
@@ -66,6 +67,7 @@ namespace Application.Services
             goal.CustomUnit = updatedGoal.CustomUnit;
             goal.Unit = updatedGoal.Unit;
             goal.Deadline = updatedGoal.Deadline;
+            goal.ModificationDate = DateTime.UtcNow;
 
             if (await _goalsRepository.Update(goal) == 0)
                 return Result<Object>.Failure("Failed to update goal");
@@ -81,6 +83,7 @@ namespace Application.Services
                 return null;
 
             goal.Status = newStatus;
+            goal.ModificationDate = DateTime.UtcNow;
 
             if (await _goalsRepository.Update(goal) == 0)
                 return Result<Object>.Failure("Failed to update goal status");
@@ -96,6 +99,7 @@ namespace Application.Services
                 return null;
 
             goal.Status = GoalStatus.Deleted;
+            goal.ModificationDate = DateTime.UtcNow;
 
             if (await _goalsRepository.Update(goal) == 0)
                 return Result<Object>.Failure("Failed to delete goal");

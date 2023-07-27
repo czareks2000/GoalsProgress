@@ -33,18 +33,15 @@ export default class GoalStore {
     }
 
     private setProgress = (progress: Progress) => {
-        // date in database is in UTC, 
-        // so we need to convert it to local timezone
-        const date = new Date(progress.date!);
-        const timezoneOffsetMinutes = date.getTimezoneOffset();
-        date.setMinutes(date.getMinutes() - timezoneOffsetMinutes);
-        progress.date = date;
+        progress.date = this.convertToLocalTimezone(progress.date!);
 
         this.progresses.set(progress.id, progress);
     }
 
     private setGoal = (goal: Goal) => {
-        goal.deadline = new Date(goal.deadline!);
+        goal.deadline = this.convertToLocalTimezone(goal.deadline!);
+        goal.modificationDate = this.convertToLocalTimezone(goal.modificationDate!);
+
         this.goalsRegistry.set(goal.id, goal);
     }
 
@@ -145,6 +142,7 @@ export default class GoalStore {
         try {
             const id = await agent.Goals.create(goal);
             goal.id = id;
+            goal.modificationDate = new Date();
             runInAction(() => {
                 this.goalsRegistry.set(goal.id, goal);
             })
@@ -156,6 +154,7 @@ export default class GoalStore {
     updateGoal = async (id:number, goal: Goal) => {
         try {
             await agent.Goals.update(id, goal);
+            goal.modificationDate = new Date();
             runInAction(() => {
                 this.setGoal(goal);
                 this.selectedGoal = goal;
@@ -168,7 +167,11 @@ export default class GoalStore {
     changeStatus = async (id:number, status: GoalStatus) => {
         let goal = this.getGoal(id);
         
-        if (goal) goal.status = status;
+        if (goal)
+        {
+            goal.status = status;
+            goal.modificationDate = new Date();
+        }
 
         try {
             await agent.Goals.changeStatus(id, status);
@@ -178,5 +181,13 @@ export default class GoalStore {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    private convertToLocalTimezone(date: Date) {
+        const result = new Date(date);
+        const timezoneOffsetMinutes = result.getTimezoneOffset();
+        result.setMinutes(result.getMinutes() - timezoneOffsetMinutes);
+
+        return result;
     }
 }

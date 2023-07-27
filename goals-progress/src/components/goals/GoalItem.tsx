@@ -1,5 +1,7 @@
 import moment from 'moment';
 import { Goal } from '../../app/models/Goal';
+import { GoalStatus } from '../../app/models/enums/GoalStatus';
+import { format } from 'date-fns';
 
 interface Props {
   goal: Goal;
@@ -26,7 +28,10 @@ const GoalItem = ({ goal }: Props) => {
               <div>
                 Progress: {goal.currentValue}/{goal.targetValue} {goal.unit}
               </div>
-              <div>{daysLeft()} Days Left</div>
+              {goal.status == GoalStatus.Current 
+                ? <div>{daysLeft()} Days Left</div>
+                : <div>Archived: {format(goal.modificationDate!, 'dd MMM yyyy')}</div>
+              }
             </div> 
         </div>
         <div 
