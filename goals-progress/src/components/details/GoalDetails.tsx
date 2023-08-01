@@ -8,14 +8,18 @@ import ProgressAddForm from "../forms/progress/ProgressAddForm";
 import GoalEditForm from "../forms/goal/GoalEditForm";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import Button from "../common/Button";
 
 export default observer(function GoalDetails() {
     const {goalStore} = useStore();
-    const {selectedGoal: goal, loadGoal, loadCategories, categories} = goalStore;
+    const {selectedGoal: goal, selectedProgresses: progresses, categories, 
+        loadGoal, loadCategories} = goalStore;
 
     const [showAddForm, setShowAddForm] = useState<boolean>(false);
     const [showEditForm, setShowEditForm] = useState<boolean>(false);
     const [showProgressList, setShowProgressList] = useState<boolean>(true);
+
+    const [loadedProgressesCount, setLoadedProgressesCount] = useState(5);
 
     const {id} = useParams();
 
@@ -38,17 +42,27 @@ export default observer(function GoalDetails() {
     if (!goal) return <></>
 
     return (
-        <div className="container shadow">
-            <GoalItem goal={goal}/>
-            <Actions 
-                showAddForm={showAddForm} 
-                onShowAddForm={toggleAddForm}
-                showEditForm={showEditForm}
-                onShowEditForm={toggleEditForm}
-            />
-            {showAddForm && <ProgressAddForm toggleAddForm={toggleAddForm}/>}
-            {showEditForm && <GoalEditForm toggleEditForm={toggleEditForm} />}
-            {showProgressList && <ProgressList />}
-        </div>
+        <>
+            <div className="container shadow">
+                <GoalItem goal={goal}/>
+                <Actions 
+                    showAddForm={showAddForm} 
+                    onShowAddForm={toggleAddForm}
+                    showEditForm={showEditForm}
+                    onShowEditForm={toggleEditForm}
+                />
+                {showAddForm && <ProgressAddForm toggleAddForm={toggleAddForm}/>}
+                {showEditForm && <GoalEditForm toggleEditForm={toggleEditForm} />}
+                {showProgressList && <ProgressList progresses={progresses.slice(0, loadedProgressesCount)}/>}
+            </div>
+            {progresses.length > loadedProgressesCount && showProgressList &&
+            <div className="text-center">
+                <Button 
+                    text={'Load more'} 
+                    onClick={() => setLoadedProgressesCount(loadedProgressesCount+5)}
+                />
+            </div>
+            }
+        </>
     )
 })
