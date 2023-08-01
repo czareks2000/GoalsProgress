@@ -45,7 +45,8 @@ body{
   text-decoration: none;
 }
 
-.navbar-item:hover{
+.navbar-item:hover,
+.navbar-item:focus{
   background-color: var(--highlight);
 }
 
@@ -56,6 +57,11 @@ body{
 .navbar a{
   text-decoration: none;
   color: inherit;
+}
+
+.alert .close {
+  float: right;
+  font-size: 21px;
 }
 
 .footer{
@@ -83,10 +89,17 @@ body{
   border-radius: 5px;
 }
 
-.outline{
+.outline, .alert-success{
   padding: 15px;
   margin: 10px;
   border: 1px solid var(--primary);
+  border-radius: 10px;
+}
+
+.alert-error {
+  padding: 15px;
+  margin: 10px;
+  border: 1px solid red;
   border-radius: 10px;
 }
 
@@ -103,11 +116,12 @@ body{
   text-align: center;
 }
 
-.card:hover {
+.card:hover,
+.card:focus {
   background-color: var(--highlight);
 }
 
-.goals.container{
+.goals.container, .details.container{
   margin: 20px auto;
 }
 
@@ -227,7 +241,8 @@ a .goal{
   margin-right: 2px;
 }
 
-.action:hover{
+.action:hover,
+.action:focus{
   background-color: var(--highlight);
 }
 
@@ -266,8 +281,6 @@ a .goal{
 }
 
 .progress-delete{
-  cursor: pointer;
-  text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -275,7 +288,12 @@ a .goal{
   font-size: 25px;
 }
 
-.progress-delete:hover{
+.progress-delete:hover,
+.progress-delete:focus, 
+.alert .close:hover,
+.alert .close:focus{
+  cursor: pointer;
+  text-decoration: none;
   color: var(--highlight);
 }
 

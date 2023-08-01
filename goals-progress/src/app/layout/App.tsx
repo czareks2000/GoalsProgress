@@ -5,9 +5,13 @@ import Header from './Header';
 import Footer from './Footer';
 import { observer } from 'mobx-react-lite';
 import HomePage from '../../components/home/HomePage';
+import Info from './Info';
+import { useStore } from '../stores/store';
 
 export default observer(function App() {
   const location = useLocation();
+  const {commonStore} = useStore();
+  const {info, clearInfo} = commonStore;
 
   return (
     <>
@@ -17,6 +21,13 @@ export default observer(function App() {
         <>
         <div className="wrapper">
           <Header appName='GoalsProgress'/>
+          {info && 
+          <Info 
+            color={info.type} 
+            message={info.message} 
+            onClick={clearInfo}
+          />
+          }
           <Outlet />
         </div>
         <Footer/>

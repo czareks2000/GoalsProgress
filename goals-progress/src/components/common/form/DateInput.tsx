@@ -13,6 +13,7 @@ export default function DateInput(props: Props) {
             <DatePicker
                 {...field}
                 {...props}
+                autoComplete='off'
                 selected={(field.value && new Date(field.value)) || null}
                 onChange={value => helpers.setValue(value)}
                 className={`date-input ${meta.touched && meta.error ? 

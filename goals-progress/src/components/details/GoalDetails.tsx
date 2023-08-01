@@ -43,7 +43,7 @@ export default observer(function GoalDetails() {
 
     return (
         <>
-            <div className="container shadow">
+            <div className="details container shadow">
                 <GoalItem goal={goal}/>
                 <Actions 
                     showAddForm={showAddForm} 

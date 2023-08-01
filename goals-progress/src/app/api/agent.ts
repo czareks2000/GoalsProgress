@@ -15,7 +15,7 @@ const sleep = (delay: number) => {
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 axios.interceptors.response.use(async response => {
-    await sleep(1000);
+    //await sleep(1000);
     return response;
 }, (error: AxiosError) => {
     const {data, status, config} = error.response as AxiosResponse;
@@ -34,7 +34,7 @@ axios.interceptors.response.use(async response => {
                 }
                 throw modalStateErrors.flat();
             } else {
-                //toast.error(data);
+                store.commonStore.setError(data);
             }
             break;
         case 401:

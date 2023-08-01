@@ -34,7 +34,6 @@ export default observer(function ProgressItem({ progress }: Props) {
           <FaTrash/>
         </div>
         }
-        
     </div>
   )
 })

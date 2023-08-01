@@ -4,13 +4,14 @@ import agent from "../api/agent";
 import { GoalStatus } from "../models/enums/GoalStatus";
 import { Progress } from "../models/Progress";
 import { Category } from "../models/Category";
+import { store } from "./store";
 
 export default class GoalStore {
     goalsRegistry = new Map<number, Goal>();
     selectedGoal: Goal | undefined = undefined;
     progresses = new Map<number, Progress>();
     categories: Category[] = [];
-
+    
     constructor() {
         makeAutoObservable(this);
     }
@@ -57,6 +58,7 @@ export default class GoalStore {
             })
         } catch (error) {
             console.log(error);
+            store.commonStore.setError("Failed to load goals");
         }
     }
 
@@ -84,6 +86,7 @@ export default class GoalStore {
                 console.log(error);
             }
         }
+        store.commonStore.setError("Failed to load goal");
     }
 
     loadProgresses = async (goalId: number) => {
@@ -95,6 +98,7 @@ export default class GoalStore {
             })
         } catch (error) {
             console.log(error);
+            store.commonStore.setError("Failed to load progresses");
         }
     }
 
@@ -110,6 +114,7 @@ export default class GoalStore {
             })
         } catch (error) {
             console.log(error);
+            store.commonStore.setError("Failed to add progress");
         }
     }
 
@@ -124,6 +129,7 @@ export default class GoalStore {
             })
         } catch (error) {
             console.log(error);
+            store.commonStore.setError("Failed to delete progress");
         }
     }
 
@@ -135,6 +141,7 @@ export default class GoalStore {
             })
         } catch (error) {
             console.log(error);
+            store.commonStore.setError("Failed to load categories");
         }
     }
 
@@ -146,8 +153,10 @@ export default class GoalStore {
             runInAction(() => {
                 this.goalsRegistry.set(goal.id, goal);
             })
+            store.commonStore.setSuccess(`Goal "${goal.name}" created successfuly`);
         } catch (error) {
             console.log(error);
+            store.commonStore.setError("Failed to delete goal");
         }
     }
 
@@ -161,6 +170,7 @@ export default class GoalStore {
             })
         } catch (error) {
             console.log(error);
+            store.commonStore.setError("Failed to update goal");
         }
     }
 
@@ -178,8 +188,11 @@ export default class GoalStore {
             runInAction(() => {
                 this.goalsRegistry.set(id, goal as Goal);
             })
+            if(status === GoalStatus.Deleted)
+                store.commonStore.setSuccess(`Goal deleted successfuly`);
         } catch (error) {
             console.log(error);
+            store.commonStore.setError(`Failed to change goal status`);
         }
     }
 
