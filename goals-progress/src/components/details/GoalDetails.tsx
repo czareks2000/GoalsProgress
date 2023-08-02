@@ -11,24 +11,16 @@ import { observer } from "mobx-react-lite";
 import Button from "../common/Button";
 
 export default observer(function GoalDetails() {
+    // State
     const {goalStore} = useStore();
     const {selectedGoal: goal, selectedProgresses: progresses, categories, 
         loadGoal, loadCategories} = goalStore;
 
+    // Forms
     const [showAddForm, setShowAddForm] = useState<boolean>(false);
     const [showEditForm, setShowEditForm] = useState<boolean>(false);
     const [showProgressList, setShowProgressList] = useState<boolean>(true);
 
-    const [loadedProgressesCount, setLoadedProgressesCount] = useState(5);
-
-    const {id} = useParams();
-
-    useEffect(() => {
-        if (id) loadGoal(parseInt(id));
-        if (categories.length === 0) loadCategories();
-    }, [id, goal, loadGoal, loadCategories, categories])
-
-    
     const toggleAddForm = () => {
         setShowAddForm(!showAddForm);
         setShowProgressList(!showProgressList);
@@ -38,11 +30,21 @@ export default observer(function GoalDetails() {
         setShowEditForm(!showEditForm);
         setShowProgressList(!showProgressList);
     };
+    
+    // Loading more progresses
+    const [loadedProgressesCount, setLoadedProgressesCount] = useState(5);
+
+    // Fetching data from api
+    const {id} = useParams();
+    useEffect(() => {
+        if (id) loadGoal(parseInt(id));
+        if (categories.length === 0) loadCategories();
+    }, [id, goal, loadGoal, loadCategories, categories])
 
     if (!goal) return <></>
 
     return (
-        <>
+        <>  
             <div className="details container shadow">
                 <GoalItem goal={goal}/>
                 <Actions 

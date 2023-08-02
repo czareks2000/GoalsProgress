@@ -28,7 +28,7 @@ const GoalItem = ({ goal }: Props) => {
               <div>
                 Progress: {goal.currentValue}/{goal.targetValue} {goal.unit}
               </div>
-              {goal.status == GoalStatus.Current 
+              {goal.status === GoalStatus.Current 
                 ? <div>{daysLeft()} Days Left</div>
                 : <div>Archived: {format(goal.modificationDate!, 'dd MMM yyyy')}</div>
               }

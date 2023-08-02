@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import { GoalStatus } from '../../app/models/enums/GoalStatus';
 import { useStore } from '../../app/stores/store';
 import { observer } from 'mobx-react-lite';
+import { useState } from 'react';
+import Dialog from '../common/Dialog';
 
 interface Props {
     onShowAddForm: () => void;
@@ -14,13 +16,19 @@ interface Props {
 }
 
 export default observer(function Actions({ onShowAddForm, showAddForm, onShowEditForm, showEditForm }: Props) {
+    // State
     const {goalStore} = useStore();
     const {selectedGoal: goal, changeStatus} = goalStore;
 
+    // Dialog
+    const [showDialog, setShowDialog] = useState(false);
+    
+    // Actions
     const navigate = useNavigate();
 
     const handleDeleteGoal = () => {
         changeStatus(goal!.id, GoalStatus.Deleted);
+        setShowDialog(false);
         navigate('/goals');
     }
 
@@ -37,6 +45,17 @@ export default observer(function Actions({ onShowAddForm, showAddForm, onShowEdi
     if (!goal) return <></>
 
     return (
+        <>
+        {showDialog && (
+            <Dialog 
+                label="Confirmation"
+                description="Are you sure you whant to delete this goal?"
+                confirmButtonText="Delete"
+                cancelButtonText="Cancel"
+                onConfirm={handleDeleteGoal}
+                onCancel={() => setShowDialog(false)}
+            />
+        )}
         <div className="actions text-center">
             <div 
                 className={`action 
@@ -65,7 +84,7 @@ export default observer(function Actions({ onShowAddForm, showAddForm, onShowEdi
             <div 
                 className={`action 
                         ${showAddForm || showEditForm ? 'disabled' : ''}`} 
-                onClick={handleDeleteGoal}
+                onClick={() => setShowDialog(true)}
             >
                 <><FaTrash/>Delete</>
             </div>
@@ -81,5 +100,6 @@ export default observer(function Actions({ onShowAddForm, showAddForm, onShowEdi
                 }
             </div>
         </div>
+    </>
   )
 })

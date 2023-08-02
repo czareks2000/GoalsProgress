@@ -10,6 +10,8 @@ Bluewater lowlight: #39a0ca
   --background-disabled: #175168;
   --primary:#478559; 
   --highlight: #f95d9b;
+  --accent: #e6a01d;
+  --reach-dialog: 1;
 }
 
 body{
@@ -341,8 +343,10 @@ a .goal{
   vertical-align: middle;
 }
 
+.btn:hover,
 .btn:focus {
   outline: none;
+  background-color: var(--highlight);
 }
 
 .btn:active {
@@ -370,4 +374,28 @@ a .goal{
 
 .w-100{
   width: 100%;
+}
+
+
+[data-reach-dialog-overlay] {
+	background: hsla(0, 0%, 0%, 0.33);
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: auto;
+}
+
+[data-reach-dialog-content] {
+	width: 350px;
+	margin: 40vh auto;
+	background: var(--background-dark);
+  border-radius: 10px;
+	padding: 2rem;
+	outline: none;
+}
+
+[data-reach-alert-dialog-label] {
+  font-size: 23px;
 }

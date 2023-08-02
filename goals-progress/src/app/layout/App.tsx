@@ -5,7 +5,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { observer } from 'mobx-react-lite';
 import HomePage from '../../components/home/HomePage';
-import Info from './Info';
+import Info from '../../components/common/Info';
 import { useStore } from '../stores/store';
 
 export default observer(function App() {

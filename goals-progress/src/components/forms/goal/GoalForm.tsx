@@ -106,7 +106,6 @@ const GoalForm = ({ onSubmit, buttonText, goal, cancelButton = false, cancelButt
                   {cancelButton &&
                   <div
                     className="btn"
-                    style={{backgroundColor: '#39a0ca'}}
                     onClick={cancelButtonAction}
                   >
                     CANCEL
