@@ -15,13 +15,13 @@ const GoalCreate = () => {
                 {type
                 ?  
                 <>
-                    <h2 className="text-center outline">{'Create ' + GoalType[type!] + ' Goal'}</h2>
+                    <h2 className="text-center outline outline-primary">{'Create ' + GoalType[type!] + ' Goal'}</h2>
                     <GoalCreateForm type={type!} setType={setType}/>
                 </>
                 :
                 <>
-                    <h2 className="text-center outline">Choose goal type</h2>
-                    <div className="card-group outline">
+                    <h2 className="text-center outline outline-primary">Choose goal type</h2>
+                    <div className="card-group outline outline-primary">
                         <div className="card" 
                             onClick={() => setType(GoalType.Standard)}
                         >

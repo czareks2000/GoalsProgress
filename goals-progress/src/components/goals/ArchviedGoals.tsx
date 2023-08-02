@@ -18,7 +18,7 @@ export default observer(function ArchviedGoals() {
         ?
           <GoalsList goals={archivedGoals}/>
         :
-          <h2 className="text-center outline">You have no archived goals</h2>
+          <h2 className="text-center outline outline-primary">You have no archived goals</h2>
         }
       </div>
     </>

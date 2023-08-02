@@ -29,7 +29,7 @@ export default class GoalStore {
 
     get archivedGoals() {
         return Array.from(this.goalsRegistry.values())
-                .filter(g => g.status === GoalStatus.Archvied)
+                .filter(g => g.status === GoalStatus.Archvied || g.status === GoalStatus.Completed)
                 .sort((a, b) => a.deadline!.getTime() - b.deadline!.getTime());
     }
 
@@ -112,6 +112,8 @@ export default class GoalStore {
                 this.setGoal(goal);
                 this.selectedGoal = goal;
             })
+            if (goal.status === GoalStatus.Completed)
+                store.commonStore.setSuccess(`Goal completed!`);
         } catch (error) {
             console.log(error);
             store.commonStore.setError("Failed to add progress");
@@ -163,10 +165,10 @@ export default class GoalStore {
     updateGoal = async (id:number, goal: Goal) => {
         try {
             await agent.Goals.update(id, goal);
-            goal.modificationDate = new Date();
+            let updatedGoal = await agent.Goals.details(id);
             runInAction(() => {
-                this.setGoal(goal);
-                this.selectedGoal = goal;
+                this.setGoal(updatedGoal);
+                this.selectedGoal = updatedGoal;
             })
         } catch (error) {
             console.log(error);

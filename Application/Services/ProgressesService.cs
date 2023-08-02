@@ -60,6 +60,9 @@ namespace Application.Services
             else if (goal.Type == GoalType.Extended)
                 goal.CurrentValue += progress.Value * category.Multiplier; 
 
+            if (goal.CurrentValue >= goal.TargetValue)
+                goal.Status = GoalStatus.Completed;
+
             goal.ModificationDate = DateTime.UtcNow;
 
             if (await _progressesRepository.Add(progress) == 0)
@@ -81,6 +84,9 @@ namespace Application.Services
                 goal.CurrentValue -= progress.Value; 
             else if (goal.Type == GoalType.Extended)
                 goal.CurrentValue -= progress.Value * progress.Category.Multiplier; 
+
+            if (goal.CurrentValue < goal.TargetValue)
+                goal.Status = GoalStatus.Current;
 
             goal.ModificationDate = DateTime.UtcNow;
 

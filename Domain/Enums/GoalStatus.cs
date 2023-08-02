@@ -4,6 +4,7 @@ namespace Domain.Enums
     {
         Current = 1,
         Archvied = 2,
-        Deleted = 3
+        Deleted = 3,
+        Completed = 4
     }
 }

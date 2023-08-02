@@ -10,7 +10,7 @@ Bluewater lowlight: #39a0ca
   --background-disabled: #175168;
   --primary:#478559; 
   --highlight: #f95d9b;
-  --accent: #e6a01d;
+  --accent: #e29300;
   --reach-dialog: 1;
 }
 
@@ -61,9 +61,14 @@ body{
   color: inherit;
 }
 
-.alert .close {
+.close {
   float: right;
   font-size: 21px;
+}
+
+.close:hover {
+  cursor: pointer;
+  color: var(--highlight);
 }
 
 .footer{
@@ -91,18 +96,27 @@ body{
   border-radius: 5px;
 }
 
-.outline, .alert-success{
+.outline{
   padding: 15px;
   margin: 10px;
-  border: 1px solid var(--primary);
   border-radius: 10px;
+  border: 1px solid black;
 }
 
-.alert-error {
-  padding: 15px;
-  margin: 10px;
-  border: 1px solid red;
-  border-radius: 10px;
+.outline-primary, .outline-success {
+  border-color: var(--primary);
+}
+
+.outline-error {
+  border-color: red;
+}
+
+.outline-highlight {
+  border-color: var(--highlight);
+}
+
+.outline-accent {
+  border-color: var(--accent);
 }
 
 .card-group {
@@ -301,17 +315,17 @@ a .goal{
 
 .progress-bar {
   --progress: 50%;
+  --color: var(--primary);
   margin-left: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 125px;
   height: 125px;
   border-radius: 50%;
   background: 
     radial-gradient(closest-side, var(--background-dark) 79%, transparent 80% 100%),
-    conic-gradient(var(--primary) var(--progress), white 0);    
+    conic-gradient(var(--color) var(--progress), white 0);    
 }
 
 .progress-bar::before {

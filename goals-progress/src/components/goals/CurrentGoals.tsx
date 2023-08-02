@@ -23,7 +23,7 @@ export default observer(function CurrentGoals (){
         ?
           <GoalsList goals={currentGoals}/>
         :
-          <h2 className="text-center outline">You have no goals</h2>
+          <h2 className="text-center outline outline-primary">You have no goals</h2>
         }
       </div>
 

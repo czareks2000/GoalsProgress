@@ -19,8 +19,23 @@ const GoalItem = ({ goal }: Props) => {
     return Math.round(goal.currentValue / goal.targetValue! * 100);
   }
 
+  const color = () => {
+    return goal.status === GoalStatus.Completed ? "accent" : "primary";
+  }
+
+  const renderModificationDate = (status: GoalStatus) => {
+    switch (status) {
+      case GoalStatus.Current:
+          return <div>{daysLeft()} Days Left</div>
+      case GoalStatus.Archvied:
+          return <div>Archived: {format(goal.modificationDate!, 'dd MMM yyyy')}</div>
+      case GoalStatus.Completed:
+          return <div>Completed: {format(goal.modificationDate!, 'dd MMM yyyy')}</div>
+    }
+  }
+
   return (
-    <div className="goal outline">
+    <div className={`goal outline outline-${color()}`}>
         <div>
             <h2>{goal.name}</h2>
             <p>{goal.description}</p>
@@ -28,16 +43,15 @@ const GoalItem = ({ goal }: Props) => {
               <div>
                 Progress: {goal.currentValue}/{goal.targetValue} {goal.unit}
               </div>
-              {goal.status === GoalStatus.Current 
-                ? <div>{daysLeft()} Days Left</div>
-                : <div>Archived: {format(goal.modificationDate!, 'dd MMM yyyy')}</div>
-              }
+              {renderModificationDate(goal.status)}
             </div> 
         </div>
         <div 
           className="progress-bar"
           data-value={`${currentProgress()}%`}
-          style={{ '--progress': `${currentProgress()}%` } as any}
+          style={{ 
+            '--progress': `${currentProgress()}%`,
+            '--color':  `var(--${color()})`} as any}
         >  
         </div>
     </div>

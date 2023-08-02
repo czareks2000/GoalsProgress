@@ -49,7 +49,7 @@ export default observer(function Actions({ onShowAddForm, showAddForm, onShowEdi
         {showDialog && (
             <Dialog 
                 label="Confirmation"
-                description="Are you sure you whant to delete this goal?"
+                description="Are you sure you want to delete this goal?"
                 confirmButtonText="Delete"
                 cancelButtonText="Cancel"
                 onConfirm={handleDeleteGoal}
@@ -72,7 +72,7 @@ export default observer(function Actions({ onShowAddForm, showAddForm, onShowEdi
             <div 
                 className={`action 
                         ${showEditForm ? 'active' : ''} 
-                        ${goal.status !== GoalStatus.Current || showAddForm ? 'disabled' : ''}`} 
+                        ${goal.status === GoalStatus.Archvied || showAddForm ? 'disabled' : ''}`} 
                 onClick={onShowEditForm}
             >
                 {showEditForm ? 

@@ -60,6 +60,9 @@ namespace Application.Services
 
             if (goal == null || goal.Status == GoalStatus.Deleted)
                 return null;
+            
+            if(goal.TargetValue != updatedGoal.TargetValue)
+                goal.ModificationDate = DateTime.UtcNow;
 
             goal.Name = updatedGoal.Name;
             goal.Description = updatedGoal.Description;
@@ -67,7 +70,12 @@ namespace Application.Services
             goal.CustomUnit = updatedGoal.CustomUnit;
             goal.Unit = updatedGoal.Unit;
             goal.Deadline = updatedGoal.Deadline;
-            goal.ModificationDate = DateTime.UtcNow;
+
+            if (goal.CurrentValue < goal.TargetValue)
+                goal.Status = GoalStatus.Current;
+            else 
+                goal.Status = GoalStatus.Completed;
+
 
             if (await _goalsRepository.Update(goal) == 0)
                 return Result<Object>.Failure("Failed to update goal");

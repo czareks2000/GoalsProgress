@@ -16,6 +16,7 @@ export default function NumberInput(props: Props) {
                 </label>
                 <input
                     type="number"
+                    autoComplete='off'
                     {...field} 
                     {...props}
                     className={meta.touched && meta.error ? 

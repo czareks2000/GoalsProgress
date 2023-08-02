@@ -10,7 +10,7 @@ interface Props {
 export default observer(function Info({ color, message, onClick }:Props) {
     return (
         <div className={`container shadow`}>
-            <div className={`alert alert-${color}`}>
+            <div className={`outline outline-${color}`}>
                 {message}
                 <div className='close' onClick={onClick}><CgCloseR/></div>
             </div>
