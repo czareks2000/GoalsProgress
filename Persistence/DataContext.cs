@@ -22,6 +22,12 @@ namespace Persistence
                 .HasForeignKey("GoalId")
                 .IsRequired();
 
+            modelBuilder.Entity<Goal>()
+                .HasMany(e => e.Categories)
+                .WithOne(e => e.Goal)
+                .HasForeignKey("GoalId")
+                .IsRequired();
+
             modelBuilder.Entity<Category>()
                 .HasMany(e => e.Progresses)
                 .WithOne(e => e.Category)

@@ -19,6 +19,7 @@ export default function NumberInput(props: Props) {
                     autoComplete='off'
                     {...field} 
                     {...props}
+                    value={field.value === null ? '' : field.value}
                     className={meta.touched && meta.error ? 
                     "error" : ""}
                 />

@@ -9,6 +9,7 @@ import GoalEditForm from "../forms/goal/GoalEditForm";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import Button from "../common/Button";
+import { GoalType } from "../../app/models/enums/GoalType";
 
 export default observer(function GoalDetails() {
     // State
@@ -38,7 +39,8 @@ export default observer(function GoalDetails() {
     const {id} = useParams();
     useEffect(() => {
         if (id) loadGoal(parseInt(id));
-        if (categories.length === 0) loadCategories();
+        if (categories.length === 0 && goal?.type === GoalType.Extended) 
+            loadCategories(goal.id);
     }, [id, goal, loadGoal, loadCategories, categories])
 
     if (!goal) return <></>

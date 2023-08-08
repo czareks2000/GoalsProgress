@@ -67,7 +67,8 @@ const requests = {
 const Goals = {
     list: () => requests.get<Goal[]>('/goals'),
     details: (id: number) => requests.get<Goal>(`/goal/${id}`),
-    progresses: (id: number) => requests.get<Progress[]>(`goal/${id}/progresses`),
+    progresses: (id: number) => requests.get<Progress[]>(`/goal/${id}/progresses`),
+    categories: (id: number) => requests.get<Category[]>(`/goal/${id}/categories`),
     create: (goal: Goal) => requests.post<number>('/goals', goal),
     update: (id: number, goal: Goal) => requests.put<void>(`/goal/${id}`, goal),
     changeStatus: (id: number, status: GoalStatus) => requests.patch<void>(`/goal/${id}/${status}`,{}),
@@ -80,7 +81,8 @@ const Progresses = {
 }
 
 const Categories = {
-    list: () => requests.get<Category[]>('/categories')
+    create: (goalId: number, category: Category) => requests.post<number>(`/categories/${goalId}`, category),
+    delete: (id: number) => requests.del<void>(`/categories/${id}`)
 }
 
 const agent = {

@@ -134,6 +134,7 @@ body{
 
 .card:hover,
 .card:focus {
+  cursor: pointer;
   background-color: var(--highlight);
 }
 

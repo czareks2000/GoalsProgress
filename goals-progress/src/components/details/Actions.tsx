@@ -90,13 +90,13 @@ export default observer(function Actions({ onShowAddForm, showAddForm, onShowEdi
             </div>
             <div 
                 className={`action 
-                        ${showAddForm || showEditForm ? 'disabled' : ''}`}  
+                        ${showAddForm || showEditForm || goal.status === GoalStatus.Completed ? 'disabled' : ''}`}  
                 onClick={goal.status === GoalStatus.Current ? handleArchiveGoal : handleRestoreGoal}
             >
-                {goal.status === GoalStatus.Current ? 
-                <><FaFolder/>Archive</>
-                : 
+                {goal.status === GoalStatus.Archvied ? 
                 <><RiArrowGoBackFill/>Restore</> 
+                : 
+                <><FaFolder/>Archive</>
                 }
             </div>
         </div>

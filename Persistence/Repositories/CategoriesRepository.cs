@@ -21,7 +21,9 @@ namespace Persistence.Repositories
 
         public async Task<List<Category>> GetAll()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories
+                    .Include(c => c.Goal)
+                    .ToListAsync();
         }
 
         public async Task<Category> GetOne(int id)

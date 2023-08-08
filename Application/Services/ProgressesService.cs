@@ -25,7 +25,12 @@ namespace Application.Services
 
         public async Task<Result<List<Progress>>> GetAll(int goalId)
         {
-            var progresses = await _progressesRepository.GetAll(goalId);
+            var progresses = await _progressesRepository.GetAll();
+            
+            progresses = progresses.Where(p => p.Goal.Id == goalId).ToList();
+
+            foreach (var progress in progresses)
+                progress.Goal = null;
 
             return Result<List<Progress>>.Sucess(progresses);
         }

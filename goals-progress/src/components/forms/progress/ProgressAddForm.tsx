@@ -23,7 +23,8 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
         selectedGoal?.type === GoalType.Standard ? 1 : null,
       date: null,
       description: '',
-      categoryId: categories[0].id
+      categoryId: 
+        selectedGoal?.type === GoalType.Extended ? categories[0].id : undefined
     };
 
     const validationSchema = Yup.object({

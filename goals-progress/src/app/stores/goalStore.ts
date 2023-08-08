@@ -135,9 +135,9 @@ export default class GoalStore {
         }
     }
 
-    loadCategories = async () => {
+    loadCategories = async (goalId: number) => {
         try {
-            var categories = await agent.Categories.list();
+            var categories = await agent.Goals.categories(goalId);
             runInAction(() => {
                 this.categories = categories
             })

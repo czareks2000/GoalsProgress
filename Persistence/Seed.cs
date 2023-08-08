@@ -8,31 +8,6 @@ namespace Persistence
         public static async Task SeedData(DataContext context)
         {
             if (context.Goals.Any()) return;
-            
-
-            var categories = new List<Category>
-            {
-                new Category
-                {
-                    Id = 1,
-                    Name = "Spacer",
-                    Multiplier = 1.0M
-                },
-                new Category
-                {
-                    Id = 2,
-                    Name = "Bieganie",
-                    Multiplier = 1.5M
-                },
-                new Category
-                {
-                    Id = 3,
-                    Name = "Rower",
-                    Multiplier = 0.5M
-                }
-            };
-
-            await context.Categories.AddRangeAsync(categories);
 
             var goals = new List<Goal>
             {
@@ -42,7 +17,7 @@ namespace Persistence
                     Name = "Filmy",
                     Description = "Obejrzeć 20 filmów",
                     CustomUnit = false,
-                    Unit = "none",
+                    Unit = "",
                     Deadline = DateTime.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
                     CurrentValue = 4,
@@ -86,7 +61,7 @@ namespace Persistence
                     Name = "Przepisy",
                     Description = "Wypróbować 10 nowych przepisów",
                     CustomUnit = false,
-                    Unit = "none",
+                    Unit = "",
                     Deadline = DateTime.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
                     CurrentValue = 5,
@@ -137,7 +112,7 @@ namespace Persistence
                     Name = "Książki",
                     Description = "Przeczytać 10 książek",
                     CustomUnit = false,
-                    Unit = "none",
+                    Unit = "",
                     Deadline = DateTime.Parse("2023-12-31"),
                     Status = GoalStatus.Current,
                     CurrentValue = 3,
@@ -203,34 +178,54 @@ namespace Persistence
                     CurrentValue = 548.77M,
                     TargetValue = 1000.0M,
                     Type = GoalType.Extended,
-                    Progresses = new List<Progress>
+                    Categories = new List<Category>
                     {
-                        new Progress
+                        new Category
                         {
-                            Id = 14,
-                            Date = DateTime.Now.AddDays(-5),
-                            Value = 200.0M,
-                            Category = categories[0]
+                            Id = 1,
+                            Name = "Spacer",
+                            Multiplier = 1.0M
                         },
-                        new Progress
+                        new Category
                         {
-                            Id = 15,
-                            Date = DateTime.Now.AddDays(-4), 
-                            Value = 230.5M,
-                            Category = categories[1]
+                            Id = 2,
+                            Name = "Bieganie",
+                            Multiplier = 1.5M
                         },
-                        new Progress
+                        new Category
                         {
-                            Id = 16,
-                            Date = DateTime.Now.AddDays(-3), 
-                            Value = 6.04M,
-                            Category = categories[2]
+                            Id = 3,
+                            Name = "Rower",
+                            Multiplier = 0.5M
                         }
                     }
                 }
             };
 
-            
+            goals[4].Progresses = new List<Progress>
+            {
+                new Progress
+                {
+                    Id = 14,
+                    Date = DateTime.Now.AddDays(-5),
+                    Value = 200.0M,
+                    Category = goals[4].Categories.FirstOrDefault(c => c.Name == "Spacer")
+                },
+                new Progress
+                {
+                    Id = 15,
+                    Date = DateTime.Now.AddDays(-4), 
+                    Value = 230.5M,
+                    Category = goals[4].Categories.FirstOrDefault(c => c.Name == "Bieganie")
+                },
+                new Progress
+                {
+                    Id = 16,
+                    Date = DateTime.Now.AddDays(-3), 
+                    Value = 6.04M,
+                    Category = goals[4].Categories.FirstOrDefault(c => c.Name == "Rower")
+                }
+            };
             
             await context.Goals.AddRangeAsync(goals);
             await context.SaveChangesAsync();
