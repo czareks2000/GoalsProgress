@@ -10,10 +10,14 @@ export default class GoalStore {
     goalsRegistry = new Map<number, Goal>();
     selectedGoal: Goal | undefined = undefined;
     progresses = new Map<number, Progress>();
-    categories: Category[] = [];
+    categories = new Map<number, Category>();
     
     constructor() {
         makeAutoObservable(this);
+    }
+
+    get selectedCategories() {
+        return Array.from(this.categories.values());
     }
 
     get selectedProgresses() {
@@ -33,6 +37,10 @@ export default class GoalStore {
                 .sort((a, b) => a.deadline!.getTime() - b.deadline!.getTime());
     }
 
+    private setCategory = (category: Category) => {
+        this.categories.set(category.id, category);
+    }
+
     private setProgress = (progress: Progress) => {
         progress.date = this.convertToLocalTimezone(progress.date!);
 
@@ -50,18 +58,6 @@ export default class GoalStore {
         return this.goalsRegistry.get(id);
     }
 
-    loadGoals = async () => {
-        try {
-            const goals = await agent.Goals.list();
-            goals.forEach(goal => {
-                this.setGoal(goal);
-            })
-        } catch (error) {
-            console.log(error);
-            store.commonStore.setError("Failed to load goals");
-        }
-    }
-
     loadGoal = async (id: number) => {
         let goal = this.getGoal(id);
 
@@ -69,6 +65,7 @@ export default class GoalStore {
             this.selectedGoal = goal;
             try {
                 await this.loadProgresses(goal.id);
+                await this.loadCategories(goal.id);
             } catch (error) {
                 console.log(error);
             }
@@ -81,12 +78,25 @@ export default class GoalStore {
                     this.selectedGoal = goal;
                 })
                 await this.loadProgresses(goal.id);
+                await this.loadCategories(goal.id);
                 return goal;
             } catch (error) {
                 console.log(error);
             }
         }
         store.commonStore.setError("Failed to load goal");
+    }
+
+    loadGoals = async () => {
+        try {
+            const goals = await agent.Goals.list();
+            goals.forEach(goal => {
+                this.setGoal(goal);
+            })
+        } catch (error) {
+            console.log(error);
+            store.commonStore.setError("Failed to load goals");
+        }
     }
 
     loadProgresses = async (goalId: number) => {
@@ -102,44 +112,12 @@ export default class GoalStore {
         }
     }
 
-    createProgress = async (goalId: number, progress: Progress) => {
-        try {
-            const id = await agent.Progresses.create(goalId, progress);
-            progress.id = id;
-            let goal = await agent.Goals.details(goalId);
-            runInAction(() => {
-                this.setProgress(progress);
-                this.setGoal(goal);
-                this.selectedGoal = goal;
-            })
-            if (goal.status === GoalStatus.Completed)
-                store.commonStore.setSuccess(`Goal completed!`);
-        } catch (error) {
-            console.log(error);
-            store.commonStore.setError("Failed to add progress");
-        }
-    }
-
-    deleteProgress = async (id: number, goalId: number) => {
-        try {
-            await agent.Progresses.delete(id);
-            let goal = await agent.Goals.details(goalId);
-            runInAction(() => {
-                this.progresses.delete(id);
-                this.setGoal(goal);
-                this.selectedGoal = goal;
-            })
-        } catch (error) {
-            console.log(error);
-            store.commonStore.setError("Failed to delete progress");
-        }
-    }
-
     loadCategories = async (goalId: number) => {
         try {
+            this.categories.clear();
             var categories = await agent.Goals.categories(goalId);
-            runInAction(() => {
-                this.categories = categories
+            categories.forEach(category => {
+                this.setCategory(category);
             })
         } catch (error) {
             console.log(error);
@@ -195,6 +173,52 @@ export default class GoalStore {
         } catch (error) {
             console.log(error);
             store.commonStore.setError(`Failed to change goal status`);
+        }
+    }
+
+    createProgress = async (goalId: number, progress: Progress) => {
+        try {
+            const id = await agent.Progresses.create(goalId, progress);
+            progress.id = id;
+            let goal = await agent.Goals.details(goalId);
+            runInAction(() => {
+                this.setProgress(progress);
+                this.setGoal(goal);
+                this.selectedGoal = goal;
+            })
+            if (goal.status === GoalStatus.Completed)
+                store.commonStore.setSuccess(`Goal completed!`);
+        } catch (error) {
+            console.log(error);
+            store.commonStore.setError("Failed to add progress");
+        }
+    }
+
+    deleteProgress = async (id: number, goalId: number) => {
+        try {
+            await agent.Progresses.delete(id);
+            let goal = await agent.Goals.details(goalId);
+            runInAction(() => {
+                this.progresses.delete(id);
+                this.setGoal(goal);
+                this.selectedGoal = goal;
+            })
+        } catch (error) {
+            console.log(error);
+            store.commonStore.setError("Failed to delete progress");
+        }
+    }
+
+    createCategory = async (goalId: number, category: Category) => {
+        try {
+            const id = await agent.Categories.create(goalId, category);
+            category.id = id;
+            runInAction(() => {
+                this.setCategory(category);
+            })
+        } catch (error) {
+            console.log(error);
+            store.commonStore.setError("Failed to add category");
         }
     }
 

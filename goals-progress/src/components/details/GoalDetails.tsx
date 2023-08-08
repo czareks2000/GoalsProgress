@@ -10,12 +10,13 @@ import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import Button from "../common/Button";
 import { GoalType } from "../../app/models/enums/GoalType";
+import CategoryAddForm from "../forms/category/CategoryAddForm";
 
 export default observer(function GoalDetails() {
     // State
     const {goalStore} = useStore();
-    const {selectedGoal: goal, selectedProgresses: progresses, categories, 
-        loadGoal, loadCategories} = goalStore;
+    const {selectedGoal: goal, selectedProgresses: progresses, 
+        selectedCategories: categories, loadGoal} = goalStore;
 
     // Forms
     const [showAddForm, setShowAddForm] = useState<boolean>(false);
@@ -39,9 +40,7 @@ export default observer(function GoalDetails() {
     const {id} = useParams();
     useEffect(() => {
         if (id) loadGoal(parseInt(id));
-        if (categories.length === 0 && goal?.type === GoalType.Extended) 
-            loadCategories(goal.id);
-    }, [id, goal, loadGoal, loadCategories, categories])
+    }, [id, goal, loadGoal])
 
     if (!goal) return <></>
 
@@ -55,9 +54,14 @@ export default observer(function GoalDetails() {
                     showEditForm={showEditForm}
                     onShowEditForm={toggleEditForm}
                 />
-                {showAddForm && <ProgressAddForm toggleAddForm={toggleAddForm}/>}
-                {showEditForm && <GoalEditForm toggleEditForm={toggleEditForm} />}
-                {showProgressList && <ProgressList progresses={progresses.slice(0, loadedProgressesCount)}/>}
+                {categories.length > 0 && showAddForm && 
+                    <ProgressAddForm toggleAddForm={toggleAddForm}/>}
+                {goal.type == GoalType.Extended && showAddForm && 
+                    <CategoryAddForm/>}
+                {showEditForm && 
+                    <GoalEditForm toggleEditForm={toggleEditForm} />}
+                {showProgressList && 
+                    <ProgressList progresses={progresses.slice(0, loadedProgressesCount)}/>}
             </div>
             {progresses.length > loadedProgressesCount && showProgressList &&
             <div className="text-center">

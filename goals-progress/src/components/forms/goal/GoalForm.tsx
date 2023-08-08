@@ -39,7 +39,7 @@ const GoalForm = ({ onSubmit, buttonText, goal, cancelButton = false, cancelButt
         {(formik) => {
           const { errors, touched, isValid, dirty, values } = formik;
           return (
-              <Form className="goal-form outline outline-primary">
+              <Form className="form outline outline-primary">
                 {/* Name */}
                 <TextInput placeholder="ex. Reading Books" name="name" label="Name"/>
 

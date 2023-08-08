@@ -8,14 +8,15 @@ import * as Yup from "yup";
 import TextInput from "../../common/form/TextInput";
 import NumberInput from "../../common/form/NumberInput";
 import DateInput from "../../common/form/DateInput";
+import { observer } from "mobx-react-lite";
 
 interface Props {
   toggleAddForm: () => void;
 }
 
-const ProgressAddForm = ({ toggleAddForm }: Props) => {
+export default observer(function ProgressAddForm({ toggleAddForm }: Props) {
     const {goalStore} = useStore();
-    const {createProgress, categories, selectedGoal} = goalStore;
+    const {createProgress, selectedCategories: categories, selectedGoal} = goalStore;
 
     const initialValues = {
       id: 0,
@@ -49,7 +50,7 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
           onSubmit={values => onSubmit(values)}
         >
         {({ isValid, dirty, values, setFieldValue }) => (
-          <Form className="outline">
+          <Form className="form outline outline-primary">
             {/* Value */}
             <NumberInput placeholder="ex. 1" name="value" label="Value"/>
 
@@ -100,6 +101,4 @@ const ProgressAddForm = ({ toggleAddForm }: Props) => {
         </Formik>
       </>
   )
-}
-
-export default ProgressAddForm
+})
