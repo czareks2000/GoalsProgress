@@ -3,13 +3,10 @@ import { Goal } from "../../../app/models/Goal";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
-interface Props {
-    toggleEditForm: () => void; 
-}
-
-export default observer(function GoalEditForm({ toggleEditForm }: Props)  {
-    const {goalStore} = useStore();
+export default observer(function GoalEditForm()  {
+    const {goalStore, detailsPageStore} = useStore();
     const {updateGoal, selectedGoal} = goalStore;
+    const {toggleEditForm} = detailsPageStore;
 
     const submitForm = (goal: Goal) => {
         updateGoal(goal.id, goal);

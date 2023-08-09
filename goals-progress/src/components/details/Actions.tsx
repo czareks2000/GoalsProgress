@@ -8,17 +8,12 @@ import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import Dialog from '../common/Dialog';
 
-interface Props {
-    onShowAddForm: () => void;
-    showAddForm: boolean;
-    onShowEditForm: () => void;
-    showEditForm: boolean;
-}
-
-export default observer(function Actions({ onShowAddForm, showAddForm, onShowEditForm, showEditForm }: Props) {
+export default observer(function Actions() {
     // State
-    const {goalStore} = useStore();
+    const {goalStore, detailsPageStore} = useStore();
     const {selectedGoal: goal, changeStatus} = goalStore;
+    const {showAddForm, showEditForm,
+        toggleAddForm, toggleEditForm} = detailsPageStore;
 
     // Dialog
     const [showDialog, setShowDialog] = useState(false);
@@ -61,7 +56,7 @@ export default observer(function Actions({ onShowAddForm, showAddForm, onShowEdi
                 className={`action 
                         ${showAddForm ? 'active' : ''}
                         ${goal.status !== GoalStatus.Current || showEditForm ? 'disabled' : ''}`} 
-                onClick={onShowAddForm}
+                onClick={toggleAddForm}
             >
                 {showAddForm ? 
                 <><GiCancel/>Cancel</>
@@ -73,7 +68,7 @@ export default observer(function Actions({ onShowAddForm, showAddForm, onShowEdi
                 className={`action 
                         ${showEditForm ? 'active' : ''} 
                         ${goal.status === GoalStatus.Archvied || showAddForm ? 'disabled' : ''}`} 
-                onClick={onShowEditForm}
+                onClick={toggleEditForm}
             >
                 {showEditForm ? 
                 <><GiCancel/>Cancel</>

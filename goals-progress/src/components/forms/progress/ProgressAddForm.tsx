@@ -10,13 +10,10 @@ import NumberInput from "../../common/form/NumberInput";
 import DateInput from "../../common/form/DateInput";
 import { observer } from "mobx-react-lite";
 
-interface Props {
-  toggleAddForm: () => void;
-}
-
-export default observer(function ProgressAddForm({ toggleAddForm }: Props) {
-    const {goalStore} = useStore();
+export default observer(function ProgressAddForm() {
+    const {goalStore, detailsPageStore} = useStore();
     const {createProgress, selectedCategories: categories, selectedGoal} = goalStore;
+    const {toggleAddForm} = detailsPageStore;
 
     const initialValues = {
       id: 0,

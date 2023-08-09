@@ -14,24 +14,11 @@ import CategoryAddForm from "../forms/category/CategoryAddForm";
 
 export default observer(function GoalDetails() {
     // State
-    const {goalStore} = useStore();
+    const {goalStore, detailsPageStore} = useStore();
     const {selectedGoal: goal, selectedProgresses: progresses, 
         selectedCategories: categories, loadGoal} = goalStore;
-
-    // Forms
-    const [showAddForm, setShowAddForm] = useState<boolean>(false);
-    const [showEditForm, setShowEditForm] = useState<boolean>(false);
-    const [showProgressList, setShowProgressList] = useState<boolean>(true);
-
-    const toggleAddForm = () => {
-        setShowAddForm(!showAddForm);
-        setShowProgressList(!showProgressList);
-    };
-
-    const toggleEditForm = () => {
-        setShowEditForm(!showEditForm);
-        setShowProgressList(!showProgressList);
-    };
+    const {showAddForm, showEditForm, showProgressList, 
+        setInitialValues} = detailsPageStore;
     
     // Loading more progresses
     const [loadedProgressesCount, setLoadedProgressesCount] = useState(5);
@@ -40,7 +27,8 @@ export default observer(function GoalDetails() {
     const {id} = useParams();
     useEffect(() => {
         if (id) loadGoal(parseInt(id));
-    }, [id, goal, loadGoal])
+        setInitialValues();
+    }, [id, goal, loadGoal, setInitialValues])
 
     if (!goal) return <></>
 
@@ -48,20 +36,20 @@ export default observer(function GoalDetails() {
         <>  
             <div className="details container shadow">
                 <GoalItem goal={goal}/>
-                <Actions 
-                    showAddForm={showAddForm} 
-                    onShowAddForm={toggleAddForm}
-                    showEditForm={showEditForm}
-                    onShowEditForm={toggleEditForm}
-                />
-                {categories.length > 0 && showAddForm && 
-                    <ProgressAddForm toggleAddForm={toggleAddForm}/>}
+                <Actions />
+                {((goal.type === GoalType.Extended && categories.length > 0 ) || 
+                (goal.type === GoalType.Standard)) && showAddForm && 
+                    <ProgressAddForm/>
+                }
                 {goal.type === GoalType.Extended && showAddForm && 
-                    <CategoryAddForm/>}
+                    <CategoryAddForm/>
+                }
                 {showEditForm && 
-                    <GoalEditForm toggleEditForm={toggleEditForm} />}
+                    <GoalEditForm/>
+                }
                 {showProgressList && 
-                    <ProgressList progresses={progresses.slice(0, loadedProgressesCount)}/>}
+                    <ProgressList progresses={progresses.slice(0, loadedProgressesCount)}/>
+                }
             </div>
             {progresses.length > loadedProgressesCount && showProgressList &&
             <div className="text-center">
