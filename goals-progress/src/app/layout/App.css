@@ -26,19 +26,16 @@ body{
 
 .navbar{
   display: flex;
-  margin: 0 0 30px 0;
   color: var(--background-dark);
-
   margin-left: auto;
   margin-right: auto;
   width: 500px;
-  border: 1px solid black;
   padding: 10px;
 }
 
 .navbar-item{
-  margin: 0 10px;
-  min-width: 100px;
+  margin: 0 5px;
+  min-width: 115px;
   background-color: var(--background-light);
   text-align: center;
   border-radius: 5px;
@@ -91,7 +88,7 @@ body{
 .container{
   margin-left: auto;
   margin-right: auto;
-  width: 500px;
+  width: 550px;
   border: 1px solid black;
   border-radius: 5px;
 }
@@ -138,7 +135,8 @@ body{
   background-color: var(--highlight);
 }
 
-.goals.container, .details.container{
+.goals.container, .details.container, 
+.settings.container{
   margin: 20px auto;
 }
 
@@ -220,7 +218,8 @@ a .goal{
   display: flex;
 }
 
-.form-group-inline :not(:last-child){
+.form-group-inline :not(:last-child),
+.progress-actions :not(:last-child){
   margin-right: 10px;
 }
 
@@ -244,7 +243,7 @@ a .goal{
 }
 
 .action{
-  min-width: 108px;
+  min-width: 121px;
   background-color: var(--background-light);
   padding: 5px;
   cursor: pointer;
@@ -297,7 +296,7 @@ a .goal{
   padding: 0;
 }
 
-.progress-delete{
+.progress-actions{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -305,8 +304,12 @@ a .goal{
   font-size: 25px;
 }
 
-.progress-delete:hover,
-.progress-delete:focus, 
+.progress-actions :not(:last-child) {
+  margin-right: 10px;
+}
+
+.progress-actions *:hover,
+.progress-actions *:focus, 
 .alert .close:hover,
 .alert .close:focus{
   cursor: pointer;

@@ -1,4 +1,4 @@
-import { FaPlus, FaTrash } from 'react-icons/fa'
+import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa'
 import { Progress } from '../../../app/models/Progress';
 import { GoalStatus } from '../../../app/models/enums/GoalStatus';
 import { useStore } from '../../../app/stores/store';
@@ -36,8 +36,9 @@ export default observer(function ProgressItem({ progress }: Props) {
             <small>{format(progress.date!, 'dd MMM yyyy')}</small>
         </div>
         {goal.status === GoalStatus.Current && 
-        <div className="progress-delete" onClick={() => deleteProgress(progress.id, goal.id)}>
-          <FaTrash/>
+        <div className="progress-actions">
+          <FaEdit />
+          <FaTrash onClick={() => deleteProgress(progress.id, goal.id)}/>
         </div>
         }
     </div>

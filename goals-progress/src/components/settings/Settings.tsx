@@ -1,6 +1,6 @@
 const Settings = () => {
   return (
-    <div className="container shadow">
+    <div className="settings container shadow">
       tu bedą ustawienia konta
     </div>
   )
