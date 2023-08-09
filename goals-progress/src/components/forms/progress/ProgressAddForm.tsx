@@ -1,9 +1,9 @@
-import { ChangeEvent } from "react"
+import { ChangeEvent, useEffect } from "react"
 
 import { Progress } from "../../../app/models/Progress";
 import { useStore } from "../../../app/stores/store";
 import { GoalType } from "../../../app/models/enums/GoalType";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field,} from "formik";
 import * as Yup from "yup";
 import TextInput from "../../common/form/TextInput";
 import NumberInput from "../../common/form/NumberInput";
@@ -12,7 +12,8 @@ import { observer } from "mobx-react-lite";
 
 export default observer(function ProgressAddForm() {
     const {goalStore, detailsPageStore} = useStore();
-    const {createProgress, selectedCategories: categories, selectedGoal} = goalStore;
+    const {createProgress, selectedCategories: categories, 
+      selectedGoal, idOfLastCreatedCategory} = goalStore;
     const {toggleAddForm} = detailsPageStore;
 
     const initialValues = {
@@ -39,6 +40,12 @@ export default observer(function ProgressAddForm() {
       toggleAddForm();
     }
 
+    var updateField: any;
+    useEffect(()=> {
+        if(idOfLastCreatedCategory)
+          updateField('categoryId', idOfLastCreatedCategory);
+    }, [idOfLastCreatedCategory, updateField]);
+
     return (
       <>
         <Formik
@@ -46,7 +53,9 @@ export default observer(function ProgressAddForm() {
           validationSchema={validationSchema}
           onSubmit={values => onSubmit(values)}
         >
-        {({ isValid, dirty, values, setFieldValue }) => (
+        {({ isValid, dirty, values, setFieldValue }) => {
+          updateField = setFieldValue;
+          return(
           <Form className="form outline outline-primary">
             {/* Value */}
             <NumberInput placeholder="ex. 1" name="value" label="Value"/>
@@ -63,8 +72,9 @@ export default observer(function ProgressAddForm() {
                   name="categoryId" 
                   id="categoryId"
                   value={values.categoryId} 
-                  onChange={(e: ChangeEvent<HTMLSelectElement>) => 
-                    setFieldValue('categoryId', parseInt(e.target.value))}>
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                    setFieldValue('categoryId', parseInt(e.target.value));
+                  }}>
                   {categories.map(category => (
                     <option key={category.id} value={category.id}>{`${category.name} (x ${category.multiplier})`}</option>
                   ))}
@@ -94,7 +104,8 @@ export default observer(function ProgressAddForm() {
             </div>
 
           </Form>
-        )}
+          )
+        }}
         </Formik>
       </>
   )

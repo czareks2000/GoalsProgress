@@ -11,12 +11,16 @@ namespace Application.Services
     {
         private readonly ICategoriesRepository _categoriesRepository;
         private readonly IGoalsRepository _goalsRepository;
+        private readonly IProgressesRepository _progressesRepository;
+
         public CategoriesService(
             ICategoriesRepository categoriesRepository,
-            IGoalsRepository goalsRepository
+            IGoalsRepository goalsRepository,
+            IProgressesRepository progressesRepository
         )
         {
             _goalsRepository = goalsRepository;
+            _progressesRepository = progressesRepository;
             _categoriesRepository = categoriesRepository;
 
         }
@@ -62,10 +66,23 @@ namespace Application.Services
             if (category == null)
                 return null;
 
+            if (!await CanBeDeleted(category))
+                return Result<Object>.Failure("You cannot delete assigned category");
+
             if (await _categoriesRepository.Delete(id) == 0)
                 return Result<Object>.Failure("Failed to delete category");
             
             return Result<Object>.Sucess(null);
+        }
+
+        private async Task<bool> CanBeDeleted(Category category) 
+        {
+            var progresses = await _progressesRepository.GetAll();
+
+            if (progresses.FirstOrDefault(p => p.Category == category) != null)
+                return false;
+
+            return true;
         }
     }
 }

@@ -11,6 +11,7 @@ export default class GoalStore {
     selectedGoal: Goal | undefined = undefined;
     progresses = new Map<number, Progress>();
     categories = new Map<number, Category>();
+    idOfLastCreatedCategory: number | undefined = undefined;
     
     constructor() {
         makeAutoObservable(this);
@@ -186,6 +187,7 @@ export default class GoalStore {
                 this.setProgress(progress);
                 this.setGoal(goal);
                 this.selectedGoal = goal;
+                this.idOfLastCreatedCategory = undefined;
             })
             if (goal.status === GoalStatus.Completed)
                 store.commonStore.setSuccess(`Goal completed!`);
@@ -216,6 +218,7 @@ export default class GoalStore {
             category.id = id;
             runInAction(() => {
                 this.setCategory(category);
+                this.idOfLastCreatedCategory = category.id;
             })
         } catch (error) {
             console.log(error);
