@@ -65,12 +65,16 @@ export default class GoalStore {
         if(this.selectedGoal)
             return ((this.selectedGoal.type === GoalType.Extended && this.categories.size > 0 ) 
                 ||  (this.selectedGoal.type === GoalType.Standard)) && this.visibleAddProgressForm
+        
+        return false;
     }
 
     get showCategoryAddForm() {
         if(this.selectedGoal)
             return (this.selectedGoal.type === GoalType.Extended && this.visibleAddProgressForm) 
                 ||  (this.selectedGoal.type === GoalType.Extended && this.visibleEditProgressForm)
+        
+        return false;
     }
 
     get addProgressActionStatus() {
@@ -78,6 +82,8 @@ export default class GoalStore {
             return this.selectedGoal.status !== GoalStatus.Current 
                 || this.visibleEditGoalForm 
                 || this.visibleEditProgressForm
+        
+        return false;
     }
 
     get editGoalActionStatus() {
@@ -85,11 +91,15 @@ export default class GoalStore {
             return this.selectedGoal.status === GoalStatus.Archvied 
                 || this.visibleAddProgressForm 
                 || this.visibleEditProgressForm
+        
+        return false;
     }
 
     get archiveGoalActionStatus() {
         if(this.selectedGoal)
             return !this.visibleProgressList || this.selectedGoal.status === GoalStatus.Completed
+        
+        return false;
     }
 
     get selectedCategories() {

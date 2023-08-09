@@ -9,7 +9,6 @@ import GoalEditForm from "../forms/goal/GoalEditForm";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import Button from "../common/Button";
-import { GoalType } from "../../app/models/enums/GoalType";
 import CategoryAddForm from "../forms/category/CategoryAddForm";
 import ProgressEditForm from "../forms/progress/ProgressEditForm";
 

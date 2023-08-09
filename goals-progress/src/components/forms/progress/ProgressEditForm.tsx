@@ -1,5 +1,4 @@
 import { Progress } from "../../../app/models/Progress"
-import { GoalType } from "../../../app/models/enums/GoalType";
 import { useStore } from "../../../app/stores/store";
 import ProgressForm from "./ProgressForm"
 
@@ -8,7 +7,7 @@ const ProgressEditForm = () => {
     const {selectedProgress, toggleEditProgressForm} = goalStore;
 
     const submitForm = (progress: Progress) => {
-        
+
     }
 
     const initialValues = {
