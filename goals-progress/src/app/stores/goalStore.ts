@@ -5,16 +5,91 @@ import { GoalStatus } from "../models/enums/GoalStatus";
 import { Progress } from "../models/Progress";
 import { Category } from "../models/Category";
 import { store } from "./store";
+import { GoalType } from "../models/enums/GoalType";
 
 export default class GoalStore {
     goalsRegistry = new Map<number, Goal>();
     selectedGoal: Goal | undefined = undefined;
     progresses = new Map<number, Progress>();
+    selectedProgress: Progress | undefined = undefined;
     categories = new Map<number, Category>();
     idOfLastCreatedCategory: number | undefined = undefined;
+
+    visibleAddProgressForm = false;
+    visibleEditProgressForm = false;
+    visibleEditGoalForm = false;
+    visibleProgressList = true;
     
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setInitialValues = async() => {
+        runInAction(() => {
+            this.visibleAddProgressForm = false;
+            this.visibleEditProgressForm = false;
+            this.visibleEditGoalForm = false;
+            this.visibleProgressList = true;
+        })
+    }
+
+    toggleAddProgressForm = async () => {
+        runInAction(() => {
+            this.visibleAddProgressForm = !this.visibleAddProgressForm;
+            this.visibleProgressList = !this.visibleProgressList;
+        })
+    }
+
+    toggleEditGoalForm = async () => {
+        runInAction(() => {
+            this.visibleEditGoalForm = !this.visibleEditGoalForm;
+            this.visibleProgressList = !this.visibleProgressList;
+        })
+    }
+
+    toggleEditProgressForm = async () => {
+        runInAction(() => {
+            this.visibleEditProgressForm = !this.visibleEditProgressForm;
+            this.visibleProgressList = !this.visibleProgressList;
+        })
+    }
+
+    showEditProgressForm = async (progress: Progress) => {
+        runInAction(() => {
+            this.selectedProgress = progress;
+            this.toggleEditProgressForm();
+        })
+    }
+
+    get showProgressAddForm() {
+        if(this.selectedGoal)
+            return ((this.selectedGoal.type === GoalType.Extended && this.categories.size > 0 ) 
+                ||  (this.selectedGoal.type === GoalType.Standard)) && this.visibleAddProgressForm
+    }
+
+    get showCategoryAddForm() {
+        if(this.selectedGoal)
+            return (this.selectedGoal.type === GoalType.Extended && this.visibleAddProgressForm) 
+                ||  (this.selectedGoal.type === GoalType.Extended && this.visibleEditProgressForm)
+    }
+
+    get addProgressActionStatus() {
+        if(this.selectedGoal)
+            return this.selectedGoal.status !== GoalStatus.Current 
+                || this.visibleEditGoalForm 
+                || this.visibleEditProgressForm
+    }
+
+    get editGoalActionStatus() {
+        if(this.selectedGoal)
+            return this.selectedGoal.status === GoalStatus.Archvied 
+                || this.visibleAddProgressForm 
+                || this.visibleEditProgressForm
+    }
+
+    get archiveGoalActionStatus() {
+        if(this.selectedGoal)
+            return !this.visibleProgressList || this.selectedGoal.status === GoalStatus.Completed
     }
 
     get selectedCategories() {

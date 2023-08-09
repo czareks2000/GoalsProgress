@@ -10,10 +10,12 @@ import Dialog from '../common/Dialog';
 
 export default observer(function Actions() {
     // State
-    const {goalStore, detailsPageStore} = useStore();
-    const {selectedGoal: goal, changeStatus} = goalStore;
-    const {showAddForm, showEditForm,
-        toggleAddForm, toggleEditForm} = detailsPageStore;
+    const {goalStore} = useStore();
+    const {
+        selectedGoal: goal,  
+        visibleAddProgressForm, visibleEditGoalForm, visibleProgressList, 
+        toggleAddProgressForm, toggleEditGoalForm, changeStatus,
+        addProgressActionStatus, editGoalActionStatus, archiveGoalActionStatus} = goalStore;
 
     // Dialog
     const [showDialog, setShowDialog] = useState(false);
@@ -54,11 +56,11 @@ export default observer(function Actions() {
         <div className="actions text-center">
             <div 
                 className={`action 
-                        ${showAddForm ? 'active' : ''}
-                        ${goal.status !== GoalStatus.Current || showEditForm ? 'disabled' : ''}`} 
-                onClick={toggleAddForm}
+                        ${visibleAddProgressForm ? 'active' : ''}
+                        ${addProgressActionStatus ? 'disabled' : ''}`} 
+                onClick={toggleAddProgressForm}
             >
-                {showAddForm ? 
+                {visibleAddProgressForm ? 
                 <><GiCancel/>Cancel</>
                 : 
                 <><FaPlus/>Progress</> 
@@ -66,11 +68,11 @@ export default observer(function Actions() {
             </div>
             <div 
                 className={`action 
-                        ${showEditForm ? 'active' : ''} 
-                        ${goal.status === GoalStatus.Archvied || showAddForm ? 'disabled' : ''}`} 
-                onClick={toggleEditForm}
+                        ${visibleEditGoalForm ? 'active' : ''} 
+                        ${editGoalActionStatus ? 'disabled' : ''}`} 
+                onClick={toggleEditGoalForm}
             >
-                {showEditForm ? 
+                {visibleEditGoalForm ? 
                 <><GiCancel/>Cancel</>
                 : 
                 <><FaEdit/>Edit</> 
@@ -78,14 +80,14 @@ export default observer(function Actions() {
             </div>
             <div 
                 className={`action 
-                        ${showAddForm || showEditForm ? 'disabled' : ''}`} 
+                        ${!visibleProgressList ? 'disabled' : ''}`} 
                 onClick={() => setShowDialog(true)}
             >
                 <><FaTrash/>Delete</>
             </div>
             <div 
                 className={`action 
-                        ${showAddForm || showEditForm || goal.status === GoalStatus.Completed ? 'disabled' : ''}`}  
+                        ${archiveGoalActionStatus  ? 'disabled' : ''}`}  
                 onClick={goal.status === GoalStatus.Current ? handleArchiveGoal : handleRestoreGoal}
             >
                 {goal.status === GoalStatus.Archvied ? 

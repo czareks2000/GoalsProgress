@@ -12,7 +12,7 @@ interface Props {
 
 export default observer(function ProgressItem({ progress }: Props) {
   const {goalStore} = useStore();
-  const {selectedGoal: goal, deleteProgress} = goalStore;
+  const {selectedGoal: goal, deleteProgress, showEditProgressForm} = goalStore;
 
   const color = () => {
     return goal?.status === GoalStatus.Completed ? "accent" : "primary";
@@ -37,7 +37,7 @@ export default observer(function ProgressItem({ progress }: Props) {
         </div>
         {goal.status === GoalStatus.Current && 
         <div className="progress-actions">
-          <FaEdit />
+          <FaEdit onClick={() => showEditProgressForm(progress)}/>
           <FaTrash onClick={() => deleteProgress(progress.id, goal.id)}/>
         </div>
         }

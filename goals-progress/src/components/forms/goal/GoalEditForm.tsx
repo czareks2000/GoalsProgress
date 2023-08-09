@@ -4,13 +4,12 @@ import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
 export default observer(function GoalEditForm()  {
-    const {goalStore, detailsPageStore} = useStore();
-    const {updateGoal, selectedGoal} = goalStore;
-    const {toggleEditForm} = detailsPageStore;
+    const {goalStore} = useStore();
+    const {updateGoal, selectedGoal, toggleEditGoalForm} = goalStore;
 
     const submitForm = (goal: Goal) => {
         updateGoal(goal.id, goal);
-        toggleEditForm();
+        toggleEditGoalForm();
     }
 
     return (
@@ -18,7 +17,6 @@ export default observer(function GoalEditForm()  {
             goal={selectedGoal as Goal}
             onSubmit={submitForm}
             buttonText={'UPDATE'}
-            cancelButton={false}
         />
     )
 })

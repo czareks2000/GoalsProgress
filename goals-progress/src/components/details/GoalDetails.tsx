@@ -11,14 +11,14 @@ import { observer } from "mobx-react-lite";
 import Button from "../common/Button";
 import { GoalType } from "../../app/models/enums/GoalType";
 import CategoryAddForm from "../forms/category/CategoryAddForm";
+import ProgressEditForm from "../forms/progress/ProgressEditForm";
 
 export default observer(function GoalDetails() {
     // State
-    const {goalStore, detailsPageStore} = useStore();
+    const {goalStore} = useStore();
     const {selectedGoal: goal, selectedProgresses: progresses, 
-        selectedCategories: categories, loadGoal} = goalStore;
-    const {showAddForm, showEditForm, showProgressList, 
-        setInitialValues} = detailsPageStore;
+        loadGoal, visibleEditGoalForm, visibleProgressList, 
+        visibleEditProgressForm, setInitialValues, showProgressAddForm, showCategoryAddForm} = goalStore;
     
     // Loading more progresses
     const [loadedProgressesCount, setLoadedProgressesCount] = useState(5);
@@ -37,21 +37,23 @@ export default observer(function GoalDetails() {
             <div className="details container shadow">
                 <GoalItem goal={goal}/>
                 <Actions />
-                {((goal.type === GoalType.Extended && categories.length > 0 ) || 
-                (goal.type === GoalType.Standard)) && showAddForm && 
+                {showProgressAddForm &&
                     <ProgressAddForm/>
                 }
-                {goal.type === GoalType.Extended && showAddForm && 
+                {visibleEditProgressForm &&
+                    <ProgressEditForm />
+                }
+                {showCategoryAddForm && 
                     <CategoryAddForm/>
                 }
-                {showEditForm && 
+                {visibleEditGoalForm && 
                     <GoalEditForm/>
                 }
-                {showProgressList && 
+                {visibleProgressList && 
                     <ProgressList progresses={progresses.slice(0, loadedProgressesCount)}/>
                 }
             </div>
-            {progresses.length > loadedProgressesCount && showProgressList &&
+            {progresses.length > loadedProgressesCount && visibleProgressList &&
             <div className="text-center">
                 <Button 
                     text={'Load more'} 
