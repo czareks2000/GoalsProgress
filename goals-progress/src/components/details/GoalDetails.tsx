@@ -56,7 +56,7 @@ export default observer(function GoalDetails() {
                 />
                 {categories.length > 0 && showAddForm && 
                     <ProgressAddForm toggleAddForm={toggleAddForm}/>}
-                {goal.type == GoalType.Extended && showAddForm && 
+                {goal.type === GoalType.Extended && showAddForm && 
                     <CategoryAddForm/>}
                 {showEditForm && 
                     <GoalEditForm toggleEditForm={toggleEditForm} />}

@@ -50,6 +50,7 @@ export default class GoalStore {
     private setGoal = (goal: Goal) => {
         goal.deadline = this.convertToLocalTimezone(goal.deadline!);
         goal.modificationDate = this.convertToLocalTimezone(goal.modificationDate!);
+        goal.completedDate = this.convertToLocalTimezone(goal.completedDate!);
 
         this.goalsRegistry.set(goal.id, goal);
     }

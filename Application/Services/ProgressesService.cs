@@ -66,8 +66,11 @@ namespace Application.Services
                 goal.CurrentValue += progress.Value * category.Multiplier; 
 
             if (goal.CurrentValue >= goal.TargetValue)
+            {
                 goal.Status = GoalStatus.Completed;
-
+                goal.CompletedDate = DateTime.UtcNow;
+            }
+                
             goal.ModificationDate = DateTime.UtcNow;
 
             if (await _progressesRepository.Add(progress) == 0)

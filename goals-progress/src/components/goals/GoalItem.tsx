@@ -30,7 +30,7 @@ const GoalItem = ({ goal }: Props) => {
       case GoalStatus.Archvied:
           return <div>Archived: {format(goal.modificationDate!, 'dd MMM yyyy')}</div>
       case GoalStatus.Completed:
-          return <div>Completed: {format(goal.modificationDate!, 'dd MMM yyyy')}</div>
+          return <div>Completed: {format(goal.completedDate!, 'dd MMM yyyy')}</div>
     }
   }
 

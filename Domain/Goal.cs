@@ -15,6 +15,7 @@ namespace Domain
         public GoalStatus Status { get; set; }
         public GoalType Type { get; set; }
         public DateTime ModificationDate { get; set; }
+        public DateTime CompletedDate { get; set; }
         public ICollection<Progress> Progresses { get; set; }
         public ICollection<Category> Categories { get; set; }
     }
