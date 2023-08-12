@@ -14,9 +14,15 @@ namespace API.Controllers
         }
 
         [HttpPost("progresses/{goalId}")] //api/progresses/goalId
-        public async Task<IActionResult> CreateProgress(int goalId, ProgressCreateDto progress)
+        public async Task<IActionResult> CreateProgress(int goalId, ProgressCreateUpdateDto progress)
         {
             return HandleResult(await _progressesService.Create(goalId, progress));
+        }
+
+        [HttpPut("progresses/{id}")] //api/progresses/id
+        public async Task<IActionResult> UpdateProgress(int id, ProgressCreateUpdateDto progress)
+        {
+            return HandleResult(await _progressesService.Update(id, progress));
         }
 
         [HttpDelete("progress/{id}")] //api/progress/id

@@ -26,15 +26,18 @@ namespace Application.Services
         }
 
         public async Task<Result<List<Category>>> GetAll(int goalId)
-        {
-            var categories = await _categoriesRepository.GetAll();
-            
-            categories = categories.Where(c => c.Goal.Id == goalId).ToList();
+        {   
+            var goal = await _goalsRepository.GetOne(goalId);
+
+            var categories = goal.Categories;
 
             foreach (var category in categories)
+            {
                 category.Goal = null;
-
-            return Result<List<Category>>.Sucess(categories);
+                category.Progresses = null;
+            }
+                
+            return Result<List<Category>>.Sucess(categories.ToList());
         }
 
         public async Task<Result<int>> Create(int goalId, CategoryCreateUpdateDto newCategory)

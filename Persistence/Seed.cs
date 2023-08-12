@@ -23,6 +23,8 @@ namespace Persistence
                     CurrentValue = 4,
                     TargetValue = 20,
                     Type = GoalType.Standard,
+                    ModificationDate = DateTime.Now,
+                    CompletedDate = null,
                     Progresses = new List<Progress>
                     {
                         new Progress
@@ -67,6 +69,8 @@ namespace Persistence
                     CurrentValue = 5,
                     TargetValue = 10,
                     Type = GoalType.Standard,
+                    ModificationDate = DateTime.Now,
+                    CompletedDate = null,
                     Progresses = new List<Progress>
                     {
                         new Progress
@@ -118,6 +122,8 @@ namespace Persistence
                     CurrentValue = 3,
                     TargetValue = 10,
                     Type = GoalType.Standard,
+                    ModificationDate = DateTime.Now,
+                    CompletedDate = null,
                     Progresses = new List<Progress>
                     {
                         new Progress
@@ -155,6 +161,8 @@ namespace Persistence
                     CurrentValue = 1,
                     TargetValue = 2,
                     Type = GoalType.Standard,
+                    ModificationDate = DateTime.Now,
+                    CompletedDate = null,
                     Progresses = new List<Progress>
                     {
                         new Progress
@@ -178,6 +186,8 @@ namespace Persistence
                     CurrentValue = 548.77M,
                     TargetValue = 1000.0M,
                     Type = GoalType.Extended,
+                    ModificationDate = DateTime.Now,
+                    CompletedDate = null,
                     Categories = new List<Category>
                     {
                         new Category

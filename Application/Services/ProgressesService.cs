@@ -24,18 +24,20 @@ namespace Application.Services
         }
 
         public async Task<Result<List<Progress>>> GetAll(int goalId)
-        {
-            var progresses = await _progressesRepository.GetAll();
-            
-            progresses = progresses.Where(p => p.Goal.Id == goalId).ToList();
+        {   
+            var goal = await _goalsRepository.GetOne(goalId);      
+
+            var progresses = goal.Progresses;
 
             foreach (var progress in progresses)
+            {
                 progress.Goal = null;
+            }
 
-            return Result<List<Progress>>.Sucess(progresses);
+            return Result<List<Progress>>.Sucess(progresses.ToList());
         }
 
-        public async Task<Result<int>> Create(int goalId, ProgressCreateDto newProgress)
+        public async Task<Result<int>> Create(int goalId, ProgressCreateUpdateDto newProgress)
         {
             var goal = await _goalsRepository.GetOne(goalId);
 
@@ -59,20 +61,13 @@ namespace Application.Services
                 Goal = goal,
                 Category = category
             };
-
-            if (goal.Type == GoalType.Standard)
-                goal.CurrentValue += progress.Value; 
-            else if (goal.Type == GoalType.Extended)
-                goal.CurrentValue += progress.Value * category.Multiplier; 
-
-            if (goal.CurrentValue >= goal.TargetValue)
-            {
-                goal.Status = GoalStatus.Completed;
-                goal.CompletedDate = DateTime.UtcNow;
-            }
-                
+            
+            //update goal
+            goal.CurrentValue += CalculateValue(progress);  
+            goal = UpdateGoalStatus(goal);
             goal.ModificationDate = DateTime.UtcNow;
 
+            //save changes
             if (await _progressesRepository.Add(progress) == 0)
                 return Result<int>.Failure("Failed to create progress");
             
@@ -86,22 +81,68 @@ namespace Application.Services
             if (progress == null)
                 return null;
 
+            //update goal
             var goal = progress.Goal;
-
-            if (goal.Type == GoalType.Standard)
-                goal.CurrentValue -= progress.Value; 
-            else if (goal.Type == GoalType.Extended)
-                goal.CurrentValue -= progress.Value * progress.Category.Multiplier; 
-
-            if (goal.CurrentValue < goal.TargetValue)
-                goal.Status = GoalStatus.Current;
-
+            goal.CurrentValue -= CalculateValue(progress);
+            goal = UpdateGoalStatus(goal);
             goal.ModificationDate = DateTime.UtcNow;
 
+            //save changes
             if (await _progressesRepository.Delete(id) == 0)
                 return Result<Object>.Failure("Failed to delete progress");
             
             return Result<Object>.Sucess(null);
+        }
+
+        public async Task<Result<object>> Update(int id, ProgressCreateUpdateDto updatedProgress)
+        {
+            var progress = await _progressesRepository.GetOne(id);
+
+            if (progress == null)
+                return null;
+
+            var goal = progress.Goal;
+        
+            //delete old progress
+            goal.CurrentValue -= CalculateValue(progress);
+
+            //update progress
+            progress.Value = updatedProgress.Value;
+            progress.Description = updatedProgress.Description;
+            progress.Date = updatedProgress.Date;
+            if (goal.Type == GoalType.Extended)
+                progress.Category = await _categoriesRepository.GetOne(updatedProgress.CategoryId);
+            
+            //update goal
+            goal.CurrentValue += CalculateValue(progress);
+            goal = UpdateGoalStatus(goal);
+            goal.ModificationDate = DateTime.UtcNow;
+
+            //save changes
+            if (await _goalsRepository.Update(goal) == 0)
+                return Result<Object>.Failure("Failed to update progress");
+            
+            return Result<Object>.Sucess(null);
+        }
+
+        private decimal CalculateValue(Progress progress)
+        {   
+            if (progress.Goal.Type == GoalType.Extended)
+                return progress.Value * progress.Category.Multiplier;
+
+            return progress.Value; 
+        }
+
+        private Goal UpdateGoalStatus(Goal goal)
+        {
+            if (goal.CurrentValue < goal.TargetValue)
+                goal.Status = GoalStatus.Current;
+            else{
+                goal.Status = GoalStatus.Completed;
+                goal.CompletedDate = DateTime.UtcNow;
+            }
+
+            return goal;
         }
     }
 }

@@ -26,7 +26,10 @@ namespace Persistence.Repositories
 
         public async Task<Goal> GetOne(int id)
         {
-            return await _context.Goals.FirstOrDefaultAsync(g => g.Id == id);
+            return await _context.Goals
+                .Include(g => g.Categories)
+                .Include(g => g.Progresses)
+                .FirstOrDefaultAsync(g => g.Id == id);
         }
 
         public async Task<int> Update(Goal goal)

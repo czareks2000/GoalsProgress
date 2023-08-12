@@ -30,6 +30,9 @@ namespace Application.Services
             if (goal == null)
                 return null;
 
+            goal.Categories = null;
+            goal.Progresses = null;
+
             return Result<Goal>.Sucess(goal);
         }
 
@@ -45,7 +48,8 @@ namespace Application.Services
                 Deadline = newGoal.Deadline,
                 Status = GoalStatus.Current,
                 Type = newGoal.Type,
-                ModificationDate = DateTime.UtcNow
+                ModificationDate = DateTime.UtcNow,
+                CompletedDate = null
             };
 
             if (await _goalsRepository.Add(goal) == 0)
@@ -75,7 +79,7 @@ namespace Application.Services
                 goal.Status = GoalStatus.Completed;
                 goal.CompletedDate = DateTime.UtcNow;
             }
-
+            
             if (await _goalsRepository.Update(goal) == 0)
                 return Result<Object>.Failure("Failed to update goal");
             

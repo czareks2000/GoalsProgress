@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dto
 {
-    public class ProgressCreateDto
+    public class ProgressCreateUpdateDto
     {
         [Required]
         public Decimal Value { get; set; }
