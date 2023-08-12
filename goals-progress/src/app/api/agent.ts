@@ -77,6 +77,7 @@ const Goals = {
 
 const Progresses = {
     create: (goalId: number, progress: Progress) => requests.post<number>(`/progresses/${goalId}`, progress),
+    update: (id: number, progress: Progress) => requests.put<void>(`/progress/${id}`, progress),
     delete: (id: number) => requests.del<void>(`/progress/${id}`) 
 }
 

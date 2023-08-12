@@ -19,7 +19,7 @@ namespace API.Controllers
             return HandleResult(await _progressesService.Create(goalId, progress));
         }
 
-        [HttpPut("progresses/{id}")] //api/progresses/id
+        [HttpPut("progress/{id}")] //api/progress/id
         public async Task<IActionResult> UpdateProgress(int id, ProgressCreateUpdateDto progress)
         {
             return HandleResult(await _progressesService.Update(id, progress));

@@ -4,10 +4,11 @@ import ProgressForm from "./ProgressForm"
 
 const ProgressEditForm = () => {
     const {goalStore} = useStore();
-    const {selectedProgress, toggleEditProgressForm} = goalStore;
+    const {selectedGoal, selectedProgress, updateProgress, toggleEditProgressForm} = goalStore;
 
     const submitForm = (progress: Progress) => {
-
+        updateProgress(selectedGoal?.id as number, progress);
+        toggleEditProgressForm();
     }
 
     const initialValues = {

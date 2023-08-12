@@ -137,7 +137,8 @@ body{
 }
 
 .goals.container, .details.container, 
-.settings.container, .info.container{
+.settings.container, .info.container,
+.margin.container{
   margin: 20px auto;
 }
 

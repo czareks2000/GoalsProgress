@@ -282,6 +282,21 @@ export default class GoalStore {
         }
     }
 
+    updateProgress = async (goalId: number, progress: Progress) => {
+        try {
+            await agent.Progresses.update(progress.id, progress);
+            let updatedGoal = await agent.Goals.details(goalId);
+            runInAction(() => {
+                this.setGoal(updatedGoal);
+                this.setProgress(progress);
+                this.selectedGoal = updatedGoal;
+            })
+        } catch (error) {
+            console.log(error);
+            store.commonStore.setError("Failed to update progress");
+        }
+    }
+
     deleteProgress = async (id: number, goalId: number) => {
         try {
             await agent.Progresses.delete(id);

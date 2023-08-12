@@ -11,7 +11,7 @@ const GoalCreate = () => {
 
     return (
         <>
-            <div className="container shadow">
+            <div className="margin container shadow">
                 {type
                 ?  
                 <>
