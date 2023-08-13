@@ -14,6 +14,27 @@ Bluewater lowlight: #39a0ca
   --reach-dialog: 1;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--background-dark);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--background-light);
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--background-disabled);
+}
+
 body{
   background-color: var(--background-dark);
   font-family: 'Noto Sans', sans-serif;
