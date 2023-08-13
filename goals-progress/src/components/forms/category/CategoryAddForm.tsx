@@ -17,7 +17,9 @@ const CategoryAddForm = () => {
 
     const validationSchema = Yup.object({
         name: Yup.string().required('Name is required'),
-        multiplier: Yup.number().required('Multiplier is required')
+        multiplier: Yup.number()
+            .positive('Multiplier must be positive number')
+            .required('Multiplier is required')
       });
 
     const onSubmit = (values: Category, { resetForm }: any) => {

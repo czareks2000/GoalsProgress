@@ -24,7 +24,9 @@ export default observer(function ProgressForm(
         idOfLastCreatedCategory} = goalStore;
 
     const validationSchema = Yup.object({
-      value: Yup.string().required('Value is required'),
+      value: Yup.number()
+        .positive("Value must be positive number")
+        .required('Value is required'),
       description: 
         selectedGoal?.type === GoalType.Standard 
           ? Yup.string().required('Description is required')

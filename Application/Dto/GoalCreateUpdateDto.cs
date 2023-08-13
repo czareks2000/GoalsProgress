@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Application.Core.CustomDataAnnotations;
 using Domain.Enums;
 
 namespace Application.Dto
@@ -10,6 +11,7 @@ namespace Application.Dto
         [Required]
         public string Description { get; set; }
         [Required]
+        [GraterThanZero(ErrorMessage = "Field {0} must be positive number")]
         public decimal TargetValue { get; set; }
         public bool CustomUnit { get; set; }
         public string Unit { get; set; }
