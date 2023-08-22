@@ -6,8 +6,8 @@ const ProgressEditForm = () => {
     const {goalStore} = useStore();
     const {selectedGoal, selectedProgress, updateProgress, toggleEditProgressForm} = goalStore;
 
-    const submitForm = (progress: Progress) => {
-        updateProgress(selectedGoal?.id as number, progress);
+    const submitForm = async (progress: Progress) => {
+        await updateProgress(selectedGoal?.id as number, progress);
         toggleEditProgressForm();
     }
 

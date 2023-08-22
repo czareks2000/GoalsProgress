@@ -8,6 +8,7 @@ import { Field, Form, Formik } from "formik";
 import NumberInput from "../../common/form/NumberInput";
 import TextInput from "../../common/form/TextInput";
 import DateInput from "../../common/form/DateInput";
+import Button from "../../common/Button";
 
 interface Props {
     onSubmit: (progress: Progress) => void;
@@ -21,7 +22,7 @@ export default observer(function ProgressForm(
     {onSubmit, buttonText, progress, cancelButton = false, cancelButtonAction}: Props) {
     const {goalStore} = useStore();
     const {selectedCategories: categories, selectedGoal,
-        idOfLastCreatedCategory} = goalStore;
+        idOfLastCreatedCategory, loading} = goalStore;
 
     const validationSchema = Yup.object({
       value: Yup.number()
@@ -47,7 +48,7 @@ export default observer(function ProgressForm(
           validationSchema={validationSchema}
           onSubmit={values => onSubmit(values)}
         >
-        {({ isValid, dirty, values, setFieldValue }) => {
+        {({ isValid, dirty, values, setFieldValue, isSubmitting }) => {
           updateField = setFieldValue;
           return(
           <Form className="form outline outline-primary">
@@ -88,13 +89,13 @@ export default observer(function ProgressForm(
 
             {/* Button */}
             <div className="text-center">
-              <button
+              <Button
+                loading={loading}
                 type="submit"
                 className={!(dirty && isValid) ? "btn disabled" : "btn"}
-                disabled={!(dirty && isValid) }
-              >
-                {buttonText}
-              </button>
+                disabled={!(dirty && isValid) || isSubmitting}
+                text={buttonText}
+              />
               {cancelButton &&
                   <div
                     className="btn"

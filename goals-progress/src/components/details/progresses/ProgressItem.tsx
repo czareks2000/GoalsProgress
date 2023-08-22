@@ -1,10 +1,11 @@
-import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa'
+import { FaCircleNotch, FaEdit, FaPlus, FaTrash } from 'react-icons/fa'
 import { Progress } from '../../../app/models/Progress';
 import { GoalStatus } from '../../../app/models/enums/GoalStatus';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import { GoalType } from '../../../app/models/enums/GoalType';
 import { format } from 'date-fns';
+import { useState } from 'react';
 
 interface Props {
   progress: Progress;
@@ -12,7 +13,9 @@ interface Props {
 
 export default observer(function ProgressItem({ progress }: Props) {
   const {goalStore} = useStore();
-  const {selectedGoal: goal, deleteProgress, showEditProgressForm} = goalStore;
+  const {selectedGoal: goal, deleteProgress, showEditProgressForm, loading: apiLoading} = goalStore;
+
+  const [loading, setLoading] = useState(false);
 
   const color = () => {
     return goal?.status === GoalStatus.Completed ? "accent" : "primary";
@@ -35,10 +38,18 @@ export default observer(function ProgressItem({ progress }: Props) {
             </p>
             <small>{format(progress.date!, 'dd MMM yyyy')}</small>
         </div>
-        {goal.status === GoalStatus.Current && 
+        {(goal.status === GoalStatus.Current || apiLoading) && 
         <div className="progress-actions">
           <FaEdit onClick={() => showEditProgressForm(progress)}/>
-          <FaTrash onClick={() => deleteProgress(progress.id, goal.id)}/>
+          {loading ? 
+            <FaCircleNotch className="spinner"/>
+          :
+            <FaTrash onClick={() => {
+              setLoading(true);
+              deleteProgress(progress.id, goal.id)
+                .finally(() => setLoading(false));
+            }}/>
+          }
         </div>
         }
     </div>

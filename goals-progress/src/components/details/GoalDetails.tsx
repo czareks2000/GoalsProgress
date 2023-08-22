@@ -11,6 +11,7 @@ import { observer } from "mobx-react-lite";
 import Button from "../common/Button";
 import CategoryAddForm from "../forms/category/CategoryAddForm";
 import ProgressEditForm from "../forms/progress/ProgressEditForm";
+import Loading from "../common/Loading";
 
 export default observer(function GoalDetails() {
     // State
@@ -27,9 +28,9 @@ export default observer(function GoalDetails() {
     useEffect(() => {
         if (id) loadGoal(parseInt(id));
         setInitialValues();
-    }, [id, goal, loadGoal, setInitialValues])
+    }, [id, loadGoal, setInitialValues])
 
-    if (!goal) return <></>
+    if (!goal) return <Loading/>
 
     return (
         <>  

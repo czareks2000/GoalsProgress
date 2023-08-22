@@ -4,10 +4,14 @@ import * as Yup from "yup";
 import TextInput from "../../common/form/TextInput";
 import NumberInput from "../../common/form/NumberInput";
 import { Category } from "../../../app/models/Category";
+import Button from "../../common/Button";
+import { useState } from "react";
 
 const CategoryAddForm = () => {
     const {goalStore} = useStore();
     const {selectedGoal: goal, createCategory} = goalStore;
+
+    const [loading, setLoading] = useState(false);
     
     const initialValues = {
         id: 0,
@@ -22,8 +26,10 @@ const CategoryAddForm = () => {
             .required('Multiplier is required')
       });
 
-    const onSubmit = (values: Category, { resetForm }: any) => {
-        createCategory(goal?.id as number, values);
+    const onSubmit = async (values: Category, { resetForm }: any) => {
+        setLoading(true);
+        await createCategory(goal?.id as number, values);
+        setLoading(false);
         resetForm();
     }
 
@@ -34,18 +40,18 @@ const CategoryAddForm = () => {
             validationSchema={validationSchema}
             onSubmit={onSubmit}
         >
-        {({ isValid, dirty }) => (
+        {({ isValid, dirty, isSubmitting }) => (
             <Form className="form outline outline-primary">
                 <TextInput name="name" placeholder="ex. Running" label="Category Name"/>
                 <NumberInput name="multiplier" placeholder="ex. 1.5" label="Multiplier"/>
                 <div className="text-center">
-                    <button
+                    <Button
+                        loading={loading}
                         type="submit"
                         className={!(dirty && isValid) ? "btn disabled" : "btn"}
-                        disabled={!(dirty && isValid) }
-                    >
-                        ADD
-                    </button>
+                        disabled={!(dirty && isValid) || isSubmitting}
+                        text={<>ADD</>}
+                    />
                 </div>
             </Form>
         )}

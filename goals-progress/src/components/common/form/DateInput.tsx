@@ -9,8 +9,9 @@ export default function DateInput(props: Props) {
     const [field, meta, helpers] = useField(props.name!);
     return (
         <div className="form-control">
-            <label>{props.label}</label>
+            <label htmlFor={field.name}>{props.label}</label>
             <DatePicker
+                id={field.name}
                 {...field}
                 {...props}
                 autoComplete='off'

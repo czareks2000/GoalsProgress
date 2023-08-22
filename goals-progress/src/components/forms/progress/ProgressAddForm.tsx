@@ -19,8 +19,8 @@ export default observer(function ProgressAddForm() {
         selectedGoal?.type === GoalType.Extended ? categories[0].id : undefined
     };
 
-    const submitForm = (values: Progress) => {
-      createProgress(selectedGoal!.id, values);
+    const submitForm = async (values: Progress) => {
+      await createProgress(selectedGoal!.id, values);
       toggleAddProgressForm();
     }
 

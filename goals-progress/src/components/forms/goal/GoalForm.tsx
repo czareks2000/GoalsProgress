@@ -4,6 +4,9 @@ import { Formik, Form, Field, ErrorMessage, FormikProps } from "formik";
 import * as Yup from "yup";
 import DateInput from "../../common/form/DateInput";
 import TextInput from "../../common/form/TextInput";
+import Button from "../../common/Button";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
 interface Props {
   onSubmit: (goal: Goal) => void;
@@ -13,7 +16,9 @@ interface Props {
   cancelButtonAction?: any;
 }
 
-const GoalForm = ({ onSubmit, buttonText, goal, cancelButton = false, cancelButtonAction }: Props) => {
+export default observer(function GoalForm({ onSubmit, buttonText, goal, cancelButton = false, cancelButtonAction }: Props) {
+    const {goalStore} = useStore();
+    const {loading} = goalStore;
 
     const validationSchema = Yup.object({
       name: Yup.string().required('The goal name is required'),
@@ -39,7 +44,7 @@ const GoalForm = ({ onSubmit, buttonText, goal, cancelButton = false, cancelButt
         onSubmit={values => onSubmit(values)}
       >
         {(formik) => {
-          const { errors, touched, isValid, dirty, values } = formik;
+          const { errors, touched, isValid, dirty, values, isSubmitting } = formik;
           return (
               <Form className="form outline outline-primary">
                 {/* Name */}
@@ -98,13 +103,13 @@ const GoalForm = ({ onSubmit, buttonText, goal, cancelButton = false, cancelButt
 
                 {/* Buttons */}
                 <div className="text-center">
-                  <button
+                  <Button
+                    loading={loading} 
                     type="submit"
                     className={!(dirty && isValid) ? "btn disabled" : "btn"}
-                    disabled={!(dirty && isValid) }
-                  >
-                    {buttonText}
-                  </button>
+                    disabled={!(dirty && isValid) || isSubmitting}
+                    text={buttonText}
+                  />
                   {cancelButton &&
                   <div
                     className="btn"
@@ -119,6 +124,4 @@ const GoalForm = ({ onSubmit, buttonText, goal, cancelButton = false, cancelButt
         }}
       </Formik>
   )
-}
-
-export default GoalForm
+})

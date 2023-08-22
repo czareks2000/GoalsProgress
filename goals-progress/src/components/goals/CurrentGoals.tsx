@@ -6,15 +6,19 @@ import { observer } from "mobx-react-lite";
 import { useStore } from '../../app/stores/store'
 import { useEffect } from 'react';
 import GoalsList from './GoalsList';
+import Loading from '../common/Loading';
 
 
 export default observer(function CurrentGoals (){
   const {goalStore} = useStore();
-  const {currentGoals, loadGoals, goalsRegistry} = goalStore;
+  const {currentGoals, loadGoals, goalsRegistry,
+    initialLoading} = goalStore;
 
   useEffect(() => {
     if (goalsRegistry.size <= 1) loadGoals();
   }, [loadGoals, goalsRegistry]);
+
+  if (initialLoading) return <Loading/>
 
   return (
     <>

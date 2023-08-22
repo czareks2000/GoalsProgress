@@ -7,8 +7,8 @@ export default observer(function GoalEditForm()  {
     const {goalStore} = useStore();
     const {updateGoal, selectedGoal, toggleEditGoalForm} = goalStore;
 
-    const submitForm = (goal: Goal) => {
-        updateGoal(goal.id, goal);
+    const submitForm = async (goal: Goal) => {
+        await updateGoal(goal.id, goal);
         toggleEditGoalForm();
     }
 

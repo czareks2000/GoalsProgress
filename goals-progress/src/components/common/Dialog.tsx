@@ -1,11 +1,11 @@
 import { AlertDialog, AlertDialogDescription, AlertDialogLabel } from "@reach/alert-dialog";
-import { useRef } from "react";
+import { ReactNode, useRef } from "react";
 
 interface Props {
     label: string;
     description: string;
-    confirmButtonText?: string;
-    cancelButtonText?: string;
+    confirmButtonText?: ReactNode;
+    cancelButtonText?: ReactNode;
     onConfirm: () => void;
     onCancel: () => void;
 }

@@ -1,4 +1,4 @@
-import { FaPlus, FaEdit, FaTrash, FaFolder } from 'react-icons/fa'
+import { FaPlus, FaEdit, FaTrash, FaFolder, FaCircleNotch } from 'react-icons/fa'
 import { GiCancel } from 'react-icons/gi'
 import { RiArrowGoBackFill } from 'react-icons/ri'
 import { useNavigate } from 'react-router-dom'
@@ -14,7 +14,7 @@ export default observer(function Actions() {
     const {
         selectedGoal: goal,  
         visibleAddProgressForm, visibleEditGoalForm, visibleProgressList, 
-        toggleAddProgressForm, toggleEditGoalForm, changeStatus,
+        toggleAddProgressForm, toggleEditGoalForm, changeStatus, loading,
         addProgressActionStatus, editGoalActionStatus, archiveGoalActionStatus} = goalStore;
 
     // Dialog
@@ -23,8 +23,8 @@ export default observer(function Actions() {
     // Actions
     const navigate = useNavigate();
 
-    const handleDeleteGoal = () => {
-        changeStatus(goal!.id, GoalStatus.Deleted);
+    const handleDeleteGoal = async () => {
+        await changeStatus(goal!.id, GoalStatus.Deleted);
         setShowDialog(false);
         navigate('/goals');
     }
@@ -47,7 +47,8 @@ export default observer(function Actions() {
             <Dialog 
                 label="Confirmation"
                 description="Are you sure you want to delete this goal?"
-                confirmButtonText="Delete"
+                confirmButtonText={
+                    loading ? <FaCircleNotch className="spinner"/> : "Delete"}
                 cancelButtonText="Cancel"
                 onConfirm={handleDeleteGoal}
                 onCancel={() => setShowDialog(false)}
@@ -57,7 +58,7 @@ export default observer(function Actions() {
             <div 
                 className={`action 
                         ${visibleAddProgressForm ? 'active' : ''}
-                        ${addProgressActionStatus ? 'disabled' : ''}`} 
+                        ${showDialog || addProgressActionStatus ? 'disabled' : ''}`} 
                 onClick={toggleAddProgressForm}
             >
                 {visibleAddProgressForm ? 
@@ -69,7 +70,7 @@ export default observer(function Actions() {
             <div 
                 className={`action 
                         ${visibleEditGoalForm ? 'active' : ''} 
-                        ${editGoalActionStatus ? 'disabled' : ''}`} 
+                        ${showDialog || editGoalActionStatus ? 'disabled' : ''}`} 
                 onClick={toggleEditGoalForm}
             >
                 {visibleEditGoalForm ? 
@@ -80,14 +81,14 @@ export default observer(function Actions() {
             </div>
             <div 
                 className={`action 
-                        ${!visibleProgressList ? 'disabled' : ''}`} 
+                        ${showDialog || !visibleProgressList ? 'disabled' : ''}`} 
                 onClick={() => setShowDialog(true)}
             >
                 <><FaTrash/>Delete</>
             </div>
             <div 
                 className={`action 
-                        ${archiveGoalActionStatus  ? 'disabled' : ''}`}  
+                        ${showDialog || archiveGoalActionStatus ? 'disabled' : ''}`}  
                 onClick={goal.status === GoalStatus.Current ? handleArchiveGoal : handleRestoreGoal}
             >
                 {goal.status === GoalStatus.Archvied ? 

@@ -15,6 +15,7 @@ export default function NumberInput(props: Props) {
                     {props.label}
                 </label>
                 <input
+                    id={field.name}
                     type="number"
                     autoComplete='off'
                     {...field} 

@@ -4,6 +4,7 @@ interface Props {
     placeholder: string;
     name: string;
     label?: string;
+    type?: string;
 }
 
 export default function TextInput(props: Props) {
@@ -15,6 +16,7 @@ export default function TextInput(props: Props) {
                     {props.label}
                 </label>
                 <input
+                    id={field.name}
                     {...field} 
                     {...props}
                     autoComplete='off'
