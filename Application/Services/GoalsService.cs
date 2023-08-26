@@ -10,17 +10,26 @@ namespace Application.Services
     public class GoalsService : IGoalsService
     {
         private readonly IGoalsRepository _goalsRepository;
+        private readonly IUserAccessor _userAccessor;
    
-        public GoalsService(IGoalsRepository goalsRepository)
+        public GoalsService(IGoalsRepository goalsRepository, IUserAccessor userAccessor)
         {
+            _userAccessor = userAccessor;
             _goalsRepository = goalsRepository;
         }
 
         public async Task<Result<List<Goal>>> GetAll()
         {   
-            var goals = await _goalsRepository.GetAll();
+            var allGoals = await _goalsRepository.GetAll();
 
-            return Result<List<Goal>>.Sucess(goals.FindAll(g => g.Status != GoalStatus.Deleted));
+            var userGoals = allGoals.FindAll(g => 
+                g.Status != GoalStatus.Deleted && 
+                g.User.Email == _userAccessor.GetUserEmail());
+
+            foreach (var goal in userGoals)
+                goal.User = null;
+
+            return Result<List<Goal>>.Sucess(userGoals);
         }
 
         public async Task<Result<Goal>> GetOne(int id)

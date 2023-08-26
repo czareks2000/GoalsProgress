@@ -3,7 +3,7 @@ import { FaUserLock } from "react-icons/fa"
 const Unauthorised = () => {
   return (
     <>
-        <div className="container shadow">
+        <div className="errors container shadow">
             <h1 className="text-center">
                 <FaUserLock style={{fontSize: '200px'}}/>
             </h1>

@@ -38,13 +38,13 @@ axios.interceptors.response.use(async response => {
             }
             break;
         case 401:
-            router.navigate('unauthorised')
+            router.navigate('/unauthorised')
             break;
         case 403:
-            router.navigate('forbidden')
+            router.navigate('/forbidden')
             break;
         case 404:
-            router.navigate('not-found');
+            router.navigate('/not-found');
             break;
         case 500:
             store.commonStore.setServerError(data);

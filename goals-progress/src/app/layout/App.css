@@ -159,7 +159,7 @@ body{
 
 .goals.container, .details.container, 
 .settings.container, .info.container,
-.margin.container{
+.margin.container, .errors.container{
   margin: 20px auto;
 }
 

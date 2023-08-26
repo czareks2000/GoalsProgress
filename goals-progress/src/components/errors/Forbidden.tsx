@@ -3,7 +3,7 @@ import { RiFolderForbidFill } from "react-icons/ri"
 const Forbidden = () => {
   return (
     <>
-        <div className="container shadow">
+        <div className="errors container shadow">
             <h1 className="text-center">
                 <RiFolderForbidFill style={{fontSize: '200px'}}/>
             </h1>

@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization;
 using Application.Interfaces;
 using Application.Services;
+using Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Interfaces;
@@ -13,9 +13,6 @@ namespace API.Extentions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, 
             IConfiguration config)
         {
-            services.AddControllers()
-                .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
             services.AddDbContext<DataContext>(opt => 
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
@@ -26,6 +23,10 @@ namespace API.Extentions
                     policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
                 });
             });
+
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<IUserAccessor, UserAccessor>();
 
             services.AddScoped<IGoalsService, GoalsService>();
             services.AddScoped<IGoalsRepository, GoalsRepository>();

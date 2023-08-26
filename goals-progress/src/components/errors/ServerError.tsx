@@ -4,7 +4,7 @@ const ServerError = () => {
     const {commonStore} = useStore();
 
     return (
-        <div className="container shadow">
+        <div className="errors container shadow">
             <h1 className="text-center">Server Error</h1>
             <h5 className="text-center error">{commonStore.serverError?.message}</h5>
             {commonStore.serverError?.details && (

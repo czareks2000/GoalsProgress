@@ -1,7 +1,7 @@
 export default function NotFound() {
     return (
         <>
-            <div className="container shadow">
+            <div className="errors container shadow">
                 <span className="text-center" style={{fontSize: '150px'}}>
                     404
                 </span>

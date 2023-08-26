@@ -29,6 +29,9 @@ namespace Application.Services
         {   
             var goal = await _goalsRepository.GetOne(goalId);
 
+            if (goal == null)
+                return Result<List<Category>>.Failure("Invalid goal id");
+
             var categories = goal.Categories;
 
             foreach (var category in categories)
