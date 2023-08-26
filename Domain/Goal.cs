@@ -18,5 +18,6 @@ namespace Domain
         public DateTime? CompletedDate { get; set; }
         public ICollection<Progress> Progresses { get; set; }
         public ICollection<Category> Categories { get; set; }
+        public AppUser User { get; set; }
     }
 }

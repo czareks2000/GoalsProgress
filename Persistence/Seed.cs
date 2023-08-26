@@ -1,13 +1,38 @@
 using Domain;
 using Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context)
+        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
         {
-            if (context.Goals.Any()) return;
+            if (userManager.Users.Any() || context.Goals.Any()) return;
+
+            var users = new List<AppUser>
+            {
+                new AppUser
+                {
+                    UserName = "bob",
+                    Email = "bob@test.com"
+                },
+                new AppUser
+                {
+                    UserName = "ben",
+                    Email = "ben@test.com"
+                },
+                new AppUser
+                {
+                    UserName = "susan",
+                    Email = "susan@test.com"
+                }
+            };
+
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "Pa$$w0rd");
+            }
 
             var goals = new List<Goal>
             {
@@ -25,6 +50,7 @@ namespace Persistence
                     Type = GoalType.Standard,
                     ModificationDate = DateTime.Now,
                     CompletedDate = null,
+                    User = users[0],
                     Progresses = new List<Progress>
                     {
                         new Progress
@@ -71,6 +97,7 @@ namespace Persistence
                     Type = GoalType.Standard,
                     ModificationDate = DateTime.Now,
                     CompletedDate = null,
+                    User = users[0],
                     Progresses = new List<Progress>
                     {
                         new Progress
@@ -124,6 +151,7 @@ namespace Persistence
                     Type = GoalType.Standard,
                     ModificationDate = DateTime.Now,
                     CompletedDate = null,
+                    User = users[0],
                     Progresses = new List<Progress>
                     {
                         new Progress
@@ -163,6 +191,7 @@ namespace Persistence
                     Type = GoalType.Standard,
                     ModificationDate = DateTime.Now,
                     CompletedDate = null,
+                    User = users[0],
                     Progresses = new List<Progress>
                     {
                         new Progress
@@ -188,6 +217,7 @@ namespace Persistence
                     Type = GoalType.Extended,
                     ModificationDate = DateTime.Now,
                     CompletedDate = null,
+                    User = users[0],
                     Categories = new List<Category>
                     {
                         new Category
