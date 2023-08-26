@@ -198,12 +198,12 @@ export default class GoalStore {
             const goals = await agent.Goals.list();
             goals.forEach(goal => {
                 this.setGoal(goal);
-            })
-            this.setInitialLoading(false);
+            })     
         } catch (error) {
             console.log(error);
-            this.setInitialLoading(false);
             store.commonStore.setError("Failed to load goals");
+        } finally {
+            runInAction(() => this.setInitialLoading(false)); 
         }
     }
 
@@ -215,11 +215,11 @@ export default class GoalStore {
             progresses.forEach(progress => {
                 this.setProgress(progress);
             })
-            this.setInitialLoading(false);
         } catch (error) {
             console.log(error);
-            this.setInitialLoading(false);
             store.commonStore.setError("Failed to load progresses");
+        } finally {
+            runInAction(() => this.setInitialLoading(false));
         }
     }
 
@@ -244,13 +244,14 @@ export default class GoalStore {
             goal.modificationDate = new Date();
             runInAction(() => {
                 this.goalsRegistry.set(goal.id, goal);
-                this.setLoading(false);
             })
             store.commonStore.setSuccess(`Goal "${goal.name}" created successfuly`);
         } catch (error) {
             console.log(error);
-            this.setLoading(false);
+            
             store.commonStore.setError("Failed to delete goal");
+        } finally {
+            runInAction(() => this.setLoading(false));
         }
     }
 
@@ -262,12 +263,12 @@ export default class GoalStore {
             runInAction(() => {
                 this.setGoal(updatedGoal);
                 this.selectedGoal = updatedGoal;
-                this.setLoading(false);
             })
         } catch (error) {
             console.log(error);
-            this.setLoading(false);
             store.commonStore.setError("Failed to update goal");
+        } finally {
+            runInAction(() => this.setLoading(false));
         }
     }
 
@@ -283,14 +284,14 @@ export default class GoalStore {
             await agent.Goals.changeStatus(id, status);
             runInAction(() => {
                 this.goalsRegistry.set(id, goal as Goal);
-                this.setLoading(false);
             })
             if(status === GoalStatus.Deleted)
                 store.commonStore.setSuccess(`Goal deleted successfuly`);
         } catch (error) {
             console.log(error);
-            this.setLoading(false);
             store.commonStore.setError(`Failed to change goal status`);
+        } finally {
+            runInAction(() => this.setLoading(false));
         }
     }
 
@@ -306,14 +307,14 @@ export default class GoalStore {
                 this.setGoal(goal);
                 this.selectedGoal = goal;
                 this.idOfLastCreatedCategory = undefined;
-                this.setLoading(false);
             })
             if (goal.status === GoalStatus.Completed)
                 store.commonStore.setSuccess(`Goal completed!`);
         } catch (error) {
             console.log(error);
-            this.setLoading(false);
             store.commonStore.setError("Failed to add progress");
+        } finally {
+            runInAction(() => this.setLoading(false));
         }
     }
 
@@ -326,12 +327,12 @@ export default class GoalStore {
                 this.setGoal(updatedGoal);
                 this.setProgress(progress);
                 this.selectedGoal = updatedGoal;
-                this.setLoading(false);
             })
         } catch (error) {
             console.log(error);
-            this.setLoading(false);
             store.commonStore.setError("Failed to update progress");
+        } finally {
+            runInAction(() => this.setLoading(false));
         }
     }
 
