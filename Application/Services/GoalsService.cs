@@ -3,6 +3,7 @@ using Application.Dto;
 using Application.Interfaces;
 using Domain;
 using Domain.Enums;
+using Microsoft.AspNetCore.Identity;
 using Persistence.Interfaces;
 
 namespace Application.Services
@@ -11,9 +12,11 @@ namespace Application.Services
     {
         private readonly IGoalsRepository _goalsRepository;
         private readonly IUserAccessor _userAccessor;
+        private readonly UserManager<AppUser> _userManager;
    
-        public GoalsService(IGoalsRepository goalsRepository, IUserAccessor userAccessor)
+        public GoalsService(IGoalsRepository goalsRepository, UserManager<AppUser> userManager, IUserAccessor userAccessor)
         {
+            _userManager = userManager;
             _userAccessor = userAccessor;
             _goalsRepository = goalsRepository;
         }
@@ -46,7 +49,9 @@ namespace Application.Services
         }
 
         public async Task<Result<int>> Create(GoalCreateUpdateDto newGoal)
-        {
+        {   
+            var user = await _userManager.FindByEmailAsync(_userAccessor.GetUserEmail());
+
             var goal = new Goal {
                 Name = newGoal.Name,
                 Description = newGoal.Description,
@@ -58,7 +63,8 @@ namespace Application.Services
                 Status = GoalStatus.Current,
                 Type = newGoal.Type,
                 ModificationDate = DateTime.UtcNow,
-                CompletedDate = null
+                CompletedDate = null,
+                User = user
             };
 
             if (await _goalsRepository.Add(goal) == 0)
