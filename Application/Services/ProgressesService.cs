@@ -25,7 +25,7 @@ namespace Application.Services
 
         public async Task<Result<List<Progress>>> GetAll(int goalId)
         {   
-            var goal = await _goalsRepository.GetOne(goalId);      
+            var goal = await _goalsRepository.GetOneAsync(goalId);      
 
             var progresses = goal.Progresses;
 
@@ -39,7 +39,7 @@ namespace Application.Services
 
         public async Task<Result<int>> Create(int goalId, ProgressCreateUpdateDto newProgress)
         {
-            var goal = await _goalsRepository.GetOne(goalId);
+            var goal = await _goalsRepository.GetOneAsync(goalId);
 
             if (goal == null)
                 return Result<int>.Failure("Invalid goal id");
@@ -48,7 +48,7 @@ namespace Application.Services
             
             if (goal.Type == GoalType.Extended)
             {
-                category = await _categoriesRepository.GetOne(newProgress.CategoryId);
+                category = await _categoriesRepository.GetOneAsync(newProgress.CategoryId);
 
                 if (category == null)
                     return Result<int>.Failure("Invalid category id");
@@ -68,7 +68,7 @@ namespace Application.Services
             goal.ModificationDate = DateTime.UtcNow;
 
             //save changes
-            if (await _progressesRepository.Add(progress) == 0)
+            if (await _progressesRepository.AddAsync(progress) == 0)
                 return Result<int>.Failure("Failed to create progress");
             
             return Result<int>.Sucess(progress.Id);
@@ -76,7 +76,7 @@ namespace Application.Services
 
         public async Task<Result<Object>> Delete(int id)
         {
-            var progress = await _progressesRepository.GetOne(id);
+            var progress = await _progressesRepository.GetOneAsync(id);
 
             if (progress == null)
                 return null;
@@ -88,7 +88,7 @@ namespace Application.Services
             goal.ModificationDate = DateTime.UtcNow;
 
             //save changes
-            if (await _progressesRepository.Delete(id) == 0)
+            if (await _progressesRepository.DeleteAsync(id) == 0)
                 return Result<Object>.Failure("Failed to delete progress");
             
             return Result<Object>.Sucess(null);
@@ -96,7 +96,7 @@ namespace Application.Services
 
         public async Task<Result<object>> Update(int id, ProgressCreateUpdateDto updatedProgress)
         {
-            var progress = await _progressesRepository.GetOne(id);
+            var progress = await _progressesRepository.GetOneAsync(id);
 
             if (progress == null)
                 return null;
@@ -111,7 +111,7 @@ namespace Application.Services
             progress.Description = updatedProgress.Description;
             progress.Date = updatedProgress.Date;
             if (goal.Type == GoalType.Extended)
-                progress.Category = await _categoriesRepository.GetOne(updatedProgress.CategoryId);
+                progress.Category = await _categoriesRepository.GetOneAsync(updatedProgress.CategoryId);
             
             //update goal
             goal.CurrentValue += CalculateValue(progress);
@@ -119,7 +119,7 @@ namespace Application.Services
             goal.ModificationDate = DateTime.UtcNow;
 
             //save changes
-            if (await _goalsRepository.Update(goal) == 0)
+            if (await _goalsRepository.UpdateAsync(goal) == 0)
                 return Result<Object>.Failure("Failed to update progress");
             
             return Result<Object>.Sucess(null);

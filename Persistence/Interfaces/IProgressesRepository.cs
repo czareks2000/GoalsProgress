@@ -4,10 +4,10 @@ namespace Persistence.Interfaces
 {
     public interface IProgressesRepository
     {
-        Task<int> Add(Progress progress);
-        Task<List<Progress>> GetAll();
-        Task<Progress> GetOne(int id);
-        Task<int> Update(Progress progress);
-        Task<int> Delete(int id);
+        Task<int> AddAsync(Progress progress);
+        Task<List<Progress>> GetAllAsync();
+        Task<Progress> GetOneAsync(int id);
+        Task<int> UpdateAsync(Progress progress);
+        Task<int> DeleteAsync(int id);
     }
 }

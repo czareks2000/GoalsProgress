@@ -27,7 +27,7 @@ namespace Application.Services
 
         public async Task<Result<List<Category>>> GetAll(int goalId)
         {   
-            var goal = await _goalsRepository.GetOne(goalId);
+            var goal = await _goalsRepository.GetOneAsync(goalId);
 
             if (goal == null)
                 return Result<List<Category>>.Failure("Invalid goal id");
@@ -45,7 +45,7 @@ namespace Application.Services
 
         public async Task<Result<int>> Create(int goalId, CategoryCreateUpdateDto newCategory)
         {
-            var goal = await _goalsRepository.GetOne(goalId);
+            var goal = await _goalsRepository.GetOneAsync(goalId);
 
             if (goal == null)
                 return Result<int>.Failure("Invalid goal id");
@@ -59,7 +59,7 @@ namespace Application.Services
                 Goal = goal
             };
 
-            if (await _categoriesRepository.Add(category) == 0)
+            if (await _categoriesRepository.AddAsync(category) == 0)
                 return Result<int>.Failure("Failed to create category");
 
             return Result<int>.Sucess(category.Id);
@@ -67,7 +67,7 @@ namespace Application.Services
 
         public async Task<Result<object>> Delete(int id)
         {
-            var category = await _categoriesRepository.GetOne(id);
+            var category = await _categoriesRepository.GetOneAsync(id);
 
             if (category == null)
                 return null;
@@ -75,7 +75,7 @@ namespace Application.Services
             if (!await CanBeDeleted(category))
                 return Result<Object>.Failure("You cannot delete assigned category");
 
-            if (await _categoriesRepository.Delete(id) == 0)
+            if (await _categoriesRepository.DeleteAsync(id) == 0)
                 return Result<Object>.Failure("Failed to delete category");
             
             return Result<Object>.Sucess(null);
@@ -83,7 +83,7 @@ namespace Application.Services
 
         private async Task<bool> CanBeDeleted(Category category) 
         {
-            var progresses = await _progressesRepository.GetAll();
+            var progresses = await _progressesRepository.GetAllAsync();
 
             if (progresses.FirstOrDefault(p => p.Category == category) != null)
                 return false;

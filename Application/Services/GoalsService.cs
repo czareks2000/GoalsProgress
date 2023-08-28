@@ -23,7 +23,7 @@ namespace Application.Services
 
         public async Task<Result<List<Goal>>> GetAll()
         {   
-            var allGoals = await _goalsRepository.GetAll();
+            var allGoals = await _goalsRepository.GetAllAsync();
 
             var userGoals = allGoals.FindAll(g => 
                 g.Status != GoalStatus.Deleted && 
@@ -37,13 +37,14 @@ namespace Application.Services
 
         public async Task<Result<Goal>> GetOne(int id)
         {   
-            var goal = await _goalsRepository.GetOne(id);
+            var goal = await _goalsRepository.GetOneAsync(id);
             
             if (goal == null)
                 return null;
 
             goal.Categories = null;
             goal.Progresses = null;
+            goal.User = null;
 
             return Result<Goal>.Sucess(goal);
         }
@@ -67,7 +68,7 @@ namespace Application.Services
                 User = user
             };
 
-            if (await _goalsRepository.Add(goal) == 0)
+            if (await _goalsRepository.AddAsync(goal) == 0)
                 return Result<int>.Failure("Failed to create goal");
             
             return Result<int>.Sucess(goal.Id);
@@ -75,7 +76,7 @@ namespace Application.Services
         
         public async Task<Result<Object>> Update(int id, GoalCreateUpdateDto updatedGoal)
         {
-            var goal = await _goalsRepository.GetOne(id);
+            var goal = await _goalsRepository.GetOneAsync(id);
 
             if (goal == null || goal.Status == GoalStatus.Deleted)
                 return null;
@@ -95,7 +96,7 @@ namespace Application.Services
                 goal.CompletedDate = DateTime.UtcNow;
             }
             
-            if (await _goalsRepository.Update(goal) == 0)
+            if (await _goalsRepository.UpdateAsync(goal) == 0)
                 return Result<Object>.Failure("Failed to update goal");
             
             return Result<Object>.Sucess(null);
@@ -103,7 +104,7 @@ namespace Application.Services
 
         public async Task<Result<object>> UpdateStatus(int id, GoalStatus newStatus)
         {
-            var goal = await _goalsRepository.GetOne(id);
+            var goal = await _goalsRepository.GetOneAsync(id);
 
             if (goal == null)
                 return null;
@@ -111,7 +112,7 @@ namespace Application.Services
             goal.Status = newStatus;
             goal.ModificationDate = DateTime.UtcNow;
 
-            if (await _goalsRepository.Update(goal) == 0)
+            if (await _goalsRepository.UpdateAsync(goal) == 0)
                 return Result<Object>.Failure("Failed to update goal status");
             
             return Result<Object>.Sucess(null);
@@ -119,7 +120,7 @@ namespace Application.Services
 
         public async Task<Result<Object>> Delete(int id)
         {
-            var goal = await _goalsRepository.GetOne(id);
+            var goal = await _goalsRepository.GetOneAsync(id);
 
             if (goal == null || goal.Status == GoalStatus.Deleted)
                 return null;
@@ -127,7 +128,7 @@ namespace Application.Services
             goal.Status = GoalStatus.Deleted;
             goal.ModificationDate = DateTime.UtcNow;
 
-            if (await _goalsRepository.Update(goal) == 0)
+            if (await _goalsRepository.UpdateAsync(goal) == 0)
                 return Result<Object>.Failure("Failed to delete goal");
             
             return Result<Object>.Sucess(null);

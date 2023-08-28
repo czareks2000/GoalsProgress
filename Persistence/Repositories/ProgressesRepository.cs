@@ -12,19 +12,19 @@ namespace Persistence.Repositories
             _context = context;
         }
 
-        public async Task<int> Add(Progress progress)
+        public async Task<int> AddAsync(Progress progress)
         {
             await _context.Progresses.AddAsync(progress);
 
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Progress>> GetAll()
+        public async Task<List<Progress>> GetAllAsync()
         {
             return await _context.Progresses.ToListAsync();
         }
 
-        public async Task<Progress> GetOne(int id)
+        public async Task<Progress> GetOneAsync(int id)
         {
             return await _context.Progresses
                     .Include(p => p.Category)
@@ -32,14 +32,14 @@ namespace Persistence.Repositories
                     .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<int> Update(Progress progress)
+        public async Task<int> UpdateAsync(Progress progress)
         {
             _context.Progresses.Update(progress);
 
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> DeleteAsync(int id)
         {
             var progress = await _context.Progresses.FindAsync(id);
 

@@ -23,7 +23,7 @@ export default observer(function App() {
     }
   }, [commonStore, userStore]);
 
-  if (!commonStore.appLoaded) return <div className='container center'><Loading/></div>
+  if (!commonStore.appLoaded) return <div className='center'><Loading/></div>
 
   return (
     <>

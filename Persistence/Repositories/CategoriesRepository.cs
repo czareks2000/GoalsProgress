@@ -12,19 +12,19 @@ namespace Persistence.Repositories
             _context = context;
         }
 
-        public async Task<int> Add(Category category)
+        public async Task<int> AddAsync(Category category)
         {
             await _context.AddAsync(category);
 
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Category>> GetAll()
+        public async Task<List<Category>> GetAllAsync()
         {
             return await _context.Categories.ToListAsync();
         }
 
-        public async Task<Category> GetOne(int id)
+        public async Task<Category> GetOneAsync(int id)
         {
             return await _context.Categories
                 .Include(c => c.Goal)
@@ -32,14 +32,14 @@ namespace Persistence.Repositories
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<int> Update(Category category)
+        public async Task<int> UpdateAsync(Category category)
         {
             _context.Categories.Update(category);
 
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> DeleteAsync(int id)
         {
             var category = await _context.Categories.FindAsync(id);
 

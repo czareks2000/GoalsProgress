@@ -1,6 +1,7 @@
 using Application.Dto;
 using Application.Interfaces;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -27,22 +28,25 @@ namespace API.Controllers
             return HandleResult(await _goalsService.GetAll());
         }
 
-        [HttpGet("goal/{id}")] //api/goal/id
-        public async Task<IActionResult> GetGoal(int id)
+        [Authorize(Policy = "IsOwner")]
+        [HttpGet("goal/{goalId}")] //api/goal/goalId
+        public async Task<IActionResult> GetGoal(int goalId)
         {
-            return HandleResult(await _goalsService.GetOne(id));
+            return HandleResult(await _goalsService.GetOne(goalId));
         }
 
-        [HttpGet("goal/{id}/categories")] //api/goal/id/categories
-        public async Task<IActionResult> GetCategories(int id)
+        [Authorize(Policy = "IsOwner")]
+        [HttpGet("goal/{goalId}/categories")] //api/goal/goalId/categories
+        public async Task<IActionResult> GetCategories(int goalId)
         {
-            return HandleResult(await _categoriesService.GetAll(id));
+            return HandleResult(await _categoriesService.GetAll(goalId));
         }
 
-        [HttpGet("goal/{id}/progresses")] //api/goal/id/progresses
-        public async Task<IActionResult> GetGoalProgresses(int id)
+        [Authorize(Policy = "IsOwner")]
+        [HttpGet("goal/{goalId}/progresses")] //api/goal/goalId/progresses
+        public async Task<IActionResult> GetGoalProgresses(int goalId)
         {
-            return HandleResult(await _progressesService.GetAll(id));
+            return HandleResult(await _progressesService.GetAll(goalId));
         }
 
         [HttpPost("goals")] //api/goals
@@ -51,22 +55,25 @@ namespace API.Controllers
             return HandleResult(await _goalsService.Create(goal));
         }
 
-        [HttpPut("goal/{id}")] //api/goal/id
-        public async Task<IActionResult> UpdateGoal(int id, GoalCreateUpdateDto goal)
+        [Authorize(Policy = "IsOwner")]
+        [HttpPut("goal/{goalId}")] //api/goal/goalId
+        public async Task<IActionResult> UpdateGoal(int goalId, GoalCreateUpdateDto goal)
         {
-            return HandleResult(await _goalsService.Update(id, goal));
+            return HandleResult(await _goalsService.Update(goalId, goal));
         }
 
-        [HttpPatch("goal/{id}/{status}")] //api/goal/id/status
-        public async Task<IActionResult> UpdateGoalStatus(int id, GoalStatus status)
+        [Authorize(Policy = "IsOwner")]
+        [HttpPatch("goal/{goalId}/{status}")] //api/goal/goalId/status
+        public async Task<IActionResult> UpdateGoalStatus(int goalId, GoalStatus status)
         {
-            return HandleResult(await _goalsService.UpdateStatus(id, status));
+            return HandleResult(await _goalsService.UpdateStatus(goalId, status));
         }
 
-        [HttpDelete("goal/{id}")] //api/goal/id
-        public async Task<IActionResult> DeleteGoal(int id)
+        [Authorize(Policy = "IsOwner")]
+        [HttpDelete("goal/{goalId}")] //api/goal/goalId
+        public async Task<IActionResult> DeleteGoal(int goalId)
         {
-            return HandleResult(await _goalsService.Delete(id));
+            return HandleResult(await _goalsService.Delete(goalId));
         }
     }
 }

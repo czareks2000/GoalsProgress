@@ -479,7 +479,7 @@ to {
 }
 
 [data-reach-dialog-content],
-.container.center {
+.center {
   margin: 0;
   position: absolute;
   top: 50%;

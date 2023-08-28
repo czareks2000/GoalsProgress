@@ -1,5 +1,6 @@
 using Application.Dto;
 using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -12,6 +13,7 @@ namespace API.Controllers
             _categoriesService = categoriesService;
         }
 
+        [Authorize(Policy = "IsOwner")]
         [HttpPost("categories/{goalId}")] //api/categories/goalId
         public async Task<IActionResult> CreateCategory(
             int goalId, CategoryCreateUpdateDto newCategory)
@@ -19,10 +21,10 @@ namespace API.Controllers
             return HandleResult(await _categoriesService.Create(goalId, newCategory));
         }
 
-        [HttpDelete("categories/{id}")] //api/categories/id
-        public async Task<IActionResult> DeleteCategory(int id)
+        [HttpDelete("categories/{categoryId}")] //api/categories/id
+        public async Task<IActionResult> DeleteCategory(int categoryId)
         {
-            return HandleResult(await _categoriesService.Delete(id));
+            return HandleResult(await _categoriesService.Delete(categoryId));
         }
     }
 }
