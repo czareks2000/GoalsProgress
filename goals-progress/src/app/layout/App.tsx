@@ -7,11 +7,23 @@ import { observer } from 'mobx-react-lite';
 import HomePage from '../../components/home/HomePage';
 import Info from '../../components/common/Info';
 import { useStore } from '../stores/store';
+import { useEffect } from 'react';
+import Loading from '../../components/common/Loading';
 
 export default observer(function App() {
   const location = useLocation();
-  const {commonStore} = useStore();
+  const {commonStore, userStore} = useStore();
   const {info, clearInfo} = commonStore;
+
+  useEffect(() => {
+    if (commonStore.token) {
+      userStore.getUser().finally(() => commonStore.setApploaded());
+    } else {
+      commonStore.setApploaded();
+    }
+  }, [commonStore, userStore]);
+
+  if (!commonStore.appLoaded) return <div className='container center'><Loading/></div>
 
   return (
     <>

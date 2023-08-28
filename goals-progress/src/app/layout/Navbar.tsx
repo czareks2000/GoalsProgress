@@ -1,6 +1,9 @@
 import { NavLink } from 'react-router-dom'
+import { useStore } from '../stores/store';
+import { observer } from 'mobx-react-lite';
 
-const Navbar = () => {
+export default observer(function Navbar() {
+    const {userStore: {logout}} = useStore();
     return (
         <div className='container shadow'>
             <div className="navbar text-center">
@@ -13,12 +16,10 @@ const Navbar = () => {
                 <NavLink  className={`navbar-item`} to="/settings">
                     Settings
                 </NavLink>
-                <div className="navbar-item">
+                <div className="navbar-item" onClick={logout}>
                     Logout
                 </div>
             </div>
         </div>
     )
-}
-
-export default Navbar
+})

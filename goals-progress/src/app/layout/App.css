@@ -39,7 +39,7 @@ body{
   background-color: var(--background-dark);
   font-family: 'Noto Sans', sans-serif;
   color: white;
-  margin: 0px !important;
+  margin: 0px;
 }
 
 .wrapper{
@@ -410,6 +410,10 @@ a .goal{
   background-color: var(--primary);
 }
 
+a {
+  text-decoration: none;
+}
+
 .my-1 {
   margin: 10px 0;
 }
@@ -474,6 +478,15 @@ to {
 }
 }
 
+[data-reach-dialog-content],
+.container.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 
 [data-reach-dialog-overlay] {
 	background: hsla(0, 0%, 0%, 0.33);
@@ -487,7 +500,6 @@ to {
 
 [data-reach-dialog-content] {
 	width: 350px;
-	margin: 40vh auto;
 	background: var(--background-dark);
   border-radius: 10px;
 	padding: 2rem;

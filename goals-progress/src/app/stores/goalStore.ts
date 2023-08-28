@@ -27,6 +27,15 @@ export default class GoalStore {
         makeAutoObservable(this);
     }
 
+    clearStore = () => {
+        this.goalsRegistry.clear();
+        this.selectedGoal = undefined;
+        this.progresses.clear();
+        this.selectedProgress = undefined;
+        this.categories.clear();
+        this.idOfLastCreatedCategory = undefined;
+    }
+
     setInitialValues = async() => {
         runInAction(() => {
             this.visibleAddProgressForm = false;
