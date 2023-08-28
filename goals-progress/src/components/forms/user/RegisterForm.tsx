@@ -24,7 +24,7 @@ export default observer(function RegisterForm({cancelButtonAction}: Props) {
                 password: Yup.string().required('Password is required')
             })}
         >
-            {({handleSubmit, isSubmitting, errors, isValid, dirty}) => (
+            {({handleSubmit, isSubmitting, isValid, dirty}) => (
                 <Form
                     className="form outline outline-primary" 
                     onSubmit={handleSubmit} 

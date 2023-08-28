@@ -22,7 +22,7 @@ export default observer(function ProgressForm(
     {onSubmit, buttonText, progress, cancelButton = false, cancelButtonAction}: Props) {
     const {goalStore} = useStore();
     const {selectedCategories: categories, selectedGoal,
-        idOfLastCreatedCategory, loading} = goalStore;
+        idOfLastCreatedCategory} = goalStore;
 
     const validationSchema = Yup.object({
       value: Yup.number()
@@ -90,7 +90,7 @@ export default observer(function ProgressForm(
             {/* Button */}
             <div className="text-center">
               <Button
-                loading={loading}
+                loading={isSubmitting}
                 type="submit"
                 className={!(dirty && isValid) ? "btn disabled" : "btn"}
                 disabled={!(dirty && isValid) || isSubmitting}

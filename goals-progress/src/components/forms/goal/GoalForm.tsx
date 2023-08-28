@@ -17,9 +17,6 @@ interface Props {
 }
 
 export default observer(function GoalForm({ onSubmit, buttonText, goal, cancelButton = false, cancelButtonAction }: Props) {
-    const {goalStore} = useStore();
-    const {loading} = goalStore;
-
     const validationSchema = Yup.object({
       name: Yup.string().required('The goal name is required'),
       description: Yup.string().required('The goal description is required'),
@@ -104,7 +101,7 @@ export default observer(function GoalForm({ onSubmit, buttonText, goal, cancelBu
                 {/* Buttons */}
                 <div className="text-center">
                   <Button
-                    loading={loading} 
+                    loading={isSubmitting} 
                     type="submit"
                     className={!(dirty && isValid) ? "btn disabled" : "btn"}
                     disabled={!(dirty && isValid) || isSubmitting}
