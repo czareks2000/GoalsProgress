@@ -7,8 +7,8 @@ namespace Application.Interfaces
 {
     public interface IGoalsService
     {
-        Task<Result<List<Goal>>> GetAll();
-        Task<Result<Goal>> GetOne(int id);
+        Task<Result<List<GoalDto>>> GetAll();
+        Task<Result<GoalDto>> GetOne(int id);
         Task<Result<int>> Create(GoalCreateUpdateDto newGoal); 
         Task<Result<Object>> Update(int id, GoalCreateUpdateDto updatedGoal);
         Task<Result<Object>> UpdateStatus(int id, GoalStatus newStatus); 

@@ -1,6 +1,7 @@
 using Application.Core;
 using Application.Dto;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using Domain.Enums;
 using Persistence.Interfaces;
@@ -12,29 +13,27 @@ namespace Application.Services
         private readonly IProgressesRepository _progressesRepository;
         private readonly IGoalsRepository _goalsRepository;
         private readonly ICategoriesRepository _categoriesRepository;
+        private readonly IMapper _mapper;
 
         public ProgressesService(
             IProgressesRepository progressesRepository,
             IGoalsRepository goalsRepository,
-            ICategoriesRepository categoriesRepository)
+            ICategoriesRepository categoriesRepository,
+            IMapper mapper)
         {
             _progressesRepository = progressesRepository;
             _goalsRepository = goalsRepository;
             _categoriesRepository = categoriesRepository;
+            _mapper = mapper;
         }
 
-        public async Task<Result<List<Progress>>> GetAll(int goalId)
+        public async Task<Result<List<ProgressDto>>> GetAll(int goalId)
         {   
             var goal = await _goalsRepository.GetOneAsync(goalId);      
 
-            var progresses = goal.Progresses;
+            var progresses = _mapper.Map<List<ProgressDto>>(goal.Progresses);
 
-            foreach (var progress in progresses)
-            {
-                progress.Goal = null;
-            }
-
-            return Result<List<Progress>>.Sucess(progresses.ToList());
+            return Result<List<ProgressDto>>.Sucess(progresses);
         }
 
         public async Task<Result<int>> Create(int goalId, ProgressCreateUpdateDto newProgress)

@@ -1,6 +1,7 @@
 using Application.Core;
 using Application.Dto;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using Domain.Enums;
 using Microsoft.AspNetCore.Identity;
@@ -13,15 +14,20 @@ namespace Application.Services
         private readonly IGoalsRepository _goalsRepository;
         private readonly IUserAccessor _userAccessor;
         private readonly UserManager<AppUser> _userManager;
+    private readonly IMapper _mapper;
    
-        public GoalsService(IGoalsRepository goalsRepository, UserManager<AppUser> userManager, IUserAccessor userAccessor)
+        public GoalsService(IGoalsRepository goalsRepository, 
+            UserManager<AppUser> userManager, 
+            IUserAccessor userAccessor,
+            IMapper mapper)
         {
             _userManager = userManager;
             _userAccessor = userAccessor;
             _goalsRepository = goalsRepository;
+            _mapper = mapper;
         }
 
-        public async Task<Result<List<Goal>>> GetAll()
+        public async Task<Result<List<GoalDto>>> GetAll()
         {   
             var allGoals = await _goalsRepository.GetAllAsync();
 
@@ -29,24 +35,21 @@ namespace Application.Services
                 g.Status != GoalStatus.Deleted && 
                 g.User.Email == _userAccessor.GetUserEmail());
 
-            foreach (var goal in userGoals)
-                goal.User = null;
+            var goals = _mapper.Map<List<GoalDto>>(userGoals);
 
-            return Result<List<Goal>>.Sucess(userGoals);
+            return Result<List<GoalDto>>.Sucess(goals);
         }
 
-        public async Task<Result<Goal>> GetOne(int id)
+        public async Task<Result<GoalDto>> GetOne(int id)
         {   
             var goal = await _goalsRepository.GetOneAsync(id);
             
             if (goal == null)
                 return null;
 
-            goal.Categories = null;
-            goal.Progresses = null;
-            goal.User = null;
+            var result = _mapper.Map<GoalDto>(goal);
 
-            return Result<Goal>.Sucess(goal);
+            return Result<GoalDto>.Sucess(result);
         }
 
         public async Task<Result<int>> Create(GoalCreateUpdateDto newGoal)

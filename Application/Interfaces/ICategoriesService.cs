@@ -6,7 +6,7 @@ namespace Application.Interfaces
 {
     public interface ICategoriesService
     {
-        Task<Result<List<Category>>> GetAll(int goalId);
+        Task<Result<List<CategoryDto>>> GetAll(int goalId);
         Task<Result<int>> Create(int goalID, CategoryCreateUpdateDto newCategory);
         Task<Result<Object>> Delete(int id);
     }

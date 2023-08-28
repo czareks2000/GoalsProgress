@@ -1,3 +1,4 @@
+using Application.Core;
 using Application.Interfaces;
 using Application.Services;
 using Infrastructure.Security;
@@ -27,6 +28,8 @@ namespace API.Extentions
             services.AddHttpContextAccessor();
 
             services.AddScoped<IUserAccessor, UserAccessor>();
+
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             services.AddScoped<IGoalsService, GoalsService>();
             services.AddScoped<IGoalsRepository, GoalsRepository>();

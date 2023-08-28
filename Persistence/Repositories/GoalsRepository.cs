@@ -22,6 +22,8 @@ namespace Persistence.Repositories
         public async Task<List<Goal>> GetAllAsync()
         {
             return await _context.Goals
+                .Include(g => g.Categories)
+                .Include(g => g.Progresses)
                 .Include(g => g.User)
                 .ToListAsync();
         }

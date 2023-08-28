@@ -1,6 +1,7 @@
 using Application.Core;
 using Application.Dto;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using Domain.Enums;
 using Persistence.Interfaces;
@@ -12,35 +13,32 @@ namespace Application.Services
         private readonly ICategoriesRepository _categoriesRepository;
         private readonly IGoalsRepository _goalsRepository;
         private readonly IProgressesRepository _progressesRepository;
+        private readonly IMapper _mapper;
 
         public CategoriesService(
             ICategoriesRepository categoriesRepository,
             IGoalsRepository goalsRepository,
-            IProgressesRepository progressesRepository
+            IProgressesRepository progressesRepository,
+            IMapper mapper
         )
         {
             _goalsRepository = goalsRepository;
             _progressesRepository = progressesRepository;
+            _mapper = mapper;
             _categoriesRepository = categoriesRepository;
 
         }
 
-        public async Task<Result<List<Category>>> GetAll(int goalId)
+        public async Task<Result<List<CategoryDto>>> GetAll(int goalId)
         {   
             var goal = await _goalsRepository.GetOneAsync(goalId);
 
             if (goal == null)
-                return Result<List<Category>>.Failure("Invalid goal id");
+                return Result<List<CategoryDto>>.Failure("Invalid goal id");
 
-            var categories = goal.Categories;
-
-            foreach (var category in categories)
-            {
-                category.Goal = null;
-                category.Progresses = null;
-            }
+            var categories = _mapper.Map<List<CategoryDto>>(goal.Categories);
                 
-            return Result<List<Category>>.Sucess(categories.ToList());
+            return Result<List<CategoryDto>>.Sucess(categories);
         }
 
         public async Task<Result<int>> Create(int goalId, CategoryCreateUpdateDto newCategory)
