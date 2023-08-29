@@ -36,12 +36,12 @@ namespace Application.Services
             return Result<List<ProgressDto>>.Sucess(progresses);
         }
 
-        public async Task<Result<int>> Create(int goalId, ProgressCreateUpdateDto newProgress)
+        public async Task<Result<GoalDto>> Create(int goalId, ProgressCreateUpdateDto newProgress)
         {
             var goal = await _goalsRepository.GetOneAsync(goalId);
 
             if (goal == null)
-                return Result<int>.Failure("Invalid goal id");
+                return Result<GoalDto>.Failure("Invalid goal id");
 
             Category category = null;
             
@@ -50,7 +50,7 @@ namespace Application.Services
                 category = await _categoriesRepository.GetOneAsync(newProgress.CategoryId);
 
                 if (category == null)
-                    return Result<int>.Failure("Invalid category id");
+                    return Result<GoalDto>.Failure("Invalid category id");
             }
 
             var progress = new Progress {
@@ -68,12 +68,14 @@ namespace Application.Services
 
             //save changes
             if (await _progressesRepository.AddAsync(progress) == 0)
-                return Result<int>.Failure("Failed to create progress");
+                return Result<GoalDto>.Failure("Failed to create progress");
             
-            return Result<int>.Sucess(progress.Id);
+            var result = _mapper.Map<GoalDto>(goal);
+
+            return Result<GoalDto>.Sucess(result);
         }
 
-        public async Task<Result<Object>> Delete(int id)
+        public async Task<Result<GoalDto>> Delete(int id)
         {
             var progress = await _progressesRepository.GetOneAsync(id);
 
@@ -88,12 +90,16 @@ namespace Application.Services
 
             //save changes
             if (await _progressesRepository.DeleteAsync(id) == 0)
-                return Result<Object>.Failure("Failed to delete progress");
+                return Result<GoalDto>.Failure("Failed to delete progress");
             
-            return Result<Object>.Sucess(null);
+            var updatedGoal = await _goalsRepository.GetOneAsync(goal.Id);
+
+            var result = _mapper.Map<GoalDto>(updatedGoal);
+
+            return Result<GoalDto>.Sucess(result);
         }
 
-        public async Task<Result<object>> Update(int id, ProgressCreateUpdateDto updatedProgress)
+        public async Task<Result<GoalDto>> Update(int id, ProgressCreateUpdateDto updatedProgress)
         {
             var progress = await _progressesRepository.GetOneAsync(id);
 
@@ -119,9 +125,13 @@ namespace Application.Services
 
             //save changes
             if (await _goalsRepository.UpdateAsync(goal) == 0)
-                return Result<Object>.Failure("Failed to update progress");
+                return Result<GoalDto>.Failure("Failed to update progress");
             
-            return Result<Object>.Sucess(null);
+            var updatedGoal = await _goalsRepository.GetOneAsync(goal.Id);
+
+            var result = _mapper.Map<GoalDto>(updatedGoal);
+
+            return Result<GoalDto>.Sucess(result);
         }
 
         private decimal CalculateValue(Progress progress)

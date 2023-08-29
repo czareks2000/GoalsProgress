@@ -6,8 +6,7 @@ import ProgressForm from "./ProgressForm";
 
 export default observer(function ProgressAddForm() {
     const {goalStore} = useStore();
-    const {createProgress, selectedCategories: categories,
-      selectedGoal, toggleAddProgressForm} = goalStore;
+    const {createProgress, selectedGoal, toggleAddProgressForm} = goalStore;
 
     const initialValues = {
       id: 0,
@@ -16,7 +15,7 @@ export default observer(function ProgressAddForm() {
       date: null,
       description: '',
       categoryId: 
-        selectedGoal?.type === GoalType.Extended ? categories[0].id : undefined
+        selectedGoal?.type === GoalType.Extended ? selectedGoal.categories![0].id : undefined
     };
 
     const submitForm = async (values: Progress) => {

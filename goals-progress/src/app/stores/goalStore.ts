@@ -10,9 +10,7 @@ import { GoalType } from "../models/enums/GoalType";
 export default class GoalStore {
     goalsRegistry = new Map<number, Goal>();
     selectedGoal: Goal | undefined = undefined;
-    progresses = new Map<number, Progress>();
     selectedProgress: Progress | undefined = undefined;
-    categories = new Map<number, Category>();
     idOfLastCreatedCategory: number | undefined = undefined;
 
     visibleAddProgressForm = false;
@@ -30,9 +28,7 @@ export default class GoalStore {
     clearStore = () => {
         this.goalsRegistry.clear();
         this.selectedGoal = undefined;
-        this.progresses.clear();
         this.selectedProgress = undefined;
-        this.categories.clear();
         this.idOfLastCreatedCategory = undefined;
     }
 
@@ -76,7 +72,7 @@ export default class GoalStore {
 
     get showProgressAddForm() {
         if(this.selectedGoal)
-            return ((this.selectedGoal.type === GoalType.Extended && this.categories.size > 0 ) 
+            return ((this.selectedGoal.type === GoalType.Extended && this.selectedGoal.categories!.length > 0 ) 
                 ||  (this.selectedGoal.type === GoalType.Standard)) && this.visibleAddProgressForm
         
         return false;
@@ -115,13 +111,12 @@ export default class GoalStore {
         return false;
     }
 
-    get selectedCategories() {
-        return Array.from(this.categories.values());
-    }
 
-    get selectedProgresses() {
-        return Array.from(this.progresses.values())
-            .sort((a, b) => b.date!.getTime() - a.date!.getTime());
+    get sortedProgresses() {
+        if (this.selectedGoal)
+            return this.selectedGoal.progresses!.slice().sort((a, b) => b.date!.getTime() - a.date!.getTime());
+
+        return [];
     }
 
     get currentGoals() {
@@ -136,15 +131,6 @@ export default class GoalStore {
                 .sort((a, b) => a.deadline!.getTime() - b.deadline!.getTime());
     }
 
-    private setCategory = (category: Category) => {
-        this.categories.set(category.id, category);
-    }
-
-    private setProgress = (progress: Progress) => {
-        progress.date = this.convertToLocalTimezone(progress.date!);
-
-        this.progresses.set(progress.id, progress);
-    }
 
     private setLoading = (state: boolean) => {
         this.loading = state;
@@ -159,6 +145,11 @@ export default class GoalStore {
         goal.modificationDate = this.convertToLocalTimezone(goal.modificationDate!);
         goal.completedDate = this.convertToLocalTimezone(goal.completedDate!);
 
+        goal.progresses?.map(progress => {
+            progress.date = this.convertToLocalTimezone(progress.date!);
+            return progress;
+        }) 
+
         this.goalsRegistry.set(goal.id, goal);
     }
 
@@ -167,47 +158,34 @@ export default class GoalStore {
     }
 
     loadGoal = async (id: number) => {
+        this.setInitialLoading(true);
+        
         let goal = this.getGoal(id);
 
         if (goal) {
             this.selectedGoal = goal;
-            try {
-                this.loadProgressesAndCategories(goal);
-            } catch (error) {
-                console.log(error);
-            }
+            this.setInitialLoading(false); 
             return goal;
         } else {
             try {
                 goal = await agent.Goals.details(id);
                 this.setGoal(goal);
-                runInAction(() => {
-                    this.selectedGoal = goal;
-                })
-                this.loadProgressesAndCategories(goal);
+                runInAction(() => this.selectedGoal = goal)
                 return goal;
             } catch (error) {
                 console.log(error);
+                store.commonStore.setError("Failed to load goal");
+            } finally {
+                runInAction(() => this.setInitialLoading(false)); 
             }
         }
-        store.commonStore.setError("Failed to load goal");
-    }
-
-    private loadProgressesAndCategories = (goal: Goal) => {
-        if(goal.currentValue !== 0)
-            this.loadProgresses(goal.id);
-        else
-            this.progresses.clear();
-        this.loadCategories(goal.id);
     }
 
     loadGoals = async () => {
         this.setInitialLoading(true);
         try {
             const goals = await agent.Goals.list();
-            goals.forEach(goal => {
-                this.setGoal(goal);
-            })     
+            goals.forEach(goal => this.setGoal(goal))     
         } catch (error) {
             console.log(error);
             store.commonStore.setError("Failed to load goals");
@@ -216,59 +194,29 @@ export default class GoalStore {
         }
     }
 
-    loadProgresses = async (goalId: number) => {
-        this.setInitialLoading(true);
-        try {
-            this.progresses.clear();
-            const progresses = await agent.Goals.progresses(goalId);
-            progresses.forEach(progress => {
-                this.setProgress(progress);
-            })
-        } catch (error) {
-            console.log(error);
-            store.commonStore.setError("Failed to load progresses");
-        } finally {
-            runInAction(() => this.setInitialLoading(false));
-        }
-    }
-
-    loadCategories = async (goalId: number) => {
-        try {
-            this.categories.clear();
-            var categories = await agent.Goals.categories(goalId);
-            categories.forEach(category => {
-                this.setCategory(category);
-            })
-        } catch (error) {
-            console.log(error);
-            store.commonStore.setError("Failed to load categories");
-        }
-    }
-
     createGoal = async (goal: Goal) => {
-        this.setLoading(true);
         try {
             const id = await agent.Goals.create(goal);
             goal.id = id;
             goal.modificationDate = new Date();
-            runInAction(() => {
-                this.goalsRegistry.set(goal.id, goal);
+            goal.categories = [];
+            goal.progresses = [];
+            runInAction(() => { 
+                //not using this.setGoal(goal) on purpose
+                //goal object is not from db so dont need 
+                //to deal w date and time
+                this.goalsRegistry.set(goal.id, goal); 
             })
             store.commonStore.setSuccess(`Goal "${goal.name}" created successfuly`);
         } catch (error) {
             console.log(error);
-            
             store.commonStore.setError("Failed to delete goal");
-        } finally {
-            runInAction(() => this.setLoading(false));
         }
     }
 
     updateGoal = async (id:number, goal: Goal) => {
-        this.setLoading(true);
         try {
-            await agent.Goals.update(id, goal);
-            let updatedGoal = await agent.Goals.details(id);
+            const updatedGoal = await agent.Goals.update(id, goal);
             runInAction(() => {
                 this.setGoal(updatedGoal);
                 this.selectedGoal = updatedGoal;
@@ -276,26 +224,32 @@ export default class GoalStore {
         } catch (error) {
             console.log(error);
             store.commonStore.setError("Failed to update goal");
-        } finally {
-            runInAction(() => this.setLoading(false));
         }
     }
 
     changeStatus = async (id:number, status: GoalStatus) => {
         this.setLoading(true);
-        let goal = this.getGoal(id);
-        if (goal)
+        if (this.selectedGoal)
         {
-            goal.status = status;
-            goal.modificationDate = new Date();
+            this.selectedGoal.status = status;
+            this.selectedGoal.modificationDate = new Date();
         }
         try {
             await agent.Goals.changeStatus(id, status);
             runInAction(() => {
-                this.goalsRegistry.set(id, goal as Goal);
-            })
-            if(status === GoalStatus.Deleted)
-                store.commonStore.setSuccess(`Goal deleted successfuly`);
+                if (status === GoalStatus.Deleted)
+                {
+                    this.goalsRegistry.delete(id);
+                    store.commonStore.setSuccess(`Goal deleted successfuly`);
+                }
+                else
+                {
+                    //not using this.setGoal(goal) on purpose
+                    //goal object is not from db so dont need 
+                    //to deal w date and time
+                    this.goalsRegistry.set(id, this.selectedGoal as Goal);
+                }
+            })                
         } catch (error) {
             console.log(error);
             store.commonStore.setError(`Failed to change goal status`);
@@ -305,14 +259,9 @@ export default class GoalStore {
     }
 
     createProgress = async (goalId: number, progress: Progress) => {
-        this.setLoading(true);
         try {
-            const id = await agent.Progresses.create(goalId, progress);
-            progress.id = id;
-            progress.category = this.categories.get(progress.categoryId as number);
-            let goal = await agent.Goals.details(goalId);
+            const goal = await agent.Progresses.create(goalId, progress);
             runInAction(() => {
-                this.setProgress(progress);
                 this.setGoal(goal);
                 this.selectedGoal = goal;
                 this.idOfLastCreatedCategory = undefined;
@@ -322,35 +271,26 @@ export default class GoalStore {
         } catch (error) {
             console.log(error);
             store.commonStore.setError("Failed to add progress");
-        } finally {
-            runInAction(() => this.setLoading(false));
         }
     }
 
     updateProgress = async (goalId: number, progress: Progress) => {
-        this.setLoading(true);
         try {
-            await agent.Progresses.update(progress.id, progress);
-            let updatedGoal = await agent.Goals.details(goalId);
+            const updatedGoal = await agent.Progresses.update(progress.id, progress);
             runInAction(() => {
                 this.setGoal(updatedGoal);
-                this.setProgress(progress);
                 this.selectedGoal = updatedGoal;
             })
         } catch (error) {
             console.log(error);
             store.commonStore.setError("Failed to update progress");
-        } finally {
-            runInAction(() => this.setLoading(false));
         }
     }
 
     deleteProgress = async (id: number, goalId: number) => {
         try {
-            await agent.Progresses.delete(id);
-            let goal = await agent.Goals.details(goalId);
+            const goal = await agent.Progresses.delete(id);
             runInAction(() => {
-                this.progresses.delete(id);
                 this.setGoal(goal);
                 this.selectedGoal = goal;
             })
@@ -365,7 +305,8 @@ export default class GoalStore {
             const id = await agent.Categories.create(goalId, category);
             category.id = id;
             runInAction(() => {
-                this.setCategory(category);
+                this.selectedGoal?.categories?.push(category);
+                this.goalsRegistry.set(goalId, this.selectedGoal!);
                 this.idOfLastCreatedCategory = category.id;
             })
         } catch (error) {

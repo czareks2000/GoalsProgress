@@ -77,7 +77,7 @@ namespace Application.Services
             return Result<int>.Sucess(goal.Id);
         }
         
-        public async Task<Result<Object>> Update(int id, GoalCreateUpdateDto updatedGoal)
+        public async Task<Result<GoalDto>> Update(int id, GoalCreateUpdateDto updatedGoal)
         {
             var goal = await _goalsRepository.GetOneAsync(id);
 
@@ -100,9 +100,11 @@ namespace Application.Services
             }
             
             if (await _goalsRepository.UpdateAsync(goal) == 0)
-                return Result<Object>.Failure("Failed to update goal");
+                return Result<GoalDto>.Failure("Failed to update goal");
             
-            return Result<Object>.Sucess(null);
+            var result = _mapper.Map<GoalDto>(goal);
+
+            return Result<GoalDto>.Sucess(result);
         }
 
         public async Task<Result<object>> UpdateStatus(int id, GoalStatus newStatus)

@@ -80,15 +80,15 @@ const Goals = {
     progresses: (id: number) => requests.get<Progress[]>(`/goal/${id}/progresses`),
     categories: (id: number) => requests.get<Category[]>(`/goal/${id}/categories`),
     create: (goal: Goal) => requests.post<number>('/goals', goal),
-    update: (id: number, goal: Goal) => requests.put<void>(`/goal/${id}`, goal),
+    update: (id: number, goal: Goal) => requests.put<Goal>(`/goal/${id}`, goal),
     changeStatus: (id: number, status: GoalStatus) => requests.patch<void>(`/goal/${id}/${status}`,{}),
     delete: (id: number) => requests.del<void>(`/goal/${id}`)
 }
 
 const Progresses = {
-    create: (goalId: number, progress: Progress) => requests.post<number>(`/progresses/${goalId}`, progress),
-    update: (id: number, progress: Progress) => requests.put<void>(`/progress/${id}`, progress),
-    delete: (id: number) => requests.del<void>(`/progress/${id}`) 
+    create: (goalId: number, progress: Progress) => requests.post<Goal>(`/progresses/${goalId}`, progress),
+    update: (id: number, progress: Progress) => requests.put<Goal>(`/progress/${id}`, progress),
+    delete: (id: number) => requests.del<Goal>(`/progress/${id}`) 
 }
 
 const Categories = {

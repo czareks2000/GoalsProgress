@@ -38,7 +38,9 @@ export default observer(function ProgressItem({ progress }: Props) {
             </p>
             <small>{format(progress.date!, 'dd MMM yyyy')}</small>
         </div>
-        {(goal.status === GoalStatus.Current || apiLoading) && 
+        {((goal.status === GoalStatus.Current) || 
+          (goal.status === GoalStatus.Deleted && apiLoading)
+          ) && 
         <div className="progress-actions">
           <FaEdit onClick={() => showEditProgressForm(progress)}/>
           {loading ? 

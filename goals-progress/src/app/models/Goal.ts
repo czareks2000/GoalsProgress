@@ -1,3 +1,5 @@
+import { Category } from "./Category";
+import { Progress } from "./Progress";
 import { GoalStatus } from "./enums/GoalStatus";
 import { GoalType } from "./enums/GoalType";
 
@@ -14,4 +16,6 @@ export interface Goal {
     type: GoalType,
     modificationDate?: Date,
     completedDate?: Date,
+    progresses?: Progress[],
+    categories?: Category[]
 }

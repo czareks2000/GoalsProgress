@@ -16,8 +16,7 @@ import Loading from "../common/Loading";
 export default observer(function GoalDetails() {
     // State
     const {goalStore} = useStore();
-    const {selectedGoal: goal, selectedProgresses: progresses, 
-        loadGoal, visibleEditGoalForm, visibleProgressList, 
+    const {selectedGoal: goal, loadGoal, visibleEditGoalForm, visibleProgressList, sortedProgresses: progresses,
         visibleEditProgressForm, setInitialValues, showProgressAddForm, showCategoryAddForm} = goalStore;
     
     // Loading more progresses
@@ -53,7 +52,7 @@ export default observer(function GoalDetails() {
                     <ProgressList progresses={progresses.slice(0, loadedProgressesCount)}/>
                 }
             </div>
-            {progresses.length > loadedProgressesCount && visibleProgressList &&
+            {goal.progresses!.length > loadedProgressesCount && visibleProgressList &&
             <div className="text-center">
                 <Button 
                     text={'Load more'} 

@@ -21,8 +21,7 @@ interface Props {
 export default observer(function ProgressForm(
     {onSubmit, buttonText, progress, cancelButton = false, cancelButtonAction}: Props) {
     const {goalStore} = useStore();
-    const {selectedCategories: categories, selectedGoal,
-        idOfLastCreatedCategory} = goalStore;
+    const {selectedGoal, idOfLastCreatedCategory} = goalStore;
 
     const validationSchema = Yup.object({
       value: Yup.number()
@@ -70,7 +69,7 @@ export default observer(function ProgressForm(
                   onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                     setFieldValue('categoryId', parseInt(e.target.value));
                   }}>
-                  {categories.map(category => (
+                  {selectedGoal?.categories!.map(category => (
                     <option key={category.id} value={category.id}>{`${category.name} (x ${category.multiplier})`}</option>
                   ))}
                 </Field>
