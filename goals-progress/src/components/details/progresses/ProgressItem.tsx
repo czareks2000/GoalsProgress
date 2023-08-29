@@ -27,13 +27,16 @@ export default observer(function ProgressItem({ progress }: Props) {
     <div className={`progress outline outline-${color()}`}>
         <div className="progress-value">
             <FaPlus/>
-            <p>{progress.value}</p>
+            {goal.type === GoalType.Standard 
+              ? <p>{progress.value!}</p>
+              : <p>{progress.value! * progress.category?.multiplier!}</p>
+            }
         </div>
         <div className="progress-details">
             <p>
               {goal.type === GoalType.Standard 
                 ? progress.description 
-                : `${progress.category?.name} (x ${progress.category?.multiplier})`
+                : `${progress.category?.name} (  ${progress.value!} x ${progress.category?.multiplier} )`
               }
             </p>
             <small>{format(progress.date!, 'dd MMM yyyy')}</small>

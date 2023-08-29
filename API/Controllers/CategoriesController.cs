@@ -21,6 +21,7 @@ namespace API.Controllers
             return HandleResult(await _categoriesService.Create(goalId, newCategory));
         }
 
+        [Authorize(Policy = "IsOwner")]
         [HttpDelete("categories/{categoryId}")] //api/categories/id
         public async Task<IActionResult> DeleteCategory(int categoryId)
         {

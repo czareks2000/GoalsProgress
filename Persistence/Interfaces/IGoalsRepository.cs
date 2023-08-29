@@ -10,5 +10,6 @@ namespace Persistence.Interfaces
         Goal GetOne(int id);
         Task<int> UpdateAsync(Goal goal);
         Task<int> DeleteAsync(int id);
+        string GetUserId(int goalId);
     }
 }

@@ -47,5 +47,15 @@ namespace Persistence.Repositories
 
             return await _context.SaveChangesAsync();
         }
+
+        public string GetUserId(int progresId)
+        {
+            var userId = _context.Progresses
+                .Where(p => p.Id == progresId)
+                .Select(p => p.Goal.User.Id)
+                .FirstOrDefault();
+
+            return userId;
+        }
     }
 }

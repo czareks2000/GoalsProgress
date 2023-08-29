@@ -9,5 +9,6 @@ namespace Persistence.Interfaces
         Task<Progress> GetOneAsync(int id);
         Task<int> UpdateAsync(Progress progress);
         Task<int> DeleteAsync(int id);
+        string GetUserId(int progresId);
     }
 }

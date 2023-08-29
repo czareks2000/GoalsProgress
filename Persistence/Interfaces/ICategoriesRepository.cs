@@ -9,5 +9,6 @@ namespace Persistence.Interfaces
         Task<Category> GetOneAsync(int id);
         Task<int> UpdateAsync(Category category);
         Task<int> DeleteAsync(int id);
+        string GetUserId(int categoryId);
     }
 }

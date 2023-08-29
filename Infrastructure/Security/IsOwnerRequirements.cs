@@ -13,11 +13,18 @@ namespace Infrastructure.Security
     public class IsOwnerRequirementsHandler : AuthorizationHandler<IsOwnerRequirements>
     {
         private readonly IGoalsRepository _goalsRepository;
+        private readonly IProgressesRepository _progressesRepository;
+        private readonly ICategoriesRepository _categoriesRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public IsOwnerRequirementsHandler(IGoalsRepository goalsRepository, 
+        public IsOwnerRequirementsHandler(
+            IGoalsRepository goalsRepository,
+            IProgressesRepository progressesRepository,
+            ICategoriesRepository categoriesRepository, 
             IHttpContextAccessor httpContextAccessor)
         {
             _goalsRepository = goalsRepository;
+            _progressesRepository = progressesRepository;
+            _categoriesRepository = categoriesRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -26,17 +33,41 @@ namespace Infrastructure.Security
             var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (userId == null) return Task.CompletedTask;
-            
-            var goalId = int.Parse(_httpContextAccessor.HttpContext?.Request.RouteValues
-                .SingleOrDefault(x => x.Key == "goalId").Value?.ToString());
 
-            var goal = _goalsRepository.GetOne(goalId);
+            string ownerId = null;
+                        
+            if (RouteContainsKey("goalId"))
+            {
+                var goalId = GetRouteValue("goalId");
+                ownerId = _goalsRepository.GetUserId(goalId);
+            }
+            else if (RouteContainsKey("progressId"))
+            {
+                var progressId = GetRouteValue("progressId");
+                ownerId = _progressesRepository.GetUserId(progressId);
+            }
+            else if (RouteContainsKey("categoryId"))
+            {
+                var categoryId = GetRouteValue("categoryId");
+                ownerId = _categoriesRepository.GetUserId(categoryId);
+            }
 
-            if (goal == null) return Task.CompletedTask;
+            if (ownerId == null) return Task.CompletedTask;
 
-            if (goal.User.Id == userId) context.Succeed(requirement);
+            if (ownerId == userId) context.Succeed(requirement);
 
             return Task.CompletedTask;
+        }
+
+        private bool RouteContainsKey(string key)
+        {
+            return (bool)_httpContextAccessor.HttpContext?.Request.RouteValues.ContainsKey(key);
+        }
+
+        private int GetRouteValue(string key)
+        {
+            return int.Parse(_httpContextAccessor.HttpContext?.Request.RouteValues
+                    .SingleOrDefault(x => x.Key == key).Value.ToString());
         }
     }
 }

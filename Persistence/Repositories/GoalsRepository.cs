@@ -59,5 +59,15 @@ namespace Persistence.Repositories
 
             return await _context.SaveChangesAsync();
         }
+
+        public string GetUserId(int goalId)
+        {
+            var userId = _context.Goals
+                .Where(g => g.Id == goalId)
+                .Select(g => g.User.Id)
+                .FirstOrDefault();
+
+            return userId;
+        }
     }
 }
