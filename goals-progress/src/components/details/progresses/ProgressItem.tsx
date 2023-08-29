@@ -12,8 +12,8 @@ interface Props {
 }
 
 export default observer(function ProgressItem({ progress }: Props) {
-  const {goalStore} = useStore();
-  const {selectedGoal: goal, deleteProgress, showEditProgressForm, loading: apiLoading} = goalStore;
+  const {goalStore, detailsPageStore: {showEditProgressForm}} = useStore();
+  const {selectedGoal: goal, deleteProgress, loading: apiLoading} = goalStore;
 
   const [loading, setLoading] = useState(false);
 

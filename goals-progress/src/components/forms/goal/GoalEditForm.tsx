@@ -4,8 +4,8 @@ import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
 export default observer(function GoalEditForm()  {
-    const {goalStore} = useStore();
-    const {updateGoal, selectedGoal, toggleEditGoalForm} = goalStore;
+    const {goalStore, detailsPageStore: {toggleEditGoalForm}} = useStore();
+    const {updateGoal, selectedGoal} = goalStore;
 
     const submitForm = async (goal: Goal) => {
         await updateGoal(goal.id, goal);

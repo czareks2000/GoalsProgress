@@ -10,12 +10,11 @@ import Dialog from '../common/Dialog';
 
 export default observer(function Actions() {
     // State
-    const {goalStore} = useStore();
-    const {
-        selectedGoal: goal,  
-        visibleAddProgressForm, visibleEditGoalForm, visibleProgressList, 
-        toggleAddProgressForm, toggleEditGoalForm, changeStatus, loading,
-        addProgressActionStatus, editGoalActionStatus, archiveGoalActionStatus} = goalStore;
+    const {goalStore, detailsPageStore} = useStore();
+    const {selectedGoal: goal, changeStatus, loading} = goalStore;
+    const {visibleAddProgressForm, visibleEditGoalForm, visibleProgressList, 
+        toggleAddProgressForm, toggleEditGoalForm, addProgressActionStatus, 
+        editGoalActionStatus, archiveGoalActionStatus} = detailsPageStore;
 
     // Dialog
     const [showDialog, setShowDialog] = useState(false);

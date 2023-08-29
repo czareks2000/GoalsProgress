@@ -5,18 +5,10 @@ import { GoalStatus } from "../models/enums/GoalStatus";
 import { Progress } from "../models/Progress";
 import { Category } from "../models/Category";
 import { store } from "./store";
-import { GoalType } from "../models/enums/GoalType";
 
 export default class GoalStore {
     goalsRegistry = new Map<number, Goal>();
     selectedGoal: Goal | undefined = undefined;
-    selectedProgress: Progress | undefined = undefined;
-    idOfLastCreatedCategory: number | undefined = undefined;
-
-    visibleAddProgressForm = false;
-    visibleEditProgressForm = false;
-    visibleEditGoalForm = false;
-    visibleProgressList = true;
 
     loading = false;
     initialLoading = true;
@@ -28,89 +20,7 @@ export default class GoalStore {
     clearStore = () => {
         this.goalsRegistry.clear();
         this.selectedGoal = undefined;
-        this.selectedProgress = undefined;
-        this.idOfLastCreatedCategory = undefined;
     }
-
-    setInitialValues = async() => {
-        runInAction(() => {
-            this.visibleAddProgressForm = false;
-            this.visibleEditProgressForm = false;
-            this.visibleEditGoalForm = false;
-            this.visibleProgressList = true;
-            this.idOfLastCreatedCategory = undefined;
-        })
-    }
-
-    toggleAddProgressForm = async () => {
-        runInAction(() => {
-            this.visibleAddProgressForm = !this.visibleAddProgressForm;
-            this.visibleProgressList = !this.visibleProgressList;
-        })
-    }
-
-    toggleEditGoalForm = async () => {
-        runInAction(() => {
-            this.visibleEditGoalForm = !this.visibleEditGoalForm;
-            this.visibleProgressList = !this.visibleProgressList;
-        })
-    }
-
-    toggleEditProgressForm = async () => {
-        runInAction(() => {
-            this.visibleEditProgressForm = !this.visibleEditProgressForm;
-            this.visibleProgressList = !this.visibleProgressList;
-        })
-    }
-
-    showEditProgressForm = async (progress: Progress) => {
-        runInAction(() => {
-            this.selectedProgress = progress;
-            this.toggleEditProgressForm();
-        })
-    }
-
-    get showProgressAddForm() {
-        if(this.selectedGoal)
-            return ((this.selectedGoal.type === GoalType.Extended && this.selectedGoal.categories!.length > 0 ) 
-                ||  (this.selectedGoal.type === GoalType.Standard)) && this.visibleAddProgressForm
-        
-        return false;
-    }
-
-    get showCategoryAddForm() {
-        if(this.selectedGoal)
-            return (this.selectedGoal.type === GoalType.Extended && this.visibleAddProgressForm) 
-                ||  (this.selectedGoal.type === GoalType.Extended && this.visibleEditProgressForm)
-        
-        return false;
-    }
-
-    get addProgressActionStatus() {
-        if(this.selectedGoal)
-            return this.selectedGoal.status !== GoalStatus.Current 
-                || this.visibleEditGoalForm 
-                || this.visibleEditProgressForm
-        
-        return false;
-    }
-
-    get editGoalActionStatus() {
-        if(this.selectedGoal)
-            return this.selectedGoal.status === GoalStatus.Archvied 
-                || this.visibleAddProgressForm 
-                || this.visibleEditProgressForm
-        
-        return false;
-    }
-
-    get archiveGoalActionStatus() {
-        if(this.selectedGoal)
-            return !this.visibleProgressList || this.selectedGoal.status === GoalStatus.Completed
-        
-        return false;
-    }
-
 
     get sortedProgresses() {
         if (this.selectedGoal)
@@ -264,7 +174,6 @@ export default class GoalStore {
             runInAction(() => {
                 this.setGoal(goal);
                 this.selectedGoal = goal;
-                this.idOfLastCreatedCategory = undefined;
             })
             if (goal.status === GoalStatus.Completed)
                 store.commonStore.setSuccess(`Goal completed!`);
@@ -307,7 +216,7 @@ export default class GoalStore {
             runInAction(() => {
                 this.selectedGoal?.categories?.push(category);
                 this.goalsRegistry.set(goalId, this.selectedGoal!);
-                this.idOfLastCreatedCategory = category.id;
+                store.detailsPageStore.idOfLastCreatedCategory = category.id;
             })
         } catch (error) {
             console.log(error);

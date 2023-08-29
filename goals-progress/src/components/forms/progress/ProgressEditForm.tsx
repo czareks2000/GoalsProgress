@@ -3,8 +3,10 @@ import { useStore } from "../../../app/stores/store";
 import ProgressForm from "./ProgressForm"
 
 const ProgressEditForm = () => {
-    const {goalStore} = useStore();
-    const {selectedGoal, selectedProgress, updateProgress, toggleEditProgressForm} = goalStore;
+    const {
+        goalStore: {selectedGoal, updateProgress}, 
+        detailsPageStore: {toggleEditProgressForm, selectedProgress}
+    } = useStore();
 
     const submitForm = async (progress: Progress) => {
         await updateProgress(selectedGoal?.id as number, progress);

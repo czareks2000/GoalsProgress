@@ -15,9 +15,10 @@ import Loading from "../common/Loading";
 
 export default observer(function GoalDetails() {
     // State
-    const {goalStore} = useStore();
-    const {selectedGoal: goal, loadGoal, visibleEditGoalForm, visibleProgressList, sortedProgresses: progresses,
-        visibleEditProgressForm, setInitialValues, showProgressAddForm, showCategoryAddForm} = goalStore;
+    const {goalStore, detailsPageStore} = useStore();
+    const {selectedGoal: goal, loadGoal, sortedProgresses: progresses,} = goalStore;
+    const {visibleEditGoalForm, visibleProgressList, visibleEditProgressForm, 
+        setInitialValues, showProgressAddForm, showCategoryAddForm} = detailsPageStore
     
     // Loading more progresses
     const [loadedProgressesCount, setLoadedProgressesCount] = useState(5);

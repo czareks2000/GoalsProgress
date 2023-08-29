@@ -20,8 +20,10 @@ interface Props {
 
 export default observer(function ProgressForm(
     {onSubmit, buttonText, progress, cancelButton = false, cancelButtonAction}: Props) {
-    const {goalStore} = useStore();
-    const {selectedGoal, idOfLastCreatedCategory} = goalStore;
+    const {
+      goalStore: {selectedGoal},
+      detailsPageStore: {idOfLastCreatedCategory}
+    } = useStore();
 
     const validationSchema = Yup.object({
       value: Yup.number()

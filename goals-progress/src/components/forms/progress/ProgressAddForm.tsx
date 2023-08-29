@@ -5,8 +5,8 @@ import { observer } from "mobx-react-lite";
 import ProgressForm from "./ProgressForm";
 
 export default observer(function ProgressAddForm() {
-    const {goalStore} = useStore();
-    const {createProgress, selectedGoal, toggleAddProgressForm} = goalStore;
+    const {goalStore, detailsPageStore: {toggleAddProgressForm}} = useStore();
+    const {createProgress, selectedGoal} = goalStore;
 
     const initialValues = {
       id: 0,
