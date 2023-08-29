@@ -12,12 +12,15 @@ export default class GoalStore {
 
     loading = false;
     initialLoading = true;
+
+    goalsLoaded = false;
     
     constructor() {
         makeAutoObservable(this);
     }
 
     clearStore = () => {
+        this.goalsLoaded = false;
         this.goalsRegistry.clear();
         this.selectedGoal = undefined;
     }
@@ -95,12 +98,13 @@ export default class GoalStore {
         this.setInitialLoading(true);
         try {
             const goals = await agent.Goals.list();
-            goals.forEach(goal => this.setGoal(goal))     
+            goals.forEach(goal => this.setGoal(goal));
+            this.goalsLoaded = true;     
         } catch (error) {
             console.log(error);
             store.commonStore.setError("Failed to load goals");
         } finally {
-            runInAction(() => this.setInitialLoading(false)); 
+            runInAction(() => this.setInitialLoading(false));
         }
     }
 

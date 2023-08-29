@@ -11,12 +11,11 @@ import Loading from '../common/Loading';
 
 export default observer(function CurrentGoals (){
   const {goalStore} = useStore();
-  const {currentGoals, loadGoals, goalsRegistry,
-    initialLoading} = goalStore;
+  const {currentGoals, loadGoals, initialLoading, goalsLoaded} = goalStore;
 
   useEffect(() => {
-    if (goalsRegistry.size <= 1) loadGoals();
-  }, [loadGoals, goalsRegistry]);
+    if (!goalsLoaded) loadGoals();
+  }, [loadGoals, goalsLoaded]);
 
   if (initialLoading) return <Loading/>
 
