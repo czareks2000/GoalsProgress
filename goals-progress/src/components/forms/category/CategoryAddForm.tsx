@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikHelpers } from "formik";
 import { useStore } from "../../../app/stores/store";
 import * as Yup from "yup";
 import TextInput from "../../common/form/TextInput";
@@ -13,7 +13,7 @@ const CategoryAddForm = () => {
 
     const [loading, setLoading] = useState(false);
     
-    const initialValues = {
+    const initialValues: Category = {
         id: 0,
         name: '',
         multiplier: null
@@ -26,7 +26,7 @@ const CategoryAddForm = () => {
             .required('Multiplier is required')
       });
 
-    const onSubmit = async (values: Category, { resetForm }: any) => {
+    const onSubmit = async (values: Category, { resetForm }: FormikHelpers<Category>) => {
         setLoading(true);
         await createCategory(goal?.id as number, values);
         setLoading(false);

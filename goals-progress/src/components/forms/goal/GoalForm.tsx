@@ -12,7 +12,7 @@ interface Props {
   buttonText: string;
   goal: Goal;
   cancelButton?: boolean;
-  cancelButtonAction?: any;
+  cancelButtonAction?: () => void;
 }
 
 export default observer(function GoalForm({ onSubmit, buttonText, goal, cancelButton = false, cancelButtonAction }: Props) {

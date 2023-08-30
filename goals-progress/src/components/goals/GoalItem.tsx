@@ -49,9 +49,10 @@ const GoalItem = ({ goal }: Props) => {
         <div 
           className="progress-bar"
           data-value={`${currentProgress()}%`}
-          style={{ 
+          style={{
             '--progress': `${currentProgress()}%`,
-            '--color':  `var(--${color()})`} as any}
+            '--color': `var(--${color()})`
+          } as React.CSSProperties}
         >  
         </div>
     </div>

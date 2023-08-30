@@ -3,7 +3,6 @@ import { Progress } from '../../../app/models/Progress';
 import { GoalStatus } from '../../../app/models/enums/GoalStatus';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
-import { GoalType } from '../../../app/models/enums/GoalType';
 import { format } from 'date-fns';
 import { useState } from 'react';
 
@@ -27,16 +26,18 @@ export default observer(function ProgressItem({ progress }: Props) {
     <div className={`progress outline outline-${color()}`}>
         <div className="progress-value">
             <FaPlus/>
-            {goal.type === GoalType.Standard 
-              ? <p>{progress.value!}</p>
-              : <p>{progress.value! * progress.category?.multiplier!}</p>
-            }
+            <p>
+              {progress.category  
+                ? progress.value * progress.category.multiplier
+                : progress.value
+              }
+            </p>
         </div>
         <div className="progress-details">
             <p>
-              {goal.type === GoalType.Standard 
-                ? progress.description 
-                : `${progress.category?.name} (  ${progress.value!} x ${progress.category?.multiplier} )`
+              {progress.category 
+                ? `${progress.category.name} (  ${progress.value!} x ${progress.category.multiplier} )`
+                : progress.description 
               }
             </p>
             <small>{format(progress.date!, 'dd MMM yyyy')}</small>

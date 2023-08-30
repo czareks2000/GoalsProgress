@@ -6,7 +6,7 @@ import TextInput from "../../common/form/TextInput";
 import Button from "../../common/Button";
 
 interface Props {
-    cancelButtonAction: any;
+    cancelButtonAction: () => void;
 }
 
 export default observer(function RegisterForm({cancelButtonAction}: Props) {

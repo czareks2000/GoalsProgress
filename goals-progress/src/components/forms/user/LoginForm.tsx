@@ -5,7 +5,7 @@ import TextInput from "../../common/form/TextInput";
 import Button from "../../common/Button";
 
 interface Props {
-    cancelButtonAction: any;
+    cancelButtonAction: () => void;
 }
 
 export default observer(function LoginForm({cancelButtonAction}: Props) {
@@ -15,7 +15,7 @@ export default observer(function LoginForm({cancelButtonAction}: Props) {
         <Formik
             initialValues={{email: '', password: '', error: null}}
             onSubmit={(values, {setErrors}) => 
-                userStore.login(values).catch(error =>
+                userStore.login(values).catch(() =>
                     setErrors({error: 'Invalid email or password'}))
             }   
         >

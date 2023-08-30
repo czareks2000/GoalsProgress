@@ -15,7 +15,7 @@ interface Props {
     buttonText: string;
     progress: Progress;
     cancelButton?: boolean;
-    cancelButtonAction?: any;
+    cancelButtonAction?: () => void;
 }
 
 export default observer(function ProgressForm(
@@ -35,8 +35,8 @@ export default observer(function ProgressForm(
           : Yup.string().notRequired(),
       date: Yup.date().required('Date is required'),
     });
-
-    var updateField: any;
+    
+    let updateField: any;// eslint-disable-line
     useEffect(()=> {
         if(idOfLastCreatedCategory)
           updateField('categoryId', idOfLastCreatedCategory);
