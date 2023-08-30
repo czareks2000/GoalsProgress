@@ -1,5 +1,5 @@
 import './App.css';
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom'
 
 import Header from './Header';
 import Footer from './Footer';
@@ -27,6 +27,7 @@ export default observer(function App() {
 
   return (
     <>
+      <ScrollRestoration/>
       {location.pathname === '/' 
       ? <HomePage /> 
       : (
