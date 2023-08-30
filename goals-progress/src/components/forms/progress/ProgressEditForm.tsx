@@ -4,12 +4,12 @@ import ProgressForm from "./ProgressForm"
 
 const ProgressEditForm = () => {
     const {
-        goalStore: {selectedGoal, updateProgress}, 
+        goalStore: {updateProgress}, 
         detailsPageStore: {toggleEditProgressForm, selectedProgress}
     } = useStore();
 
     const submitForm = async (progress: Progress) => {
-        await updateProgress(selectedGoal?.id as number, progress);
+        await updateProgress(progress);
         toggleEditProgressForm();
     }
 

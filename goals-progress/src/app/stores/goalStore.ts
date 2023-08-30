@@ -187,7 +187,7 @@ export default class GoalStore {
         }
     }
 
-    updateProgress = async (goalId: number, progress: Progress) => {
+    updateProgress = async (progress: Progress) => {
         try {
             const updatedGoal = await agent.Progresses.update(progress.id, progress);
             runInAction(() => {
@@ -200,7 +200,7 @@ export default class GoalStore {
         }
     }
 
-    deleteProgress = async (id: number, goalId: number) => {
+    deleteProgress = async (id: number) => {
         try {
             const goal = await agent.Progresses.delete(id);
             runInAction(() => {

@@ -51,7 +51,7 @@ export default observer(function ProgressItem({ progress }: Props) {
           :
             <FaTrash onClick={() => {
               setLoading(true);
-              deleteProgress(progress.id, goal.id)
+              deleteProgress(progress.id)
                 .finally(() => setLoading(false));
             }}/>
           }
