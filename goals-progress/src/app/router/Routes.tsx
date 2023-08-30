@@ -9,20 +9,23 @@ import NotFound from "../../components/errors/NotFound";
 import Unauthorised from "../../components/errors/Unauthorised";
 import Forbidden from "../../components/errors/Forbidden";
 import ServerError from "../../components/errors/ServerError";
+import RequireAuth from "./RequireAuth";
 
 export const routes: RouteObject[] = [
     {
         path: '/',
         element: <App/>,
         children: [
-            {path: 'goals', element: <CurrentGoals />},
-            {path: 'goal/:id', element: <GoalDetails />},
-            {path: 'goal/create', element: <GoalCreate />},
-            {path: 'archived', element: <ArchviedGoals />},
-            {path: 'settings', element: <Settings />},
+            {element: <RequireAuth />, children: [
+                {path: 'goals', element: <CurrentGoals />},
+                {path: 'goal/:id', element: <GoalDetails />},
+                {path: 'goal/create', element: <GoalCreate />},
+                {path: 'archived', element: <ArchviedGoals />},
+                {path: 'settings', element: <Settings />},
+                {path: 'forbidden', element: <Forbidden />},
+            ]},
             {path: 'not-found', element: <NotFound />},
             {path: 'unauthorised', element: <Unauthorised />},
-            {path: 'forbidden', element: <Forbidden />},
             {path: 'server-error', element: <ServerError />},
             {path: '*', element: <NotFound />}
         ]
