@@ -99,7 +99,7 @@ export default class GoalStore {
         try {
             const goals = await agent.Goals.list();
             goals.forEach(goal => this.setGoal(goal));
-            this.goalsLoaded = true;     
+            runInAction(() => this.goalsLoaded = true)      
         } catch (error) {
             console.log(error);
             store.commonStore.setError("Failed to load goals");
