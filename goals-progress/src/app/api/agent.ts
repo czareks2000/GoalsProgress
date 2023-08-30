@@ -39,10 +39,7 @@ axios.interceptors.response.use(async response => {
             }
             break;
         case 401:
-            if (store.userStore.isLoggedIn)
-                router.navigate('/unauthorised');
-            else
-                router.navigate('/');
+            router.navigate('/unauthorised');
             break;
         case 403:
             router.navigate('/forbidden')
