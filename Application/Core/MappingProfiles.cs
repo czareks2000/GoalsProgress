@@ -11,6 +11,10 @@ namespace Application.Core
             CreateMap<Goal, GoalDto>();
             CreateMap<Progress, ProgressDto>();
             CreateMap<Category, CategoryDto>();
+
+            CreateMap<GoalCreateUpdateDto, Goal>();
+            CreateMap<ProgressCreateUpdateDto, Progress>();
+            CreateMap<CategoryCreateUpdateDto, Category>();
         }
     }
 }

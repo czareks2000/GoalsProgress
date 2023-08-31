@@ -55,21 +55,14 @@ namespace Application.Services
         public async Task<Result<int>> Create(GoalCreateUpdateDto newGoal)
         {   
             var user = await _userManager.FindByEmailAsync(_userAccessor.GetUserEmail());
+            
+            var goal = _mapper.Map<Goal>(newGoal);
 
-            var goal = new Goal {
-                Name = newGoal.Name,
-                Description = newGoal.Description,
-                CurrentValue = 0,
-                TargetValue = newGoal.TargetValue,
-                CustomUnit = newGoal.CustomUnit,
-                Unit = newGoal.Unit,
-                Deadline = newGoal.Deadline,
-                Status = GoalStatus.Current,
-                Type = newGoal.Type,
-                ModificationDate = DateTime.UtcNow,
-                CompletedDate = null,
-                User = user
-            };
+            goal.CurrentValue = 0;
+            goal.Status = GoalStatus.Current;
+            goal.ModificationDate = DateTime.UtcNow;
+            goal.CompletedDate = null;
+            goal.User = user;
 
             if (await _goalsRepository.AddAsync(goal) == 0)
                 return Result<int>.Failure("Failed to create goal");
@@ -84,16 +77,15 @@ namespace Application.Services
             if (goal == null || goal.Status == GoalStatus.Deleted)
                 return null;
             
-            goal.Name = updatedGoal.Name;
-            goal.Description = updatedGoal.Description;
-            goal.TargetValue = updatedGoal.TargetValue;
-            goal.CustomUnit = updatedGoal.CustomUnit;
-            goal.Unit = updatedGoal.Unit;
-            goal.Deadline = updatedGoal.Deadline;
+            _mapper.Map(updatedGoal, goal);
+
             goal.ModificationDate = DateTime.UtcNow;
 
             if (goal.CurrentValue < goal.TargetValue)
+            {
                 goal.Status = GoalStatus.Current;
+                goal.CompletedDate = null;
+            }
             else{
                 goal.Status = GoalStatus.Completed;
                 goal.CompletedDate = DateTime.UtcNow;

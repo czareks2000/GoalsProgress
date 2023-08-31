@@ -51,11 +51,9 @@ namespace Application.Services
             if (goal.Type == GoalType.Standard)
                 return Result<int>.Failure("Standard goal can't have categories");
 
-            var category = new Category {
-                Name = newCategory.Name,
-                Multiplier = newCategory.Multiplier,
-                Goal = goal
-            };
+            var category = _mapper.Map<Category>(newCategory);
+
+            category.Goal = goal;
 
             if (await _categoriesRepository.AddAsync(category) == 0)
                 return Result<int>.Failure("Failed to create category");

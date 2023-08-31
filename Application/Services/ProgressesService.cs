@@ -53,13 +53,10 @@ namespace Application.Services
                     return Result<GoalDto>.Failure("Invalid category id");
             }
 
-            var progress = new Progress {
-                Value = newProgress.Value,
-                Description = newProgress.Description,
-                Date = newProgress.Date,
-                Goal = goal,
-                Category = category
-            };
+            var progress = _mapper.Map<Progress>(newProgress);
+
+            progress.Goal = goal;
+            progress.Category = category;
             
             //update goal
             goal.CurrentValue += CalculateValue(progress);  
@@ -112,9 +109,7 @@ namespace Application.Services
             goal.CurrentValue -= CalculateValue(progress);
 
             //update progress
-            progress.Value = updatedProgress.Value;
-            progress.Description = updatedProgress.Description;
-            progress.Date = updatedProgress.Date;
+            _mapper.Map(updatedProgress, progress);
             if (goal.Type == GoalType.Extended)
                 progress.Category = await _categoriesRepository.GetOneAsync(updatedProgress.CategoryId);
             
@@ -145,7 +140,10 @@ namespace Application.Services
         private Goal UpdateGoalStatus(Goal goal)
         {
             if (goal.CurrentValue < goal.TargetValue)
+            {
                 goal.Status = GoalStatus.Current;
+                goal.CompletedDate = null;
+            }
             else{
                 goal.Status = GoalStatus.Completed;
                 goal.CompletedDate = DateTime.UtcNow;
