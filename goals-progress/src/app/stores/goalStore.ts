@@ -54,12 +54,12 @@ export default class GoalStore {
     } 
 
     private setGoal = (goal: Goal) => {
-        goal.deadline = this.convertToLocalTimezone(goal.deadline!);
-        goal.modificationDate = this.convertToLocalTimezone(goal.modificationDate!);
-        goal.completedDate = this.convertToLocalTimezone(goal.completedDate!);
+        goal.deadline = this.convertToDate(goal.deadline!);
+        goal.modificationDate = this.convertToDate(goal.modificationDate!);
+        goal.completedDate = this.convertToDate(goal.completedDate!);
 
         goal.progresses?.map(progress => {
-            progress.date = this.convertToLocalTimezone(progress.date!);
+            progress.date = this.convertToDate(progress.date!);
             return progress;
         }) 
 
@@ -124,7 +124,7 @@ export default class GoalStore {
             store.commonStore.setSuccess(`Goal "${goal.name}" created successfuly`);
         } catch (error) {
             console.log(error);
-            store.commonStore.setError("Failed to delete goal");
+            store.commonStore.setError("Failed to create goal");
         }
     }
 
@@ -228,11 +228,8 @@ export default class GoalStore {
         }
     }
 
-    private convertToLocalTimezone(date: Date) {
+    private convertToDate(date: Date) {
         const result = new Date(date);
-        const timezoneOffsetMinutes = result.getTimezoneOffset();
-        result.setMinutes(result.getMinutes() - timezoneOffsetMinutes);
-
         return result;
     }
 }
