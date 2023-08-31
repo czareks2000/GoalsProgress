@@ -1,4 +1,4 @@
-import { Progress } from "../../../app/models/Progress"
+import { Progress, ProgressFormValues } from "../../../app/models/Progress"
 import { useStore } from "../../../app/stores/store";
 import ProgressForm from "./ProgressForm"
 
@@ -8,8 +8,8 @@ const ProgressEditForm = () => {
         detailsPageStore: {toggleEditProgressForm, selectedProgress}
     } = useStore();
 
-    const submitForm = async (progress: Progress) => {
-        await updateProgress(progress);
+    const submitForm = async (progress: ProgressFormValues) => {
+        await updateProgress(progress as Progress);
         toggleEditProgressForm();
     }
 
@@ -22,7 +22,7 @@ const ProgressEditForm = () => {
             <ProgressForm 
             onSubmit={submitForm}
             buttonText="UPDATE"
-            progress={initialValues as Progress}
+            progress={initialValues as ProgressFormValues}
             cancelButton={true}
             cancelButtonAction={toggleEditProgressForm}
             />

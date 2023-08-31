@@ -3,7 +3,7 @@ import { useStore } from "../../../app/stores/store";
 import * as Yup from "yup";
 import TextInput from "../../common/form/TextInput";
 import NumberInput from "../../common/form/NumberInput";
-import { Category } from "../../../app/models/Category";
+import { Category, CategoryForm } from "../../../app/models/Category";
 import Button from "../../common/Button";
 import { useState } from "react";
 
@@ -13,7 +13,7 @@ const CategoryAddForm = () => {
 
     const [loading, setLoading] = useState(false);
     
-    const initialValues: Category = {
+    const initialValues: CategoryForm = {
         id: 0,
         name: '',
         multiplier: null
@@ -26,9 +26,9 @@ const CategoryAddForm = () => {
             .required('Multiplier is required')
       });
 
-    const onSubmit = async (values: Category, { resetForm }: FormikHelpers<Category>) => {
+    const onSubmit = async (values: CategoryForm, { resetForm }: FormikHelpers<CategoryForm>) => {
         setLoading(true);
-        await createCategory(goal?.id as number, values);
+        await createCategory(goal?.id as number, values as Category);
         setLoading(false);
         resetForm();
     }

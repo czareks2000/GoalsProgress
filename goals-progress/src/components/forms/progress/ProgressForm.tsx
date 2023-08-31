@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import { GoalType } from "../../../app/models/enums/GoalType";
 import * as Yup from "yup";
-import { Progress } from "../../../app/models/Progress";
+import { ProgressFormValues } from "../../../app/models/Progress";
 import { ChangeEvent, useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 import NumberInput from "../../common/form/NumberInput";
@@ -11,9 +11,9 @@ import DateInput from "../../common/form/DateInput";
 import Button from "../../common/Button";
 
 interface Props {
-    onSubmit: (progress: Progress) => void;
+    onSubmit: (progress: ProgressFormValues) => void;
     buttonText: string;
-    progress: Progress;
+    progress: ProgressFormValues;
     cancelButton?: boolean;
     cancelButtonAction?: () => void;
 }
