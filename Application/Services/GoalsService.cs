@@ -16,7 +16,7 @@ namespace Application.Services
         private readonly UserManager<AppUser> _userManager;
     private readonly IMapper _mapper;
    
-        public GoalsService(IGoalsRepository goalsRepository, 
+        public GoalsService(IGoalsRepository goalsRepository,
             UserManager<AppUser> userManager, 
             IUserAccessor userAccessor,
             IMapper mapper)
@@ -81,15 +81,7 @@ namespace Application.Services
 
             goal.ModificationDate = DateTime.UtcNow;
 
-            if (goal.CurrentValue < goal.TargetValue)
-            {
-                goal.Status = GoalStatus.Current;
-                goal.CompletedDate = null;
-            }
-            else{
-                goal.Status = GoalStatus.Completed;
-                goal.CompletedDate = DateTime.UtcNow;
-            }
+            goal = UpdateGoalStatus(goal);
             
             if (await _goalsRepository.UpdateAsync(goal) == 0)
                 return Result<GoalDto>.Failure("Failed to update goal");
@@ -129,6 +121,21 @@ namespace Application.Services
                 return Result<Object>.Failure("Failed to delete goal");
             
             return Result<Object>.Sucess(null);
+        }
+
+        public Goal UpdateGoalStatus(Goal goal)
+        {
+            if (goal.CurrentValue < goal.TargetValue)
+            {
+                goal.Status = GoalStatus.Current;
+                goal.CompletedDate = null;
+            }
+            else{
+                goal.Status = GoalStatus.Completed;
+                goal.CompletedDate = DateTime.UtcNow;
+            }
+
+            return goal;
         }
     }
 }

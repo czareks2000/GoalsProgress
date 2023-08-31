@@ -13,5 +13,6 @@ namespace Application.Interfaces
         Task<Result<GoalDto>> Update(int id, GoalCreateUpdateDto updatedGoal);
         Task<Result<Object>> UpdateStatus(int id, GoalStatus newStatus); 
         Task<Result<Object>> Delete(int id); 
+        Goal UpdateGoalStatus(Goal goal);
     }
 }

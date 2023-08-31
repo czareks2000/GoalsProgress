@@ -13,17 +13,20 @@ namespace Application.Services
         private readonly IProgressesRepository _progressesRepository;
         private readonly IGoalsRepository _goalsRepository;
         private readonly ICategoriesRepository _categoriesRepository;
+        private readonly IGoalsService _goalsService;
         private readonly IMapper _mapper;
 
         public ProgressesService(
             IProgressesRepository progressesRepository,
             IGoalsRepository goalsRepository,
             ICategoriesRepository categoriesRepository,
+            IGoalsService goalsService,
             IMapper mapper)
         {
             _progressesRepository = progressesRepository;
             _goalsRepository = goalsRepository;
             _categoriesRepository = categoriesRepository;
+            _goalsService = goalsService;
             _mapper = mapper;
         }
 
@@ -60,7 +63,7 @@ namespace Application.Services
             
             //update goal
             goal.CurrentValue += CalculateValue(progress);  
-            goal = UpdateGoalStatus(goal);
+            goal = _goalsService.UpdateGoalStatus(goal);
             goal.ModificationDate = DateTime.UtcNow;
 
             //save changes
@@ -82,7 +85,7 @@ namespace Application.Services
             //update goal
             var goal = progress.Goal;
             goal.CurrentValue -= CalculateValue(progress);
-            goal = UpdateGoalStatus(goal);
+            goal = _goalsService.UpdateGoalStatus(goal);
             goal.ModificationDate = DateTime.UtcNow;
 
             //save changes
@@ -115,7 +118,7 @@ namespace Application.Services
             
             //update goal
             goal.CurrentValue += CalculateValue(progress);
-            goal = UpdateGoalStatus(goal);
+            goal = _goalsService.UpdateGoalStatus(goal);
             goal.ModificationDate = DateTime.UtcNow;
 
             //save changes
@@ -135,21 +138,6 @@ namespace Application.Services
                 return progress.Value * progress.Category.Multiplier;
 
             return progress.Value; 
-        }
-
-        private Goal UpdateGoalStatus(Goal goal)
-        {
-            if (goal.CurrentValue < goal.TargetValue)
-            {
-                goal.Status = GoalStatus.Current;
-                goal.CompletedDate = null;
-            }
-            else{
-                goal.Status = GoalStatus.Completed;
-                goal.CompletedDate = DateTime.UtcNow;
-            }
-
-            return goal;
         }
     }
 }
