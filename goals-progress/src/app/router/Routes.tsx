@@ -23,9 +23,9 @@ export const routes: RouteObject[] = [
                 {path: 'archived', element: <ArchviedGoals />},
                 {path: 'settings', element: <Settings />},
                 {path: 'forbidden', element: <Forbidden />},
+                {path: 'unauthorised', element: <Unauthorised />},
+                {path: 'not-found', element: <NotFound />},
             ]},
-            {path: 'not-found', element: <NotFound />},
-            {path: 'unauthorised', element: <Unauthorised />},
             {path: 'server-error', element: <ServerError />},
             {path: '*', element: <NotFound />}
         ]

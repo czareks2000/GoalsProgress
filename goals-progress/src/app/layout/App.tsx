@@ -12,7 +12,7 @@ import Loading from '../../components/common/Loading';
 
 export default observer(function App() {
   const location = useLocation();
-  const {commonStore, userStore} = useStore();
+  const {commonStore, userStore, themeStore} = useStore();
   const {info, clearInfo} = commonStore;
 
   useEffect(() => {
@@ -21,7 +21,13 @@ export default observer(function App() {
     } else {
       commonStore.setApploaded();
     }
-  }, [commonStore, userStore]);
+
+    if (themeStore.theme) {
+      themeStore.switchTheme(themeStore.theme);
+    } else {
+      themeStore.switchTheme('dark');
+    }
+  }, [commonStore, userStore, themeStore]);
 
   if (!commonStore.appLoaded) return <div className='center'><Loading/></div>
 
