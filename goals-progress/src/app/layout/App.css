@@ -528,17 +528,17 @@ to {
   font-size: 23px;
 }
 
-.settings-item {
+.round-values-setting {
   margin-left: 10px;
 }
 
-.settings-item input {
+.round-values-setting input {
   width: 35px;
   height: 30px;
   margin-top: 19px;
 }
 
-.settings-item button {
+.round-values-setting button {
   margin-left: 80px;
   height: 40px;
   margin-top: 19px;

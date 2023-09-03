@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
-import { useStore } from "../../../app/stores/store";
+import { useStore } from "../../app/stores/store";
 import * as Yup from 'yup';
 import { ErrorMessage, Form, Formik } from "formik";
-import TextInput from "../../common/form/TextInput";
-import Button from "../../common/Button";
+import TextInput from "../common/form/TextInput";
+import Button from "../common/Button";
 
 export default observer(function ChangePasswordForm() {
     const {userStore} = useStore();
