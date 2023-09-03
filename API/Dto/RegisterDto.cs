@@ -10,7 +10,7 @@ namespace API.Dto
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$", ErrorMessage = "Password must be complex")]
+        [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$", ErrorMessage = "Password needs to have at least one digit, one lowercase letter, one uppercase letter, and a minimum length of 4 characters.")]
         public string Password { get; set; }
     }
 }
