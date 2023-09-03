@@ -18,5 +18,8 @@ namespace API.Dto
                 "one uppercase letter, "+
                 "and a minimum length of 4 characters.")]
         public string Password { get; set; }
+        [Required]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
     }
 }

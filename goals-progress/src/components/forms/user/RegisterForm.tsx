@@ -13,7 +13,7 @@ export default observer(function RegisterForm({cancelButtonAction}: Props) {
     const {userStore} = useStore();
     return (
         <Formik
-            initialValues={{userName: '', email: '', password: '', error: null}}
+            initialValues={{userName: '', email: '', password: '', confirmPassword: '', error: null}}
             onSubmit={(values, {setErrors}) => 
                 userStore.register(values).catch(error => 
                     setErrors({error}))        
@@ -21,7 +21,9 @@ export default observer(function RegisterForm({cancelButtonAction}: Props) {
             validationSchema={Yup.object({
                 userName: Yup.string().required('Username is required'),
                 email: Yup.string().required('Email is required'),
-                password: Yup.string().required('Password is required')
+                password: Yup.string().required('Password is required'),
+                confirmPassword: Yup.string().required('Confirm password')
+                    .oneOf([Yup.ref('password')], 'Your passwords do not match.')
             })}
         >
             {({handleSubmit, isSubmitting, isValid, dirty}) => (
@@ -35,6 +37,7 @@ export default observer(function RegisterForm({cancelButtonAction}: Props) {
                     <TextInput placeholder="Username" name="userName" />
                     <TextInput placeholder="Email" name="email"/>
                     <TextInput placeholder="Password" name="password" type="password"/>
+                    <TextInput placeholder="Confirm Password" name="confirmPassword" type="password"/>
 
                     <div className="my-1">
                         <ErrorMessage 

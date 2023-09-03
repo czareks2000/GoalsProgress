@@ -59,7 +59,7 @@ export default observer(function ChangePasswordForm() {
                         type="submit"
                         className={!(dirty && isValid) ? "btn disabled" : "btn"}
                         disabled={!isValid || !dirty || isSubmitting}
-                        text={"Save"}
+                        text={"Change"}
                     />
                 </div>
             </Form>
