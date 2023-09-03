@@ -6,6 +6,7 @@ export default class CommonStore {
     serverError: ServerError | null = null;
     info: Info | undefined = undefined;
     token: string | null = localStorage.getItem('jwt');
+    numberOfDigits: string = localStorage.getItem('digits') || '2';
     appLoaded = false;
 
     constructor() {
@@ -21,7 +22,25 @@ export default class CommonStore {
                 }
             }
         )
+
+        reaction(
+            () => this.numberOfDigits, 
+            numberOfDigits => 
+                localStorage.setItem('digits', numberOfDigits)
+        )
     }
+
+    get digits () {
+        return parseInt(this.numberOfDigits);
+    }
+
+    setNumberOfDigits = (number: number) => {
+        this.numberOfDigits = number.toString();
+    }
+
+    roundValue = (value: number) => {
+        return Math.round(value * Math.pow(10,this.digits)) / Math.pow(10,this.digits);
+      }
 
     setServerError(error: ServerError) {
         this.serverError = error;

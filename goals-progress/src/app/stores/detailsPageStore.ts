@@ -7,7 +7,7 @@ import { GoalStatus } from "../models/enums/GoalStatus";
 export default class DetailsPageStore {
     selectedProgress: Progress | undefined = undefined;
     idOfLastCreatedCategory: number | undefined = undefined;
-
+    
     visibleAddProgressForm = false;
     visibleEditProgressForm = false;
     visibleEditGoalForm = false;

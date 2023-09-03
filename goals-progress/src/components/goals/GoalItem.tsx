@@ -2,12 +2,15 @@ import moment from 'moment';
 import { Goal } from '../../app/models/Goal';
 import { GoalStatus } from '../../app/models/enums/GoalStatus';
 import { format } from 'date-fns';
+import { useStore } from '../../app/stores/store';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
   goal: Goal;
 }
 
-const GoalItem = ({ goal }: Props) => {
+export default observer(function GoalItem({ goal }: Props) {
+  const {commonStore: {roundValue}}= useStore();
 
   const daysLeft = () => {
     const today = moment();
@@ -41,7 +44,7 @@ const GoalItem = ({ goal }: Props) => {
             <p>{goal.description}</p>
             <div className="stats">
               <div>
-                Progress: {goal.currentValue}/{goal.targetValue} {goal.unit}
+                Progress: {roundValue(goal.currentValue)}/{goal.targetValue} {goal.unit}
               </div>
               {renderModificationDate(goal.status)}
             </div> 
@@ -57,6 +60,4 @@ const GoalItem = ({ goal }: Props) => {
         </div>
     </div>
   )
-}
-
-export default GoalItem
+})

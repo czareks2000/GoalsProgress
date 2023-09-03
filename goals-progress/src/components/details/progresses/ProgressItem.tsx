@@ -11,13 +11,31 @@ interface Props {
 }
 
 export default observer(function ProgressItem({ progress }: Props) {
-  const {goalStore, detailsPageStore: {showEditProgressForm}} = useStore();
-  const {selectedGoal: goal, deleteProgress, loading: apiLoading} = goalStore;
+  const {
+    goalStore: {selectedGoal: goal, deleteProgress, loading: apiLoading}, 
+    detailsPageStore: {showEditProgressForm}, 
+    commonStore: {roundValue}
+  } = useStore();
 
   const [loading, setLoading] = useState(false);
 
   const color = () => {
     return goal?.status === GoalStatus.Completed ? "accent" : "primary";
+  }
+
+  const progressValue = () => {
+    if (progress.category)
+      return roundValue(progress.value * progress.category.multiplier);
+    
+    return roundValue(progress.value);
+  }
+
+  const progressDetails = () => {
+    if (progress.category)
+      return `${progress.category.name} 
+        ( ${roundValue(progress.value!)} x ${progress.category.multiplier} )`
+
+    return progress.description
   }
 
   if (!goal) return <></>
@@ -27,18 +45,12 @@ export default observer(function ProgressItem({ progress }: Props) {
         <div className="progress-value">
             <FaPlus/>
             <p>
-              {progress.category  
-                ? progress.value * progress.category.multiplier
-                : progress.value
-              }
+              {progressValue()}
             </p>
         </div>
         <div className="progress-details">
             <p>
-              {progress.category 
-                ? `${progress.category.name} (  ${progress.value!} x ${progress.category.multiplier} )`
-                : progress.description 
-              }
+              {progressDetails()}
             </p>
             <small>{format(progress.date!, 'dd MMM yyyy')}</small>
         </div>

@@ -21,12 +21,8 @@ export default observer(function App() {
     } else {
       commonStore.setApploaded();
     }
-
-    if (themeStore.theme) {
-      themeStore.switchTheme(themeStore.theme);
-    } else {
-      themeStore.switchTheme('dark');
-    }
+    themeStore.switchTheme(themeStore.theme);
+    
   }, [commonStore, userStore, themeStore]);
 
   if (!commonStore.appLoaded) return <div className='center'><Loading/></div>

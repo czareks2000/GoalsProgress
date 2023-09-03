@@ -24,7 +24,7 @@ export default class ThemeStore {
         '--error': 'red'
     }
 
-    theme: string | null = localStorage.getItem('theme');
+    theme: string = localStorage.getItem('theme') || 'dark';
 
     isLight = false;
 

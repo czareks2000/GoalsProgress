@@ -528,6 +528,22 @@ to {
   font-size: 23px;
 }
 
+.settings-item {
+  margin-left: 15px;
+}
+
+.settings-item input {
+  width: 35px;
+  height: 30px;
+  margin-top: 19px;
+}
+
+.settings-item button {
+  margin-left: 65px;
+  height: 40px;
+  margin-top: 19px;
+}
+
 .switch-wrapper {
   margin: 0 0 0 auto;
   transform: scale(0.45);
