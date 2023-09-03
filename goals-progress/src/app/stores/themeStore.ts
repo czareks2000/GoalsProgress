@@ -6,7 +6,7 @@ export default class ThemeStore {
         '--background-light': '#0d0d0d',
         '--background-disabled': '#8d8d8d',
         '--primary': '#0d0d0d', 
-        '--highlight': '#674500',
+        '--highlight': '#51361a',
         '--accent': '#0d0d0d',
         '--primary-font-color': '#000000',
         '--secondary-font-color': 'white',
