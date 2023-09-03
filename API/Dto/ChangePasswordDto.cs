@@ -2,13 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Dto
 {
-    public class RegisterDto
+    public class ChangePasswordDto
     {   
         [Required]
-        public string UserName { get; set; }
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string CurrentPassword { get; set; }
         [Required]
         [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$", 
             ErrorMessage = 
@@ -17,6 +14,9 @@ namespace API.Dto
                 "one lowercase letter, "+
                 "one uppercase letter, "+
                 "and a minimum length of 4 characters.")]
-        public string Password { get; set; }
+        public string NewPassword { get; set; }
+        [Required]
+        [Compare("NewPassword")]
+        public string ConfirmNewPassword { get; set; }
     }
 }

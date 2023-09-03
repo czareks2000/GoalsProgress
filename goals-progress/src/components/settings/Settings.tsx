@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 import Button from "../common/Button";
 import { useState } from "react";
+import ChangePasswordForm from "../forms/user/ChangePasswordForm";
 
 export default observer(function Settings() {
   const {
@@ -15,7 +16,7 @@ export default observer(function Settings() {
     <div className="settings container shadow">
         <div className="outline outline-primary">
           <div className="card-group">
-            <h2 style={{marginLeft: 15}}>Switch Theme</h2>
+            <h2 style={{marginLeft: 10}}>Switch Theme</h2>
             <div className="switch-wrapper">
               <input
                 id="hide-checkbox" 
@@ -52,6 +53,9 @@ export default observer(function Settings() {
                 }}/>
             </div>
           </div>
+        </div>
+        <div className="outline outline-primary">
+          <ChangePasswordForm/>
         </div>
     </div>
   )

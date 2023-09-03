@@ -9,3 +9,9 @@ export interface UserFormValues {
     email: string;
     password: string;
 }
+
+export interface ChangePasswordFormValues {
+    currentPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+}

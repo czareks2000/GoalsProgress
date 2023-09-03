@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using API.Dto;
 using API.Interfaces;
+using Application.Interfaces;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,10 +16,15 @@ namespace API.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService)
+        private readonly IUserAccessor _userAccessor;
+        public AccountController(
+            UserManager<AppUser> userManager, 
+            ITokenService tokenService,
+            IUserAccessor userAccessor)
         {
             _tokenService = tokenService;
             _userManager = userManager;
+            _userAccessor = userAccessor;
         }
 
         [AllowAnonymous]
@@ -61,6 +67,24 @@ namespace API.Controllers
             }
 
             return BadRequest(result.Errors);
+        }
+
+        [Authorize]
+        [HttpPost("changepassword")]
+        public async Task<ActionResult<UserDto>> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            var user = await _userManager.FindByEmailAsync(_userAccessor.GetUserEmail());
+
+            var result = await _userManager.ChangePasswordAsync(
+                user, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return CreateUserObject(user);
+            }
+            
+            ModelState.AddModelError("currentPassword", "Invalid password");
+            return ValidationProblem(ModelState);
         }
 
         [Authorize]

@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { User, UserFormValues } from "../models/User";
+import { ChangePasswordFormValues, User, UserFormValues } from "../models/User";
 import agent from "../api/agent";
 import { store } from "./store";
 import { router } from "../router/Routes";
@@ -53,6 +53,16 @@ export default class UserStore {
         store.goalStore.clearStore();
         this.user = null;
         router.navigate('/');
+    }
+
+    changePassword = async (values: ChangePasswordFormValues) => {
+        try {
+            await agent.Account.changePassword(values);
+            store.commonStore.setSuccess("Password changed");
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
     
     getUser = async () => {

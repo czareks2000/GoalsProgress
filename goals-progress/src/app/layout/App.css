@@ -529,7 +529,7 @@ to {
 }
 
 .settings-item {
-  margin-left: 15px;
+  margin-left: 10px;
 }
 
 .settings-item input {
@@ -539,7 +539,7 @@ to {
 }
 
 .settings-item button {
-  margin-left: 65px;
+  margin-left: 80px;
   height: 40px;
   margin-top: 19px;
 }

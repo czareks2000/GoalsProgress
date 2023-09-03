@@ -5,7 +5,7 @@ import { GoalStatus } from "../models/enums/GoalStatus";
 import { Category } from "../models/Category";
 import { router } from "../router/Routes";
 import { store } from "../stores/store";
-import { User, UserFormValues } from "../models/User";
+import { User, ChangePasswordFormValues, UserFormValues } from "../models/User";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -39,7 +39,8 @@ axios.interceptors.response.use(async response => {
             }
             break;
         case 401:
-            router.navigate('/unauthorised');
+            if (store.userStore.isLoggedIn)
+                router.navigate('/unauthorised');
             break;
         case 403:
             router.navigate('/forbidden')
@@ -96,7 +97,8 @@ const Categories = {
 const Account = {
     current: () => requests.get<User>('/account'),
     login: (user: UserFormValues) => requests.post<User>('/account/login', user),
-    register: (user: UserFormValues) => requests.post<User>('/account/register', user)
+    register: (user: UserFormValues) => requests.post<User>('/account/register', user),
+    changePassword: (values: ChangePasswordFormValues) => requests.post<void>('/account/changepassword/', values)
 }
 
 const agent = {
