@@ -39,7 +39,7 @@ const GoalCreate = () => {
             {!type &&
                 <div className="text-center my-1">
                 <Button 
-                    text={'CANCEL'}
+                    text={'Cancel'}
                     onClick={() => navigate(-1)}
                 />
             </div>

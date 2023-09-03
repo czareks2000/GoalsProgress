@@ -21,7 +21,7 @@ const ProgressEditForm = () => {
         <>
             <ProgressForm 
             onSubmit={submitForm}
-            buttonText="UPDATE"
+            buttonText="Update"
             progress={initialValues as ProgressFormValues}
             cancelButton={true}
             cancelButtonAction={toggleEditProgressForm}

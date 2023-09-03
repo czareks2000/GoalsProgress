@@ -27,7 +27,7 @@ export default observer(function ProgressAddForm() {
       <>
         <ProgressForm 
           onSubmit={submitForm}
-          buttonText="ADD"
+          buttonText="Add"
           progress={initialValues}
         />
       </>

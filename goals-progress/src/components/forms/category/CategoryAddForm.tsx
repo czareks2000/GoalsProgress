@@ -50,7 +50,7 @@ const CategoryAddForm = () => {
                         type="submit"
                         className={!(dirty && isValid) ? "btn disabled" : "btn"}
                         disabled={!(dirty && isValid) || isSubmitting}
-                        text={<>ADD</>}
+                        text={'Add'}
                     />
                 </div>
             </Form>

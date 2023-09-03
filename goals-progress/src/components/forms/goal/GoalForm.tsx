@@ -111,7 +111,7 @@ export default observer(function GoalForm({ onSubmit, buttonText, goal, cancelBu
                     className="btn"
                     onClick={cancelButtonAction}
                   >
-                    CANCEL
+                    Cancel
                   </div> 
                   }
                 </div>

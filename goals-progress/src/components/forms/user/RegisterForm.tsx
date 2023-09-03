@@ -54,13 +54,13 @@ export default observer(function RegisterForm({cancelButtonAction}: Props) {
                             type="submit"
                             className={!(dirty && isValid) ? "btn disabled" : "btn"}
                             disabled={!isValid || !dirty || isSubmitting}
-                            text={"SIGN UP"}
+                            text={"Sign up"}
                         />
                         <div
                             className="btn"
                             onClick={cancelButtonAction}
                         >
-                            CANCEL
+                            Cancel
                         </div> 
                     </div>
                 </Form>

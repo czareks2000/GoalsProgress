@@ -102,7 +102,7 @@ export default observer(function ProgressForm(
                     className="btn"
                     onClick={cancelButtonAction}
                   >
-                    CANCEL
+                    Cancel
                   </div> 
                 }
             </div>

@@ -38,7 +38,7 @@ const GoalCreateForm = ({type, setType}: Props) => {
       <GoalForm 
         goal={initialValues}
         onSubmit={submitForm}
-        buttonText={'CREATE'}
+        buttonText={'Create'}
         cancelButton={true}
         cancelButtonAction={() => setType(null)}
       />

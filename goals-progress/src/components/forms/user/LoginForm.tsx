@@ -45,13 +45,13 @@ export default observer(function LoginForm({cancelButtonAction}: Props) {
                             loading={isSubmitting}
                             type="submit"
                             disabled={isSubmitting}
-                            text={"LOGIN"}
+                            text={"Login"}
                         />
                         <div
                             className="btn"
                             onClick={cancelButtonAction}
                         >
-                            CANCEL
+                            Cancel
                         </div> 
                     </div>
                 </Form>

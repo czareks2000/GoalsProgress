@@ -16,7 +16,7 @@ export default observer(function GoalEditForm()  {
         <GoalForm 
             goal={selectedGoal as Goal}
             onSubmit={submitForm}
-            buttonText={'UPDATE'}
+            buttonText={'Update'}
         />
     )
 })
