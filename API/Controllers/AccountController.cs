@@ -47,6 +47,12 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
+            if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.UserName))
+            {
+                ModelState.AddModelError("username", "Username taken");
+                return ValidationProblem(ModelState);
+            }
+
             if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
                 ModelState.AddModelError("email", "Email taken");
@@ -83,7 +89,7 @@ namespace API.Controllers
                 return CreateUserObject(user);
             }
             
-            ModelState.AddModelError("currentPassword", "Invalid password");
+            ModelState.AddModelError("currentpassword", "Invalid password");
             return ValidationProblem(ModelState);
         }
 

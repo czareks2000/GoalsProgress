@@ -44,7 +44,6 @@ export default observer(function RegisterForm({cancelButtonAction}: Props) {
                             name="error"
                             className="error"
                             component="span"
-                            
                         />
                     </div>
                     

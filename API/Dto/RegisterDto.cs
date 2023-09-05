@@ -16,7 +16,7 @@ namespace API.Dto
                 "at least one digit, "+
                 "one lowercase letter, "+
                 "one uppercase letter, "+
-                "and a minimum length of 4 characters.")]
+                "and a minimum 4 characters.")]
         public string Password { get; set; }
         [Required]
         [Compare("Password")]
