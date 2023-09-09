@@ -7,7 +7,7 @@ namespace Application.Dto
     {
         [Required]
         [GraterThanZero(ErrorMessage = "Field {0} must be positive number")]
-        public Decimal Value { get; set; }
+        public decimal Value { get; set; }
         public string Description { get; set; }
         [Required]
         public DateTime Date { get; set; }

@@ -7,8 +7,8 @@ namespace Application.Dto
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Decimal CurrentValue { get; set; }
-        public Decimal TargetValue { get; set; }
+        public decimal CurrentValue { get; set; }
+        public decimal TargetValue { get; set; }
         public bool CustomUnit { get; set; }
         public string Unit { get; set; }
         public DateTime Deadline { get; set; }

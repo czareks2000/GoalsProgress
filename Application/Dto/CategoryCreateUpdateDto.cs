@@ -9,6 +9,6 @@ namespace Application.Dto
         public string Name { get; set; }
         [Required]
         [GraterThanZero(ErrorMessage = "Field {0} must be positive number")]
-        public Decimal Multiplier { get; set; }
+        public decimal Multiplier { get; set; }
     }
 }
