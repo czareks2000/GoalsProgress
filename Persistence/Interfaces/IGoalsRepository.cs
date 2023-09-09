@@ -5,7 +5,7 @@ namespace Persistence.Interfaces
     public interface IGoalsRepository
     {
         Task<int> AddAsync(Goal goal);
-        Task<List<Goal>> GetAllAsync();
+        Task<List<Goal>> GetAllAsync(string userEmail);
         Task<Goal> GetOneAsync(int id);
         Goal GetOne(int id);
         Task<int> UpdateAsync(Goal goal);

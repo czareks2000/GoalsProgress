@@ -19,12 +19,12 @@ namespace Persistence.Repositories
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Goal>> GetAllAsync()
+        public async Task<List<Goal>> GetAllAsync(string userEmail)
         {
             return await _context.Goals
+                .Where(g => g.User.Email == userEmail)
                 .Include(g => g.Categories)
                 .Include(g => g.Progresses)
-                .Include(g => g.User)
                 .ToListAsync();
         }
 

@@ -29,11 +29,10 @@ namespace Application.Services
 
         public async Task<Result<List<GoalDto>>> GetAll()
         {   
-            var allGoals = await _goalsRepository.GetAllAsync();
+            var allGoals = await _goalsRepository.GetAllAsync(_userAccessor.GetUserEmail());
 
             var userGoals = allGoals.FindAll(g => 
-                g.Status != GoalStatus.Deleted && 
-                g.User.Email == _userAccessor.GetUserEmail());
+                g.Status != GoalStatus.Deleted);
 
             var goals = _mapper.Map<List<GoalDto>>(userGoals);
 
