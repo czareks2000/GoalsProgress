@@ -1,6 +1,7 @@
+import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 
-export default function ThemeSetting() {
+export default observer(function ThemeSetting() {
     const {themeStore: {isLight, toggleTheme}} = useStore();
 
     return (
@@ -20,4 +21,4 @@ export default function ThemeSetting() {
             </div>
         </div>
     )
-}
+})
