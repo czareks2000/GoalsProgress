@@ -528,7 +528,14 @@ to {
   font-size: 23px;
 }
 
-.round-values-setting {
+.export-data button{
+  margin-left: 250px;
+  height: 40px;
+  margin-top: 19px;
+}
+
+.round-values-setting,
+.export-data  {
   margin-left: 10px;
 }
 

@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import ChangePasswordForm from "./ChangePasswordForm";
 import RoundValuesSetting from "./RoundValuesSetting";
 import ThemeSetting from "./ThemeSetting";
+import ExportData from "./ExportData";
 
 export default observer(function Settings() {
   return (
@@ -13,8 +14,12 @@ export default observer(function Settings() {
           <RoundValuesSetting/>
         </div>
         <div className="outline outline-primary">
+          <ExportData/>
+        </div>
+        <div className="outline outline-primary">
           <ChangePasswordForm/>
         </div>
+        
     </div>
   )
 })

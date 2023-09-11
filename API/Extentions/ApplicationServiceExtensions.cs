@@ -63,6 +63,8 @@ namespace API.Extentions
 
             services.AddScoped<IUserAccessor, UserAccessor>();
 
+            services.AddScoped<IExportDataService, ExportDataService>();
+
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
             services.AddScoped<IGoalsService, GoalsService>();

@@ -101,11 +101,16 @@ const Account = {
     changePassword: (values: ChangePasswordFormValues) => requests.post<void>('/account/changepassword/', values)
 }
 
+const Data = {
+    zip: () => axios.get('download-zip', { responseType: 'arraybuffer'})
+}
+
 const agent = {
     Goals,
     Progresses,
     Categories,
-    Account
+    Account,
+    Data
 }
 
 export default agent;
