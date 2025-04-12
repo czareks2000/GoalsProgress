@@ -33,24 +33,24 @@ export default observer(function App() {
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ScrollRestoration/>
-      {location.pathname === '/' 
-      ? <HomePage /> 
-      : (
-        <>
-        <div className="wrapper">
-          <Header appName='GoalsProgress'/>
-          {info && 
-          <Info 
-            color={info.type} 
-            message={info.message} 
-            onClick={clearInfo}
-          />
-          }
-          <Outlet />
-        </div>
-        <Footer/>
-        </>
-      )}
+        {location.pathname === '/' 
+        ? <HomePage /> 
+        : (
+          <>
+            <div className="wrapper">
+              <Header appName='GoalsProgress'/>
+              {info && 
+              <Info 
+                color={info.type} 
+                message={info.message} 
+                onClick={clearInfo}
+              />
+              }
+              <Outlet />
+            </div>
+            <Footer/>
+          </>
+        )}
       </LocalizationProvider>
     </>
   );

@@ -57,7 +57,7 @@ body{
   background-color: var(--background-dark);
   font-family: 'Noto Sans', sans-serif;
   color: var(--primary-font-color);
-  margin: 0px;
+  margin: 0px auto;
 }
 
 .wrapper{
@@ -123,6 +123,12 @@ body{
   -webkit-box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 1);
   -moz-box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 1);
   box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 1);
+}
+
+.container-without-border {
+  margin-left: auto;
+  margin-right: auto;
+  width: 550px;
 }
 
 .container{
@@ -494,6 +500,10 @@ from {
 to {
   transform: rotate(360deg);
 }
+}
+
+.center-vertical {
+  margin-top: calc(50vh - 197.875px / 2);
 }
 
 [data-reach-dialog-content],

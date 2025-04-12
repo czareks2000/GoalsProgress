@@ -30,7 +30,7 @@ export default observer(function CurrentGoals (){
         }
       </div>
 
-      <div className="text-center">
+      <div className="container-without-border text-center">
         <Link to="/goal/create">
           <Button text={<FaPlus/>}/>
         </Link>

@@ -18,31 +18,30 @@ export default observer(function HomePage() {
     }
 
     return (
-        <>
-            <div className="container center">
-                {userStore.isLoggedIn ?
+        
+        <div className="container center-vertical">
+            {userStore.isLoggedIn ?
+                <div className="outline outline-primary">
+                    <h1 className="text-center">Welcome to GoalsProgress</h1>
+                    <Link className="text-center" to='/goals'>
+                        <Button text={"Go to your goals"} />
+                    </Link>
+                </div> 
+            :
+                <>
+                    {showLoginForm && <LoginForm cancelButtonAction={hideForms}/>}
+                    {showRegisterForm && <RegisterForm cancelButtonAction={hideForms}/>}
+                    {!(showLoginForm || showRegisterForm) && 
                     <div className="outline outline-primary">
                         <h1 className="text-center">Welcome to GoalsProgress</h1>
-                        <Link className="text-center" to='/goals'>
-                            <Button text={"Go to your goals"} />
-                        </Link>
-                    </div> 
-                :
-                    <>
-                        {showLoginForm && <LoginForm cancelButtonAction={hideForms}/>}
-                        {showRegisterForm && <RegisterForm cancelButtonAction={hideForms}/>}
-                        {!(showLoginForm || showRegisterForm) && 
-                        <div className="outline outline-primary">
-                            <h1 className="text-center">Welcome to GoalsProgress</h1>
-                            <div className="text-center my-1">
-                                <Button text={"Login"} onClick={() => setShowLoginForm(true)}/>
-                                <Button text={"Register"} onClick={() => setShowRegisterForm(true)}/>
-                            </div>
+                        <div className="text-center my-1">
+                            <Button text={"Login"} onClick={() => setShowLoginForm(true)}/>
+                            <Button text={"Register"} onClick={() => setShowRegisterForm(true)}/>
                         </div>
-                        }
-                    </>
-                }
-            </div>
-        </>
+                    </div>
+                    }
+                </>
+            }
+        </div>
     )
 })

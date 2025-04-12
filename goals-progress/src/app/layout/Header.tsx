@@ -7,7 +7,7 @@ interface Props {
 const Header = ({ appName }: Props) => {
   return (
     <>
-        <div className="text-center">
+        <div className="container-without-border text-center">
             <h1>{appName}</h1>
         </div>
         <Navbar/>
