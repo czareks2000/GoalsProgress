@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom/client';
-import 'react-datepicker/dist/react-datepicker.css'
 import { StoreContext, store } from './app/stores/store';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './app/router/Routes';
 import React from 'react';
 import dayjs from 'dayjs'
 import updateLocale from 'dayjs/plugin/updateLocale'
+import '@mui/material/styles';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
