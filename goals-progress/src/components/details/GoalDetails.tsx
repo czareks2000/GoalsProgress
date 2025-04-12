@@ -54,7 +54,7 @@ export default observer(function GoalDetails() {
                 }
             </div>
             {goal.progresses!.length > loadedProgressesCount && visibleProgressList &&
-            <div className="text-center">
+            <div className="container-without-border text-center">
                 <Button 
                     text={'Load more'} 
                     onClick={() => setLoadedProgressesCount(loadedProgressesCount+5)}
