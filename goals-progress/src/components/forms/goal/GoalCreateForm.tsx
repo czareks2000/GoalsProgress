@@ -5,6 +5,7 @@ import GoalForm from "./GoalForm";
 import { Goal } from "../../../app/models/Goal";
 import { GoalType } from "../../../app/models/enums/GoalType";
 import { useStore } from "../../../app/stores/store";
+import dayjs from "dayjs";
 
 interface Props {
   type: GoalType;
@@ -23,7 +24,7 @@ const GoalCreateForm = ({type, setType}: Props) => {
     targetValue: null,
     customUnit: false,
     unit: '',
-    deadline: null,
+    deadline: dayjs().endOf('year'),
     status: 1,
     type: type
   };

@@ -1,9 +1,8 @@
-import moment from 'moment';
 import { Goal } from '../../app/models/Goal';
 import { GoalStatus } from '../../app/models/enums/GoalStatus';
-import { format } from 'date-fns';
 import { useStore } from '../../app/stores/store';
 import { observer } from 'mobx-react-lite';
+import dayjs from 'dayjs';
 
 interface Props {
   goal: Goal;
@@ -13,8 +12,8 @@ export default observer(function GoalItem({ goal }: Props) {
   const {commonStore: {roundValue}}= useStore();
 
   const daysLeft = () => {
-    const today = moment();
-    const deadline = moment(goal.deadline, 'YYYY-MM-DD');
+    const today = dayjs();
+    const deadline = dayjs(goal.deadline, 'YYYY-MM-DD');
     return deadline.diff(today, 'days');
   }
 
@@ -31,9 +30,9 @@ export default observer(function GoalItem({ goal }: Props) {
       case GoalStatus.Current:
           return <div>{daysLeft()} Days Left</div>
       case GoalStatus.Archvied:
-          return <div>Archived: {format(goal.modificationDate!, 'dd MMM yyyy')}</div>
+          return <div>Archived: {dayjs(goal.modificationDate!).format('dd MMM YYYY')}</div>
       case GoalStatus.Completed:
-          return <div>Completed: {format(goal.completedDate!, 'dd MMM yyyy')}</div>
+          return <div>Completed: {dayjs(goal.completedDate!).format('dd MMM YYYY')}</div>
     }
   }
 

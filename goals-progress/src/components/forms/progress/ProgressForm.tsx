@@ -9,6 +9,7 @@ import NumberInput from "../../common/form/NumberInput";
 import TextInput from "../../common/form/TextInput";
 import DateInput from "../../common/form/DateInput";
 import Button from "../../common/Button";
+import dayjs from "dayjs";
 
 interface Props {
     onSubmit: (progress: ProgressFormValues) => void;
@@ -33,7 +34,7 @@ export default observer(function ProgressForm(
         selectedGoal?.type === GoalType.Standard 
           ? Yup.string().required('Description is required')
           : Yup.string().notRequired(),
-      date: Yup.date().required('Date is required'),
+      date: Yup.string().required('Date is required'),
     });
     
     let updateField: any;// eslint-disable-line
@@ -82,10 +83,7 @@ export default observer(function ProgressForm(
             <DateInput
               label="Date" 
               name="date"
-              placeholderText="Click to select a date"
-              todayButton="Today"
-              calendarStartDay={1}
-              dateFormat="dd MMM yyyy"
+              defaultValue={dayjs()}
             />
 
             {/* Button */}

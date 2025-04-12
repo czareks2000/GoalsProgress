@@ -5,6 +5,7 @@ import { GoalStatus } from "../models/enums/GoalStatus";
 import { Progress } from "../models/Progress";
 import { Category } from "../models/Category";
 import { store } from "./store";
+import dayjs from "dayjs";
 
 export default class GoalStore {
     goalsRegistry = new Map<number, Goal>();
@@ -27,7 +28,7 @@ export default class GoalStore {
 
     get sortedProgresses() {
         if (this.selectedGoal)
-            return this.selectedGoal.progresses!.slice().sort((a, b) => b.date!.getTime() - a.date!.getTime());
+            return this.selectedGoal.progresses!.slice().sort((a, b) => b.date!.valueOf() - a.date!.valueOf());
 
         return [];
     }
@@ -35,13 +36,13 @@ export default class GoalStore {
     get currentGoals() {
         return Array.from(this.goalsRegistry.values())
                 .filter(g => g.status === GoalStatus.Current)
-                .sort((a, b) => a.deadline!.getTime() - b.deadline!.getTime());
+                .sort((a, b) => a.deadline!.valueOf() - b.deadline!.valueOf());
     }
 
     get archivedGoals() {
         return Array.from(this.goalsRegistry.values())
                 .filter(g => g.status === GoalStatus.Archvied || g.status === GoalStatus.Completed)
-                .sort((a, b) => a.deadline!.getTime() - b.deadline!.getTime());
+                .sort((a, b) => a.deadline!.valueOf() - b.deadline!.valueOf());
     }
 
 
@@ -228,8 +229,8 @@ export default class GoalStore {
         }
     }
 
-    private convertToDate(date: Date) {
-        const result = new Date(date);
+    private convertToDate(date: Date | dayjs.Dayjs) {
+        const result = dayjs(date);
         return result;
     }
 }

@@ -3,6 +3,7 @@ import { useStore } from "../../../app/stores/store";
 import { GoalType } from "../../../app/models/enums/GoalType";
 import { observer } from "mobx-react-lite";
 import ProgressForm from "./ProgressForm";
+import dayjs from "dayjs";
 
 export default observer(function ProgressAddForm() {
     const {goalStore, detailsPageStore: {toggleAddProgressForm}} = useStore();
@@ -12,7 +13,7 @@ export default observer(function ProgressAddForm() {
       id: 0,
       value: 
         selectedGoal?.type === GoalType.Standard ? 1 : null,
-      date: null,
+      date: dayjs(),
       description: '',
       categoryId: 
         selectedGoal?.type === GoalType.Extended ? selectedGoal.categories![0].id : undefined

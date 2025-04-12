@@ -9,6 +9,8 @@ import Info from '../../components/common/Info';
 import { useStore } from '../stores/store';
 import { useEffect } from 'react';
 import Loading from '../../components/common/Loading';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export default observer(function App() {
   const location = useLocation();
@@ -29,6 +31,7 @@ export default observer(function App() {
 
   return (
     <>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ScrollRestoration/>
       {location.pathname === '/' 
       ? <HomePage /> 
@@ -48,6 +51,7 @@ export default observer(function App() {
         <Footer/>
         </>
       )}
+      </LocalizationProvider>
     </>
   );
 })

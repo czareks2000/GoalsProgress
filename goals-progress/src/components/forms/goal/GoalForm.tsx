@@ -6,6 +6,7 @@ import DateInput from "../../common/form/DateInput";
 import TextInput from "../../common/form/TextInput";
 import Button from "../../common/Button";
 import { observer } from "mobx-react-lite";
+import dayjs from "dayjs";
 
 interface Props {
   onSubmit: (goal: Goal) => void;
@@ -22,7 +23,7 @@ export default observer(function GoalForm({ onSubmit, buttonText, goal, cancelBu
       targetValue: Yup.number()
         .positive("Goal value must be positive number")
         .required('The goal value is required'),
-      deadline: Yup.date().required('The goal deadline is required'),
+      deadline: Yup.string().required('The goal deadline is required'),
       customUnit: Yup.boolean(),
       unit: Yup.string().notRequired()
     });
@@ -91,10 +92,7 @@ export default observer(function GoalForm({ onSubmit, buttonText, goal, cancelBu
                 <DateInput
                   label="Deadline" 
                   name="deadline"
-                  placeholderText="Click to select a date"
-                  todayButton="Today"
-                  calendarStartDay={1}
-                  dateFormat="dd MMM yyyy"
+                  defaultValue={dayjs().endOf('year')}
                 />
 
                 {/* Buttons */}

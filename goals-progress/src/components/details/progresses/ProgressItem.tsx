@@ -3,8 +3,8 @@ import { Progress } from '../../../app/models/Progress';
 import { GoalStatus } from '../../../app/models/enums/GoalStatus';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
-import { format } from 'date-fns';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 
 interface Props {
   progress: Progress;
@@ -52,7 +52,7 @@ export default observer(function ProgressItem({ progress }: Props) {
             <p>
               {progressDetails()}
             </p>
-            <small>{format(progress.date!, 'dd MMM yyyy')}</small>
+            <small>{dayjs(progress.date!).format('DD MMM YYYY')}</small>
         </div>
         {((goal.status === GoalStatus.Current) || 
           (goal.status === GoalStatus.Deleted && apiLoading)

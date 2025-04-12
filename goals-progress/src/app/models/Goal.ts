@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { Category } from "./Category";
 import { Progress } from "./Progress";
 import { GoalStatus } from "./enums/GoalStatus";
@@ -11,11 +12,11 @@ export interface Goal {
     targetValue: number | null,
     customUnit: boolean,
     unit: string,
-    deadline: Date | null,
+    deadline: dayjs.Dayjs | Date;
     status: GoalStatus,
     type: GoalType,
-    modificationDate?: Date,
-    completedDate?: Date,
+    modificationDate?: dayjs.Dayjs | Date,
+    completedDate?: dayjs.Dayjs | Date,
     progresses?: Progress[],
     categories?: Category[]
 }
