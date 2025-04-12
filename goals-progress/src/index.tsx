@@ -5,7 +5,6 @@ import { router } from './app/router/Routes';
 import React from 'react';
 import dayjs from 'dayjs'
 import updateLocale from 'dayjs/plugin/updateLocale'
-import '@mui/material/styles';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

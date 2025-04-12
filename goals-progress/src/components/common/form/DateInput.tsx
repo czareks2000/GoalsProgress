@@ -38,7 +38,7 @@ export default function DateInput(props: Props) {
                 value={field.value || props.defaultValue}
                 onChange={(date) => helpers.setValue(date, true)}
                 format={props.format || "DD/MM/YYYY"}
-              
+                
                 slotProps={{
                     textField: {
                         size: 'small',
