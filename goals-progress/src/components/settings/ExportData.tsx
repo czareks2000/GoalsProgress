@@ -3,6 +3,7 @@ import agent from "../../app/api/agent";
 import Button from "../common/Button";
 import { observer } from "mobx-react-lite";
 import { store } from "../../app/stores/store";
+import dayjs from "dayjs";
 
 export default observer(function ExportData() {
     const [isLoading, setIsLoading] = useState(false);
@@ -14,8 +15,9 @@ export default observer(function ExportData() {
             const blob = new Blob([response.data], { type: 'application/zip' })
             const downloadUrl = URL.createObjectURL(blob)
             const a = document.createElement("a"); 
+            const date = dayjs().format('DD.MM.YYYY');
             a.href = downloadUrl;
-            a.download = "goalsprogress.zip";
+            a.download = `goalsprogress_${date}.zip`;
             document.body.appendChild(a);
             a.click();
         } catch (error) {
