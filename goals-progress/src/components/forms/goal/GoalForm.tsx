@@ -19,7 +19,7 @@ interface Props {
 export default observer(function GoalForm({ onSubmit, buttonText, goal, cancelButton = false, cancelButtonAction }: Props) {
     const validationSchema = Yup.object({
       name: Yup.string().required('The goal name is required'),
-      description: Yup.string().required('The goal description is required'),
+      description: Yup.string().required('The goal description is required').max(40, "Max 40 characters"),
       targetValue: Yup.number()
         .positive("Goal value must be positive number")
         .required('The goal value is required'),

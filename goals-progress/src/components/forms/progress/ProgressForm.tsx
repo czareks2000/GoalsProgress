@@ -32,7 +32,7 @@ export default observer(function ProgressForm(
         .required('Value is required'),
       description: 
         selectedGoal?.type === GoalType.Standard 
-          ? Yup.string().required('Description is required')
+          ? Yup.string().required('Description is required').max(40, "Max 40 characters")
           : Yup.string().notRequired(),
       date: Yup.string().required('Date is required'),
     });
