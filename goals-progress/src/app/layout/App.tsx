@@ -27,7 +27,7 @@ export default observer(function App() {
     
   }, [commonStore, userStore, themeStore]);
 
-  if (!commonStore.appLoaded) return <div className='center'><Loading/></div>
+  if (!commonStore.appLoaded) return <div className='center'><Loading disableContainerStyle/></div>
 
   return (
     <>
