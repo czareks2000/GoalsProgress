@@ -9,8 +9,10 @@ const Loading = ({disableContainerStyle}: Props) => {
     : '';
 
   return (
-    <div className={`${containerStyle} text-center my-3`}>
-      <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+    <div className={containerStyle}>
+      <div className={`text-center my-3`}>
+        <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+      </div>
     </div>
   )
 }
