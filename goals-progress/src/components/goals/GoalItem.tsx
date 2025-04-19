@@ -12,34 +12,41 @@ export default observer(function GoalItem({ goal }: Props) {
   const {commonStore: {roundValue, formatDate}}= useStore();
 
   const today = dayjs();
-
   const daysLeft = dayjs(goal.deadline).diff(today, 'days');
-
-  
+  const unit = goal.unit;
 
   const renderCurrentProgress = () => { 
     const currentValue = roundValue(goal.currentValue);
     const targetValue = goal.targetValue;
-    const unit = goal.unit;
 
     return `Progress: ${currentValue} / ${targetValue} ${unit}`;
   }
 
   const renderStatusInfo = () => {
+    const remainingAmount = goal.targetValue! - goal.currentValue
+    const dailyAverageToComplete = roundValue(remainingAmount / daysLeft);
+
     switch (goal.status) {
       case GoalStatus.Current:
-          return `${daysLeft} Days Left`
+          return daysLeft > 0 
+            ? `Remaining per day: ${dailyAverageToComplete} ${unit}` 
+            : `Remaining: ${roundValue(remainingAmount)} ${unit}`;
       case GoalStatus.Archvied:
-          return `Archived: ${formatDate(goal.modificationDate)}`
+          return `Archived`
       case GoalStatus.Completed:
-          return `Completed: ${formatDate(goal.completedDate!)}`
+          return `Completed`
     }
   }
 
-  const renderDailyAverageToComplete = () => {
-    const dailyAverageToComplete = roundValue((goal.targetValue! - goal.currentValue) / daysLeft);
-
-    return `Remaining per day: ${dailyAverageToComplete} ${goal.unit}`;
+  const renderTimeInfo = () => {
+    switch (goal.status) {
+      case GoalStatus.Current:
+          return daysLeft > 0 ? `${daysLeft} Days Left` : 'Deadline passed'
+      case GoalStatus.Archvied:
+          return `${formatDate(goal.modificationDate)}`
+      case GoalStatus.Completed:
+          return `${formatDate(goal.completedDate!)}`
+    }
   }
 
   const color = goal.status === GoalStatus.Completed ? "accent" : "primary";
@@ -55,10 +62,10 @@ export default observer(function GoalItem({ goal }: Props) {
                 {renderCurrentProgress()}
               </div>
               <div>
-                {renderDailyAverageToComplete()}
+                {renderStatusInfo()}
               </div>
               <div>
-                {renderStatusInfo()}
+                {renderTimeInfo()}
               </div>
             </div> 
         </div>
