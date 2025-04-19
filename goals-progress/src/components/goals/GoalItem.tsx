@@ -14,23 +14,32 @@ export default observer(function GoalItem({ goal }: Props) {
   const today = dayjs();
   const daysLeft = dayjs(goal.deadline).diff(today, 'days');
   const unit = goal.unit;
+  const currentValue = goal.currentValue;
+  const targetValue = goal.targetValue;
+  const remainingValue = targetValue! - currentValue;
 
   const renderCurrentProgress = () => { 
-    const currentValue = roundValue(goal.currentValue);
-    const targetValue = goal.targetValue;
-
-    return `Progress: ${currentValue} / ${targetValue} ${unit}`;
+    return `Progress: ${roundValue(currentValue)} / ${targetValue} ${unit}`;
   }
 
   const renderStatusInfo = () => {
-    const remainingAmount = goal.targetValue! - goal.currentValue
-    const dailyAverageToComplete = roundValue(remainingAmount / daysLeft);
+    const textForCurrentStatus = () => {
+      const dailyAverageToComplete = remainingValue / daysLeft;
+      const isRemainingPerDayVisible = dailyAverageToComplete >= 1 && daysLeft > 0;
+  
+      const labelText = isRemainingPerDayVisible
+        ? 'Remaining per day' 
+        : 'Remaining'
+      const amount = roundValue(isRemainingPerDayVisible 
+        ? dailyAverageToComplete 
+        : remainingValue);
+  
+        return `${labelText}: ${amount} ${unit}`;
+    }
 
     switch (goal.status) {
       case GoalStatus.Current:
-          return daysLeft > 0 
-            ? `Remaining per day: ${dailyAverageToComplete} ${unit}` 
-            : `Remaining: ${roundValue(remainingAmount)} ${unit}`;
+          return textForCurrentStatus()
       case GoalStatus.Archvied:
           return `Archived`
       case GoalStatus.Completed:
@@ -49,7 +58,18 @@ export default observer(function GoalItem({ goal }: Props) {
     }
   }
 
-  const color = goal.status === GoalStatus.Completed ? "accent" : "primary";
+  const calculateColor = () => {
+    switch (goal.status) {
+      case GoalStatus.Current:
+          return daysLeft > 0 ? 'primary' : 'error';
+      case GoalStatus.Archvied:
+          return 'primary'
+      case GoalStatus.Completed:
+          return 'accent'
+    }
+  }
+
+  const color = calculateColor();
   const progressPercentage = Math.round(goal.currentValue / goal.targetValue! * 100);
 
   return (
