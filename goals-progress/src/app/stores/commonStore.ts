@@ -1,6 +1,7 @@
 import { makeAutoObservable, reaction } from "mobx";
 import { ServerError } from "../models/ServerError"
 import { Info } from "../models/Info";
+import dayjs, { Dayjs } from "dayjs";
 
 export default class CommonStore {
     serverError: ServerError | null = null;
@@ -42,6 +43,10 @@ export default class CommonStore {
         return Math.round(value * Math.pow(10,this.digits)) / Math.pow(10,this.digits);
       }
 
+    formatDate = (date: Dayjs | Date | undefined, format: string = 'DD MMM YYYY') => {
+        return date ? dayjs(date).format(format) : '';
+    };
+    
     setServerError(error: ServerError) {
         this.serverError = error;
     }

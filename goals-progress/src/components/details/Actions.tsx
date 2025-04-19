@@ -1,23 +1,38 @@
 import { FaPlus, FaEdit, FaTrash, FaFolder, FaCircleNotch } from 'react-icons/fa'
-import { GiCancel } from 'react-icons/gi'
 import { RiArrowGoBackFill } from 'react-icons/ri'
+import { IoIosStats } from "react-icons/io";
 import { useNavigate } from 'react-router-dom'
 import { GoalStatus } from '../../app/models/enums/GoalStatus';
 import { useStore } from '../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import Dialog from '../common/Dialog';
+import ActionButton from './ActionButton';
+import { GoalType } from '../../app/models/enums/GoalType';
 
 export default observer(function Actions() {
     // State
     const {goalStore, detailsPageStore} = useStore();
     const {selectedGoal: goal, changeStatus, loading} = goalStore;
-    const {visibleAddProgressForm, visibleEditGoalForm, visibleProgressList, 
-        toggleAddProgressForm, toggleEditGoalForm, addProgressActionStatus, 
-        editGoalActionStatus, archiveGoalActionStatus} = detailsPageStore;
+    const {
+        visibleAddProgressForm, visibleEditGoalForm, visibleProgressList, visibleStats,
+        toggleAddProgressForm, toggleEditGoalForm, toggleStats, 
+        disableAddProgressButton, disableEditButton, disableStatsButton, disableArchiveRestoreButton
+    } = detailsPageStore;
+    
+    const currentGoal = goal?.status === GoalStatus.Current;
+    const extendedGoal = goal?.type == GoalType.Extended;
+
+    const classes = `${extendedGoal ? 'extended' : ''} actions text-center`;
+    const showStatsActionButton = extendedGoal;
+    const showArchiveActionButton = currentGoal;
 
     // Dialog
     const [showDialog, setShowDialog] = useState(false);
+
+    const toggleShowDialog = () => {
+        setShowDialog(prev => !prev);
+    }
     
     // Actions
     const navigate = useNavigate();
@@ -50,52 +65,54 @@ export default observer(function Actions() {
                     loading ? <FaCircleNotch className="spinner"/> : "Delete"}
                 cancelButtonText="Cancel"
                 onConfirm={handleDeleteGoal}
-                onCancel={() => setShowDialog(false)}
+                onCancel={toggleShowDialog}
             />
         )}
-        <div className="actions text-center">
-            <div 
-                className={`action 
-                        ${visibleAddProgressForm ? 'active' : ''}
-                        ${showDialog || addProgressActionStatus ? 'disabled' : ''}`} 
+        <div className={classes}>
+            <ActionButton 
+                defaultIcon={<FaPlus/>} 
+                defaultText={'Progress'} 
+                active={visibleAddProgressForm} 
+                disabled={showDialog || disableAddProgressButton} 
                 onClick={toggleAddProgressForm}
-            >
-                {visibleAddProgressForm ? 
-                <><GiCancel/>Cancel</>
-                : 
-                <><FaPlus/>Progress</> 
-                }
-            </div>
-            <div 
-                className={`action 
-                        ${visibleEditGoalForm ? 'active' : ''} 
-                        ${showDialog || editGoalActionStatus ? 'disabled' : ''}`} 
+            />
+            <ActionButton 
+                defaultIcon={<FaEdit/>} 
+                defaultText={'Edit'} 
+                active={visibleEditGoalForm } 
+                disabled={showDialog || disableEditButton} 
                 onClick={toggleEditGoalForm}
-            >
-                {visibleEditGoalForm ? 
-                <><GiCancel/>Cancel</>
-                : 
-                <><FaEdit/>Edit</> 
-                }
-            </div>
-            <div 
-                className={`action 
-                        ${showDialog || !visibleProgressList ? 'disabled' : ''}`} 
-                onClick={() => setShowDialog(true)}
-            >
-                <><FaTrash/>Delete</>
-            </div>
-            <div 
-                className={`action 
-                        ${showDialog || archiveGoalActionStatus ? 'disabled' : ''}`}  
-                onClick={goal.status === GoalStatus.Current ? handleArchiveGoal : handleRestoreGoal}
-            >
-                {goal.status === GoalStatus.Archvied ? 
-                <><RiArrowGoBackFill/>Restore</> 
-                : 
-                <><FaFolder/>Archive</>
-                }
-            </div>
+            />
+            {showStatsActionButton && 
+            <ActionButton 
+                defaultIcon={<IoIosStats/>} 
+                defaultText={'Stats'}
+                textOnActive={'Close'} 
+                active={visibleStats} 
+                disabled={showDialog || disableStatsButton} 
+                onClick={toggleStats}
+            />}
+            <ActionButton 
+                defaultIcon={<FaTrash/>} 
+                defaultText={'Delete'}
+                disabled={showDialog || !visibleProgressList} 
+                onClick={toggleShowDialog}
+            />
+            {showArchiveActionButton ?
+                <ActionButton 
+                    defaultIcon={<FaFolder/>} 
+                    defaultText={'Archive'} 
+                    disabled={showDialog || disableArchiveRestoreButton} 
+                    onClick={handleArchiveGoal}
+                />
+            :
+                <ActionButton 
+                    defaultIcon={<RiArrowGoBackFill/>} 
+                    defaultText={'Restore'}
+                    disabled={showDialog || disableArchiveRestoreButton} 
+                    onClick={handleRestoreGoal}
+                />
+            }
         </div>
     </>
   )

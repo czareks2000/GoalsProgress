@@ -12,12 +12,13 @@ import Button from "../common/Button";
 import CategoryAddForm from "../forms/category/CategoryAddForm";
 import ProgressEditForm from "../forms/progress/ProgressEditForm";
 import Loading from "../common/Loading";
+import Stats from "./Stats";
 
 export default observer(function GoalDetails() {
     // State
     const {goalStore, detailsPageStore} = useStore();
     const {selectedGoal: goal, loadGoal, sortedProgresses: progresses,} = goalStore;
-    const {visibleEditGoalForm, visibleProgressList, visibleEditProgressForm, 
+    const {visibleEditGoalForm, visibleProgressList, visibleEditProgressForm, visibleStats, 
         setInitialValues, showProgressAddForm, showCategoryAddForm} = detailsPageStore
     
     // Loading more progresses
@@ -45,6 +46,9 @@ export default observer(function GoalDetails() {
                 }
                 {showCategoryAddForm && 
                     <CategoryAddForm/>
+                }
+                {visibleStats && 
+                    <Stats />
                 }
                 {visibleEditGoalForm && 
                     <GoalEditForm/>

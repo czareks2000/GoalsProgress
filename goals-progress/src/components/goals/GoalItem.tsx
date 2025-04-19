@@ -9,51 +9,65 @@ interface Props {
 }
 
 export default observer(function GoalItem({ goal }: Props) {
-  const {commonStore: {roundValue}}= useStore();
+  const {commonStore: {roundValue, formatDate}}= useStore();
 
-  const daysLeft = () => {
-    const today = dayjs();
-    const deadline = dayjs(goal.deadline, 'YYYY-MM-DD');
-    return deadline.diff(today, 'days');
+  const today = dayjs();
+
+  const daysLeft = dayjs(goal.deadline).diff(today, 'days');
+
+  
+
+  const renderCurrentProgress = () => { 
+    const currentValue = roundValue(goal.currentValue);
+    const targetValue = goal.targetValue;
+    const unit = goal.unit;
+
+    return `Progress: ${currentValue} / ${targetValue} ${unit}`;
   }
 
-  const currentProgress = () => {
-    return Math.round(goal.currentValue / goal.targetValue! * 100);
-  }
-
-  const color = () => {
-    return goal.status === GoalStatus.Completed ? "accent" : "primary";
-  }
-
-  const renderModificationDate = (status: GoalStatus) => {
-    switch (status) {
+  const renderStatusInfo = () => {
+    switch (goal.status) {
       case GoalStatus.Current:
-          return <div>{daysLeft()} Days Left</div>
+          return `${daysLeft} Days Left`
       case GoalStatus.Archvied:
-          return <div>Archived: {dayjs(goal.modificationDate!).format('dd MMM YYYY')}</div>
+          return `Archived: ${formatDate(goal.modificationDate)}`
       case GoalStatus.Completed:
-          return <div>Completed: {dayjs(goal.completedDate!).format('dd MMM YYYY')}</div>
+          return `Completed: ${formatDate(goal.completedDate!)}`
     }
   }
 
+  const renderDailyAverageToComplete = () => {
+    const dailyAverageToComplete = roundValue((goal.targetValue! - goal.currentValue) / daysLeft);
+
+    return `Remaining per day: ${dailyAverageToComplete} ${goal.unit}`;
+  }
+
+  const color = goal.status === GoalStatus.Completed ? "accent" : "primary";
+  const progressPercentage = Math.round(goal.currentValue / goal.targetValue! * 100);
+
   return (
-    <div className={`goal outline outline-${color()}`}>
+    <div className={`goal outline outline-${color}`}>
         <div>
             <h2>{goal.name}</h2>
-            <p>{goal.description}</p>
+            <div>{goal.description}</div>
             <div className="stats">
               <div>
-                Progress: {roundValue(goal.currentValue)}/{goal.targetValue} {goal.unit}
+                {renderCurrentProgress()}
               </div>
-              {renderModificationDate(goal.status)}
+              <div>
+                {renderDailyAverageToComplete()}
+              </div>
+              <div>
+                {renderStatusInfo()}
+              </div>
             </div> 
         </div>
         <div 
           className="progress-bar"
-          data-value={`${currentProgress()}%`}
+          data-value={`${progressPercentage}%`}
           style={{
-            '--progress': `${currentProgress()}%`,
-            '--color': `var(--${color()})`
+            '--progress': `${progressPercentage}%`,
+            '--color': `var(--${color})`
           } as React.CSSProperties}
         >  
         </div>

@@ -6,6 +6,7 @@ import { Progress } from "../models/Progress";
 import { Category } from "../models/Category";
 import { store } from "./store";
 import dayjs from "dayjs";
+import { GoalType } from "../models/enums/GoalType";
 
 export default class GoalStore {
     goalsRegistry = new Map<number, Goal>();
@@ -45,6 +46,13 @@ export default class GoalStore {
                 .sort((a, b) => a.deadline!.valueOf() - b.deadline!.valueOf());
     }
 
+    hasType = (type: GoalType) => {
+        return this.selectedGoal?.type === type;
+    }
+
+    hasStatus = (status: GoalStatus) => {
+        return this.selectedGoal?.status === status;
+    }
 
     private setLoading = (state: boolean) => {
         this.loading = state;

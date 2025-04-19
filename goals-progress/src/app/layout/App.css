@@ -203,6 +203,7 @@ a .goal{
 
 .goal .stats{
   font-size: small;
+  margin-top: 16px;
 }
 
 .goal h2{
@@ -286,6 +287,10 @@ a .goal{
 .actions :first-child{
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+}
+
+.extended > .action {
+  min-width: 94px;
 }
 
 .action{

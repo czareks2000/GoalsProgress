@@ -4,7 +4,6 @@ import { GoalStatus } from '../../../app/models/enums/GoalStatus';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
-import dayjs from 'dayjs';
 
 interface Props {
   progress: Progress;
@@ -14,7 +13,7 @@ export default observer(function ProgressItem({ progress }: Props) {
   const {
     goalStore: {selectedGoal: goal, deleteProgress, loading: apiLoading}, 
     detailsPageStore: {showEditProgressForm}, 
-    commonStore: {roundValue}
+    commonStore: {roundValue, formatDate}
   } = useStore();
 
   const [loading, setLoading] = useState(false);
@@ -52,7 +51,7 @@ export default observer(function ProgressItem({ progress }: Props) {
             <p>
               {progressDetails()}
             </p>
-            <small>{dayjs(progress.date!).format('DD MMM YYYY')}</small>
+            <small>{formatDate(progress.date)}</small>
         </div>
         {((goal.status === GoalStatus.Current) || 
           (goal.status === GoalStatus.Deleted && apiLoading)

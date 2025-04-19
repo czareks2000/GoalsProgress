@@ -1,13 +1,14 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { store } from "./store";
 import { Progress } from "../models/Progress";
-import { GoalType } from "../models/enums/GoalType";
 import { GoalStatus } from "../models/enums/GoalStatus";
+import { GoalType } from "../models/enums/GoalType";
 
 export default class DetailsPageStore {
     selectedProgress: Progress | undefined = undefined;
     idOfLastCreatedCategory: number | undefined = undefined;
     
+    visibleStats = false;
     visibleAddProgressForm = false;
     visibleEditProgressForm = false;
     visibleEditGoalForm = false;
@@ -19,6 +20,7 @@ export default class DetailsPageStore {
 
     setInitialValues = async() => {
         runInAction(() => {
+            this.visibleStats = false;
             this.visibleAddProgressForm = false;
             this.visibleEditProgressForm = false;
             this.visibleEditGoalForm = false;
@@ -27,72 +29,62 @@ export default class DetailsPageStore {
         })
     }
 
-    toggleAddProgressForm = async () => {
-        runInAction(() => {
-            this.visibleAddProgressForm = !this.visibleAddProgressForm;
-            this.visibleProgressList = !this.visibleProgressList;
-        })
+    toggleAddProgressForm = () => {
+        this.visibleAddProgressForm = !this.visibleAddProgressForm;
+        this.visibleProgressList = !this.visibleProgressList;
     }
 
-    toggleEditGoalForm = async () => {
-        runInAction(() => {
-            this.visibleEditGoalForm = !this.visibleEditGoalForm;
-            this.visibleProgressList = !this.visibleProgressList;
-        })
+    toggleEditGoalForm = () => {
+        this.visibleEditGoalForm = !this.visibleEditGoalForm;
+        this.visibleProgressList = !this.visibleProgressList;
+    }
+    toggleStats = () => {
+        this.visibleStats = !this.visibleStats;
+        this.visibleProgressList = !this.visibleProgressList;
     }
 
-    toggleEditProgressForm = async () => {
-        runInAction(() => {
-            this.visibleEditProgressForm = !this.visibleEditProgressForm;
-            this.visibleProgressList = !this.visibleProgressList;
-        })
+    toggleEditProgressForm = () => {
+        this.visibleEditProgressForm = !this.visibleEditProgressForm;
+        this.visibleProgressList = !this.visibleProgressList;
     }
 
-    showEditProgressForm = async (progress: Progress) => {
-        runInAction(() => {
-            this.selectedProgress = progress;
-            this.toggleEditProgressForm();
-        })
+    showEditProgressForm = (progress: Progress) => {
+        this.selectedProgress = progress;
+        this.toggleEditProgressForm();
     }
 
     get showProgressAddForm() {
-        if(store.goalStore.selectedGoal)
-            return ((store.goalStore.selectedGoal.type === GoalType.Extended && store.goalStore.selectedGoal.categories!.length > 0 ) 
-                ||  (store.goalStore.selectedGoal.type === GoalType.Standard)) && this.visibleAddProgressForm
-        
-        return false;
+        const hasCategories = (store.goalStore.hasType(GoalType.Extended) && !!store.goalStore.selectedGoal?.categories?.length)
+
+        return this.visibleAddProgressForm && (hasCategories || store.goalStore.hasType(GoalType.Standard))
     }
 
     get showCategoryAddForm() {
-        if(store.goalStore.selectedGoal)
-            return (store.goalStore.selectedGoal.type === GoalType.Extended && this.visibleAddProgressForm) 
-                ||  (store.goalStore.selectedGoal.type === GoalType.Extended && this.visibleEditProgressForm)
-        
-        return false;
+        return store.goalStore.hasType(GoalType.Extended) && 
+                (this.visibleAddProgressForm || this.visibleEditProgressForm)
     }
 
-    get addProgressActionStatus() {
-        if(store.goalStore.selectedGoal)
-            return store.goalStore.selectedGoal.status !== GoalStatus.Current 
-                || this.visibleEditGoalForm 
-                || this.visibleEditProgressForm
-        
-        return false;
+    get disableAddProgressButton() {
+        return !store.goalStore.hasStatus(GoalStatus.Current)
+            || this.visibleEditGoalForm 
+            || this.visibleEditProgressForm
+            || this.visibleStats
     }
 
-    get editGoalActionStatus() {
-        if(store.goalStore.selectedGoal)
-            return store.goalStore.selectedGoal.status === GoalStatus.Archvied 
-                || this.visibleAddProgressForm 
-                || this.visibleEditProgressForm
-        
-        return false;
+    get disableEditButton() {
+        return store.goalStore.hasStatus(GoalStatus.Archvied)
+            || this.visibleAddProgressForm 
+            || this.visibleEditProgressForm
+            || this.visibleStats
     }
 
-    get archiveGoalActionStatus() {
-        if(store.goalStore.selectedGoal)
-            return !this.visibleProgressList || store.goalStore.selectedGoal.status === GoalStatus.Completed
-        
-        return false;
+    get disableStatsButton() {
+        return this.visibleAddProgressForm 
+            || this.visibleEditProgressForm 
+            || this.visibleEditGoalForm 
+    }
+
+    get disableArchiveRestoreButton() {
+        return store.goalStore.hasStatus(GoalStatus.Completed) || !this.visibleProgressList
     }
 }
