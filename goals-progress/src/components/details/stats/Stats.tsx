@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { useGoalStats } from "../../../app/hooks/useGoalStats";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDateHelpers } from "../../../app/hooks/useDateHelpers";
 import { StatsResult } from "./StatsResult";
 import { TypeSelect } from "./TypeSelect";
@@ -22,54 +22,45 @@ export enum Period {
     Custom
 }
 
-interface PeriodDates {
-    start: Dayjs;
-    end: Dayjs;
-}
-
 export default observer(function Stats() {
-    const { 
-        goalStore: {selectedGoal: goal}
-    } = useStore();
-
+    const { goalStore: {selectedGoal: goal} } = useStore();
     const { getStartOfMonth, getEndOfMonth } = useDateHelpers();
-
-    const { filterProgressesByDate, sumsByCategory, averagesPerMonthByCategory, getAllMonths } = useGoalStats();
+    const { filterProgressesByDate, sumsByCategory, 
+        averagesPerMonthByCategory, getAllMonths } = useGoalStats();
 
     if (!goal) return <></>
 
-    const now = dayjs();
-    const months = getAllMonths(goal.progresses!);
+    const [months] = useState(getAllMonths(goal.progresses!));
+    const [wholePeriod] = useState({ start: getStartOfMonth(months[0]), end: getEndOfMonth(months[months.length - 1]) });
 
     const [selectedType, setSelectedType] = useState(StatsType.Sum);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedPeriod, setSelectedPeriod] = useState(Period.ThisMonth);
     const [selectedMonth, setSelectedMonth] = useState(months[0].format('YYYY-MM'));
 
-    const [averages, setAverages] = useState<Record<string, number>>();
+    const [averages] = useState<Record<string, number>>(averagesPerMonthByCategory(goal.progresses!, wholePeriod.start, wholePeriod.end));
     const [sums, setSums] = useState<Record<string, number>>();
 
-    useEffect(() => {
-        const wholePeriod = { start: getStartOfMonth(months[0]), end: getEndOfMonth(months[months.length - 1]) };
+    const getPeriodDates = () => {
+        const now = dayjs();
 
-        const getPeriodDates = (): PeriodDates => {
-            if (selectedPeriod === Period.ThisMonth)
-                return { start: getStartOfMonth(now), end: getEndOfMonth(now) };
-    
-            if (selectedPeriod === Period.WholePeriod)
-                return wholePeriod;
-    
-            const customMonth = dayjs(selectedMonth);
-                return { start: getStartOfMonth(customMonth), end: getEndOfMonth(customMonth) };
-        };
+        if (selectedPeriod === Period.ThisMonth)
+            return { start: getStartOfMonth(now), end: getEndOfMonth(now) };
 
+        if (selectedPeriod === Period.WholePeriod)
+            return wholePeriod;
+
+        const customMonth = dayjs(selectedMonth);
+            return { start: getStartOfMonth(customMonth), end: getEndOfMonth(customMonth) };
+    };
+
+    const filteredProgresses = useMemo(() => {
         const { start, end } = getPeriodDates();
-        const filteredProgresses = filterProgressesByDate(goal.progresses!, start, end);
+        return filterProgressesByDate(goal.progresses!, start, end);
 
-        setSums(sumsByCategory(filteredProgresses));
-        setAverages(averagesPerMonthByCategory(goal.progresses!, wholePeriod.start, wholePeriod.end));
+    }, [selectedPeriod, selectedMonth]);
 
-    }, [selectedType, selectedCategory, selectedPeriod, selectedMonth])
+    useEffect(() => setSums(sumsByCategory(filteredProgresses)), [filteredProgresses]);
 
     return (
         <div className="stats outline outline-primary">
