@@ -206,8 +206,13 @@ a .goal{
   margin-top: 16px;
 }
 
-.goal h2{
+.goal h2 {
   margin: 0px;
+}
+
+.stats h2{
+  margin: 0 0 20px 0px;
+  font-weight: 400;
 }
 
 .form{

@@ -12,7 +12,7 @@ import Button from "../common/Button";
 import CategoryAddForm from "../forms/category/CategoryAddForm";
 import ProgressEditForm from "../forms/progress/ProgressEditForm";
 import Loading from "../common/Loading";
-import Stats from "./Stats";
+import Stats from "./stats/Stats";
 
 export default observer(function GoalDetails() {
     // State
